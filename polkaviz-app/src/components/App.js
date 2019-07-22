@@ -1,5 +1,6 @@
 import React from "react";
-import Relay from "./Relay"
+import Relay from "./Relay";
+import { Stage, Layer } from "react-konva";
 import Validator from "./Validator";
 
 class App extends React.Component {
@@ -10,7 +11,13 @@ class App extends React.Component {
           <h2>Polkadot Network</h2>
         </div>
         <div className="relay-circle">
-            <Relay />
+          <Stage width={window.innerWidth} height={window.innerHeight}>
+            {console.log(window.innerWidth)}
+            <Layer>
+              <Relay x={window.innerWidth} y={window.innerHeight}/>
+              <Validator x={window.innerWidth} y={window.innerHeight}/>
+            </Layer>
+          </Stage>
         </div>
       </div>
     );
