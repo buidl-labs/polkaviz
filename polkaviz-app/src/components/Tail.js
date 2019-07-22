@@ -4,7 +4,10 @@ import { Line } from "react-konva";
 class Tail extends React.Component {
   render() {
     return (
-      <Line x={this.props.x} y={this.props.y} points={[73, 70, 340, 23, 450, 60]} tension={1} fill={"#9335A3"} />
+      <React.Fragment>
+      {console.log(this.props.x+ " " + this.props.y)}
+      <Line x={this.props.x} y={this.props.y} points={[5, 50, 5, 10]} tension={0} stroke={"rgba(255, 255, 255, 0.71)"} />
+      </React.Fragment>
     );
   }
 }

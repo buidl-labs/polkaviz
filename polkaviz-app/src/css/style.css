@@ -15,7 +15,7 @@
   left: 58px;
   top: 51px;
 
-  font-family: Roboto Mono;
+  font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: normal;
   font-size: 23.4729px;
@@ -38,7 +38,7 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'Roboto Mono';
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }

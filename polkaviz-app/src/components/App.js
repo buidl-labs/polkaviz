@@ -15,7 +15,7 @@ class App extends React.Component {
             {console.log(window.innerWidth)}
             <Layer>
               <Relay x={window.innerWidth} y={window.innerHeight}/>
-              <Validator x={window.innerWidth} y={window.innerHeight}/>
+              <Validator x={window.innerWidth+750} y={window.innerHeight}/>
             </Layer>
           </Stage>
         </div>
