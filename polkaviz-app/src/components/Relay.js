@@ -1,6 +1,5 @@
 import React from "react";
 import { Circle } from "react-konva";
-import { Stage, Layer } from "react-konva";
 
 class Relay extends React.Component {
   render() {

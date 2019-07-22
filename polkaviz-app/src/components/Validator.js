@@ -1,7 +1,6 @@
 import React from "react";
 import Rectangle from "./Rectangle";
 import Tail from "./Tail"
-import { Stage, Layer, Text } from "react-konva";
 
 class Validator extends React.Component {
   render() {
