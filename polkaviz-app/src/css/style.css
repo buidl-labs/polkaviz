@@ -36,6 +36,9 @@
     width: 100%;
     height: 100%;
 }
+.validator1 {
+    transform: rotate(60deg)
+}
 
 html {
   font-family: 'Roboto Mono';

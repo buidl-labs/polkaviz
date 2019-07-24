@@ -6,7 +6,7 @@ class Tail extends React.Component {
     return (
       <React.Fragment>
       {console.log(this.props.x+ " " + this.props.y)}
-      <Line x={this.props.x} y={this.props.y} points={[5, 50, 5, 10]} tension={0} stroke={"rgba(255, 255, 255, 0.71)"} />
+      <Line x={this.props.x} y={this.props.y} points={[5, 50, 5, 10]} tension={0} stroke={"rgba(255, 255, 255, 0.71)"} rotation={this.props.angle} />
       </React.Fragment>
     );
   }
