@@ -9,7 +9,7 @@ class BlockAnimation extends React.Component {
       return (
         <Spring
           native
-          from={{ x: 0, shadowBlur: 0, fill: 'rgb(10,50,19)' }}
+          from={{ x: this.props.x2, y: this.props.y2, shadowBlur: 0, fill: 'rgb(10,50,19)' }}
           to={{
             x: flag ? this.props.x1 : this.props.x2,
             y: flag ? this.props.y1 : this.props.y2,
