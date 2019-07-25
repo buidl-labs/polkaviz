@@ -4,8 +4,33 @@ import { Stage, Layer } from "react-konva";
 import Validator from "./Validator";
 import validatorData from "./data.json";
 import BlockAnimation from "./BlockAnimation";
+import { WsProvider, ApiPromise } from '@polkadot/api';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.latestBlockAuthor=undefined;
+    this.state = {
+      validators:{} ,
+      lastAuthor: "",
+    };
+  }
+  componentDidMount(){
+    this.createApi();
+  }
+  async createApi() {
+    const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
+    const api = await ApiPromise.create(provider);
+
+    const data = await api.derive.chain.subscribeNewHead((block) => {
+      console.log(`block #${block.author}`)
+      const lastAuthor = block.author.toString();
+      this.setState({lastAuthor})
+    });
+  }
+  componentWillMount(){
+
+  }
   render() {
     const arr = [];
     return (

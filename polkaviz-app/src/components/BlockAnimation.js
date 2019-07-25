@@ -9,14 +9,15 @@ class BlockAnimation extends React.Component {
       return (
         <Spring
           native
-          from={{ x: this.props.x2, y: this.props.y2, shadowBlur: 0, fill: 'rgb(10,50,19)' }}
+          reset={true}
+          from={{ x: this.props.x2, y: this.props.y2, shadowBlur: 0, fill: 'hotpink' }}
           to={{
-            x: flag ? this.props.x1 : this.props.x2,
-            y: flag ? this.props.y1 : this.props.y2,
-            shadowBlur: flag ? 25 : 5,
-            fill: flag ? 'seagreen' : 'hotpink',
-            width: flag ? 10 : 10,
-            height: flag ? 10 : 10
+            x: this.props.x1,
+            y: this.props.y1,
+            shadowBlur: 5,
+            fill: 'seagreen',
+            width: 10,
+            height: 10
           }}
         >
           {props => (
