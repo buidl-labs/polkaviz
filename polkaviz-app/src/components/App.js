@@ -11,7 +11,7 @@ class App extends React.Component {
     super();
     this.latestBlockAuthor=undefined;
     this.state = {
-      validators:{} ,
+      validators:[] ,
       lastAuthor: "",
     };
   }
@@ -27,18 +27,23 @@ class App extends React.Component {
       const lastAuthor = block.author.toString();
       this.setState({lastAuthor})
     });
+    const allValidatorsForThisSession = await api.query.session.validators((validators)=>{
+      console.log(`validators ${validators}`)
+      const sessionValidators = validators.map(x=> x.toString())
+      this.setState({validators: sessionValidators})
+    });
+    
   }
   componentWillMount(){
 
   }
+  
   render() {
-    const arr = [];
+    const arr = this.state.validators;
     return (
       <div className="container">
-        {console.log(validatorData[0].validator)}
-        {Object.keys(validatorData).forEach(function(key) {
-          arr.push(validatorData[key]);
-        })}
+        {console.log(this.state.validators.indexOf(this.state.lastAuthor))}
+        
         {console.log(arr)}
         <div className="heading">
           <h2>Polkadot Network</h2>
@@ -51,6 +56,7 @@ class App extends React.Component {
               {arr.map((person, index) => (
                 <Validator
                   key={index}
+                  val={this.state.validators[index]}
                   angle={180 - (index * 360) / arr.length}
                   x={
                     window.innerWidth +
@@ -64,32 +70,30 @@ class App extends React.Component {
                   }
                 />
               ))}
-              {arr.map((person, index) => (
                 <BlockAnimation
-                  key={index}
-                  angle={180 - (index * 360) / arr.length}
-                  x1={
-                    window.innerWidth/2 +
-                    118 *
-                      Math.cos((90 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                  y1={
-                    window.innerHeight/2 +
-                    118 *
-                      Math.sin((90 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                  x2={
-                    window.innerWidth/2 +
-                    170 *
-                      Math.cos((90 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                  y2={
-                    window.innerHeight/2 +
-                    170 *
-                      Math.sin((90 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                />
-              ))}
+                key={this.state.validators.indexOf(this.state.lastAuthor)}
+                angle={180 - (this.state.validators.indexOf(this.state.lastAuthor) * 360) / arr.length}
+                x1={
+                  window.innerWidth/2 +
+                  118 *
+                    Math.cos((90 - (this.state.validators.indexOf(this.state.lastAuthor) * 360) / arr.length) * 0.0174533)
+                }
+                y1={
+                  window.innerHeight/2 +
+                  118 *
+                    Math.sin((90 - (this.state.validators.indexOf(this.state.lastAuthor) * 360) / arr.length) * 0.0174533)
+                }
+                x2={
+                  window.innerWidth/2 +
+                  170 *
+                    Math.cos((90 - (this.state.validators.indexOf(this.state.lastAuthor) * 360) / arr.length) * 0.0174533)
+                }
+                y2={
+                  window.innerHeight/2 +
+                  170 *
+                    Math.sin((90 - (this.state.validators.indexOf(this.state.lastAuthor) * 360) / arr.length) * 0.0174533)
+                }
+              />
             </Layer>
           </Stage>
         </div>

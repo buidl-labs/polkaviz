@@ -2,10 +2,8 @@ import React from "react";
 import { Spring, animated } from 'react-spring/renderprops-konva';
 
 class BlockAnimation extends React.Component {
-    state = { flag: false };
     handleClick = () => this.setState(state => ({ flag: !state.flag }));
     render() {
-      const { flag } = this.state;
       return (
         <Spring
           native
@@ -21,7 +19,7 @@ class BlockAnimation extends React.Component {
           }}
         >
           {props => (
-            <animated.Rect {...props} onClick={this.handleClick} rotation={this.props.angle} />
+            <animated.Rect {...props} rotation={this.props.angle} />
           )}
         </Spring>
       );
