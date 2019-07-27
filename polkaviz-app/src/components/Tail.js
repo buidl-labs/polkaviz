@@ -9,9 +9,9 @@ class Tail extends React.Component {
         <Line
           x={this.props.x}
           y={this.props.y}
-          points={[5, 50, 5, 10]}
+          points={[3, 60, 3, 6]}
           tension={0}
-          stroke={"rgba(255, 255, 255, 0.71)"}
+          stroke={"#717171"}
           rotation={this.props.angle}
         />
       </React.Fragment>

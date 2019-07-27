@@ -48,7 +48,6 @@ class App extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             {console.log(window.innerWidth)}
             <Layer>
-              <Relay x={window.innerWidth} y={window.innerHeight} />
               {arr.map((person, index) => (
                 <Validator
                   key={index}
@@ -56,16 +55,17 @@ class App extends React.Component {
                   angle={180 - (index * 360) / arr.length}
                   x={
                     window.innerWidth +
-                    350 *
+                    360 *
                       Math.cos((90 - (index * 360) / arr.length) * 0.0174533)
                   }
                   y={
                     window.innerHeight +
-                    350 *
+                    360 *
                       Math.sin((90 - (index * 360) / arr.length) * 0.0174533)
                   }
                 />
               ))}
+              <Relay x={window.innerWidth} y={window.innerHeight} />
               <BlockAnimation
                 key={this.state.validators.indexOf(this.state.lastAuthor)}
                 angle={

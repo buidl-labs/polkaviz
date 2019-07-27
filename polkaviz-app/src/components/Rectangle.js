@@ -7,8 +7,8 @@ class Rectangle extends React.Component {
       <Rect
         x={this.props.x}
         y={this.props.y}
-        width={10}
-        height={20}
+        width={6}
+        height={12}
         fill={"#9335A3"}
         cornerRadius={4.69457}
         rotation={this.props.angle}

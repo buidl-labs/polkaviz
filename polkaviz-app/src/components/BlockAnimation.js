@@ -23,7 +23,7 @@ class BlockAnimation extends React.Component {
           height: 10
         }}
       >
-        {props => <animated.Rect {...props} rotation={this.props.angle} />}
+        {props => <animated.RegularPolygon {...props} rotation={this.props.angle} sides={6} />}
       </Spring>
     );
   }
