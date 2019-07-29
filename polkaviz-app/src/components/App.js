@@ -4,6 +4,7 @@ import { Stage, Layer } from "react-konva";
 import Validator from "./Validator";
 import BlockAnimation from "./BlockAnimation";
 import { WsProvider, ApiPromise } from "@polkadot/api";
+import Bottombar from "./Bottombar";
 
 class App extends React.Component {
   constructor() {
@@ -11,7 +12,8 @@ class App extends React.Component {
     this.latestBlockAuthor = undefined;
     this.state = {
       validators: [],
-      lastAuthor: ""
+      lastAuthor: "",
+      start: null,
     };
   }
   componentDidMount() {
@@ -25,6 +27,8 @@ class App extends React.Component {
       console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       this.setState({ lastAuthor });
+      const start = new Date();
+      this.setState({ start: start });
     });
     await api.query.session.validators(validators => {
       console.log(`validators ${validators}`);
@@ -120,6 +124,9 @@ class App extends React.Component {
               />
             </Layer>
           </Stage>
+        </div>
+        <div className="bottombar">
+          <Bottombar start={this.state.start} />
         </div>
       </div>
     );
