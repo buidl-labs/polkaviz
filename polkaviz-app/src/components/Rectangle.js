@@ -30,7 +30,7 @@ class Rectangle extends React.Component {
         onMouseOver={this.handleOnMouseOver}
         onMouseOut={this.handleOnMouseOut}
       />
-      {this.state.showValidatorAddress && <Text text={this.props.validatorAddress} x={this.props.x} y={this.props.y} fill="#FFFFFF" />}
+      {this.state.showValidatorAddress && <Text text={this.props.validatorAddress} x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} fill="#FFFFFF" />}
       </React.Fragment>
     );
   }
