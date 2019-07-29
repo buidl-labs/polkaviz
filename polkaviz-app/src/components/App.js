@@ -55,7 +55,7 @@ class App extends React.Component {
               {arr.map((person, index) => (
                 <Validator
                   key={index}
-                  val={this.state.validators[index]}
+                  validatorAddress={this.state.validators[index]}
                   angle={180 - (index * 360) / arr.length}
                   x={
                     window.innerWidth +
