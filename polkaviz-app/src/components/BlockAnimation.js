@@ -19,11 +19,11 @@ class BlockAnimation extends React.Component {
           y: this.props.y1,
           shadowBlur: 5,
           fill: "seagreen",
-          width: 10,
-          height: 10
+          width: 8,
+          height: 8
         }}
       >
-        {props => <animated.RegularPolygon {...props} rotation={this.props.angle} sides={6} />}
+        {props => <animated.Rect {...props} rotation={this.props.angle} />}
       </Spring>
     );
   }
