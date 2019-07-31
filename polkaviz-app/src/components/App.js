@@ -52,6 +52,7 @@ class App extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             {console.log(window.innerWidth)}
             <Layer>
+              {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
                 <Validator
                   key={index}
@@ -60,16 +61,15 @@ class App extends React.Component {
                   x={
                     window.innerWidth +
                     360 *
-                      Math.cos((90 - (index * 360) / arr.length) * 0.0174533)
+                      Math.cos((90 - 1 - (index * 360) / arr.length) * 0.0174533)
                   }
                   y={
                     window.innerHeight +
                     360 *
-                      Math.sin((90 - (index * 360) / arr.length) * 0.0174533)
+                      Math.sin((90 - 1 - (index * 360) / arr.length) * 0.0174533)
                   }
                 />
               ))}
-              <Relay x={window.innerWidth} y={window.innerHeight} />
               <BlockAnimation
                 key={this.state.validators.indexOf(this.state.lastAuthor)}
                 angle={
@@ -79,7 +79,7 @@ class App extends React.Component {
                 }
                 x1={
                   window.innerWidth / 2 +
-                  118 *
+                  100 *
                     Math.cos(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *
@@ -90,7 +90,7 @@ class App extends React.Component {
                 }
                 y1={
                   window.innerHeight / 2 +
-                  118 *
+                  100 *
                     Math.sin(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *
@@ -101,7 +101,7 @@ class App extends React.Component {
                 }
                 x2={
                   window.innerWidth / 2 +
-                  170 *
+                  150 *
                     Math.cos(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *
@@ -112,7 +112,7 @@ class App extends React.Component {
                 }
                 y2={
                   window.innerHeight / 2 +
-                  170 *
+                  150 *
                     Math.sin(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *
@@ -122,6 +122,7 @@ class App extends React.Component {
                     )
                 }
               />
+              <Relay x={window.innerWidth} y={window.innerHeight} />
             </Layer>
           </Stage>
         </div>
