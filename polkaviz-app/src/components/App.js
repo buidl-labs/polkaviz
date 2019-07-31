@@ -101,7 +101,7 @@ class App extends React.Component {
                 }
                 x2={
                   window.innerWidth / 2 +
-                  150 *
+                  160 *
                     Math.cos(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *
@@ -112,7 +112,7 @@ class App extends React.Component {
                 }
                 y2={
                   window.innerHeight / 2 +
-                  150 *
+                  160 *
                     Math.sin(
                       (90 -
                         (this.state.validators.indexOf(this.state.lastAuthor) *

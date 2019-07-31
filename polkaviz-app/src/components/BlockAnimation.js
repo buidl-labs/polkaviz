@@ -6,7 +6,7 @@ class BlockAnimation extends React.Component {
   handleClick = () => this.setState(state => ({ flag: !state.flag }));
   render() {
     const hexagonRadius=6
-    const duration=500
+    const duration=1000
     return (
       <React.Fragment>
         <HexagonBase
