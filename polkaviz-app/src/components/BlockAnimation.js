@@ -1,29 +1,45 @@
 import React from "react";
-import { Spring, animated } from 'react-spring/renderprops-konva';
+import HexagonBase from "./HexagonBase";
+import TriangleLid from "./TriangleLid"
 
 class BlockAnimation extends React.Component {
-    state = { flag: false };
-    handleClick = () => this.setState(state => ({ flag: !state.flag }));
-    render() {
-      const { flag } = this.state;
-      return (
-        <Spring
-          native
-          from={{ x: this.props.x2, y: this.props.y2, shadowBlur: 0, fill: 'rgb(10,50,19)' }}
-          to={{
-            x: flag ? this.props.x1 : this.props.x2,
-            y: flag ? this.props.y1 : this.props.y2,
-            shadowBlur: flag ? 25 : 5,
-            fill: flag ? 'seagreen' : 'hotpink',
-            width: flag ? 10 : 10,
-            height: flag ? 10 : 10
-          }}
-        >
-          {props => (
-            <animated.Rect {...props} onClick={this.handleClick} rotation={this.props.angle} />
-          )}
-        </Spring>
-      );
-    }
+  handleClick = () => this.setState(state => ({ flag: !state.flag }));
+  render() {
+    const hexagonRadius=6
+    const duration=1000
+    return (
+      <React.Fragment>
+        <HexagonBase
+          x1={this.props.x1}
+          x2={this.props.x2}
+          y1={this.props.y1}
+          y2={this.props.y2}
+          angle={this.props.angle}
+          hexagonRadius={hexagonRadius}
+          duration={duration}
+        />
+        <TriangleLid
+        x1={this.props.x1}
+        x2={this.props.x2}
+        y1={this.props.y1}
+        y2={this.props.y2}
+        angle={this.props.angle}
+        hexagonRadius={hexagonRadius}
+        theta={60}
+        duration={duration}
+      />
+      <TriangleLid
+        x1={this.props.x1}
+        x2={this.props.x2}
+        y1={this.props.y1}
+        y2={this.props.y2}
+        angle={this.props.angle}
+        hexagonRadius={hexagonRadius}
+        theta={120}
+        duration={duration}
+      />
+      </React.Fragment>
+    );
+  }
 }
 export default BlockAnimation;

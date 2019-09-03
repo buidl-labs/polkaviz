@@ -1,18 +1,37 @@
 import React from "react";
-import { Rect } from "react-konva";
+import { Rect, Text } from "react-konva";
 
 class Rectangle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showValidatorAddress: false };
+  }
+
+  componentDidMount() {
+  }
+  handleOnMouseOver = () => {
+    this.setState({showValidatorAddress: true})
+  }
+  handleOnMouseOut = () => {
+    this.setState({showValidatorAddress: false})
+  }
+
   render() {
     return (
+      <React.Fragment>
       <Rect
         x={this.props.x}
         y={this.props.y}
-        width={10}
-        height={20}
+        width={6}
+        height={12}
         fill={"#9335A3"}
         cornerRadius={4.69457}
         rotation={this.props.angle}
+        onMouseOver={this.handleOnMouseOver}
+        onMouseOut={this.handleOnMouseOut}
       />
+      {this.state.showValidatorAddress && <Text text={this.props.validatorAddress} x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} fill="#FFFFFF" />}
+      </React.Fragment>
     );
   }
 }
