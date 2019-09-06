@@ -5,7 +5,7 @@ class Tail extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* {console.log(this.props.x + " " + this.props.y)} */}
+        {console.log(this.props.x + " " + this.props.y)}
         <Line
           x={this.props.x}
           y={this.props.y}

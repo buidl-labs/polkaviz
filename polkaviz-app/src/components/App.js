@@ -24,16 +24,15 @@ class App extends React.Component {
     const api = await ApiPromise.create(provider);
 
     await api.derive.chain.subscribeNewHead(block => {
-      console.log(`block #${block}`);
+      console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       this.setState({ lastAuthor });
       const start = new Date();
       this.setState({ start: start });
     });
     await api.query.session.validators(validators => {
-      // console.log(`validators ${validators}`);
+       console.log(`validators ${validators}`);
       const sessionValidators = validators.map(x => x.toString());
-      // console.log(sessionValidators)
       this.setState({ validators: sessionValidators });
     });
   }
@@ -41,12 +40,11 @@ class App extends React.Component {
 
   render() {
     const arr = this.state.validators;
-    console.log(this.state.lastAuthor)
-    return (
+          return (
       <div className="container">
-        {/* {console.log(this.state.validators.indexOf(this.state.lastAuthor))} */}
+         {console.log(this.state.validators.indexOf(this.state.lastAuthor))} 
 
-        {/* {console.log(arr)} */}
+         {console.log(arr)} 
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>

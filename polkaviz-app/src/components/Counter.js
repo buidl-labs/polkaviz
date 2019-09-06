@@ -9,7 +9,7 @@ class Counter extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      // console.log(this.state.elapsed, this.props.counter);
+      console.log(this.state.elapsed, this.props.counter);
       this.tick()
     }, 50);
   }
@@ -18,7 +18,7 @@ class Counter extends React.Component {
     clearInterval(this.interval);
   }
   tick() {
-    // console.log("here " + this.props.start)
+    console.log("here " + this.props.start)
     this.setState({elapsed: new Date() - this.props.start})
   }
 
