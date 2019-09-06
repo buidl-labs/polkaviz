@@ -27,10 +27,10 @@ class Bottombar extends React.Component {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create(provider);
     await api.derive.session.info(header => {
-      console.log(`eraLength #${header.eraLength}`);
-      console.log(`eraProgress #${header.eraProgress}`);
-      console.log(`sessionLength #${header.sessionLength}`);
-      console.log(`sessionProgress #${header.sessionProgress}`);
+      // console.log(`eraLength #${header.eraLength}`);
+      // console.log(`eraProgress #${header.eraProgress}`);
+      // console.log(`sessionLength #${header.sessionLength}`);
+      // console.log(`sessionProgress #${header.sessionProgress}`);
       const eraLength = header.eraLength.toString();
       const eraProgress = header.eraProgress.toString();
       const sessionLength = header.sessionLength.toString();
@@ -47,7 +47,7 @@ class Bottombar extends React.Component {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create(provider);
     await api.derive.chain.bestNumberFinalized(header => {
-      console.log(`Chain is at block: #${header}`);
+      // console.log(`Chain is at block: #${header}`);
       this.setState({ finalblock: header.toString() });
     });
   }
