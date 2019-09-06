@@ -31,7 +31,7 @@ class App extends React.Component {
       this.setState({ start: start });
     });
     await api.query.session.validators(validators => {
-       console.log(`validators ${validators}`);
+      console.log(`validators ${validators}`);
       const sessionValidators = validators.map(x => x.toString());
       this.setState({ validators: sessionValidators });
     });
@@ -40,21 +40,20 @@ class App extends React.Component {
 
   render() {
     const arr = this.state.validators;
-          return (
+    return (
       <div className="container">
-         {console.log(this.state.validators.indexOf(this.state.lastAuthor))} 
+        {console.log(this.state.validators.indexOf(this.state.lastAuthor))} 
 
-         {console.log(arr)} 
+        {console.log(arr)} 
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
-            {/* {console.log(window.innerWidth)} */}
+            {console.log(window.innerWidth)}
             <Layer>
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
-                
                 <Validator
                   key={index}
                   validatorAddress={this.state.validators[index]}
