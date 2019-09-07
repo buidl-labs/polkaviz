@@ -3,7 +3,7 @@ import { Stage, Layer, Arc, Line, Rect} from 'react-konva';
 import Form from "./form"
 import WhiteCircles from './WhiteCircles'
 
-class Semicircle extends React.Component{
+class ValidatorApp extends React.Component{
         constructor(){
             super()
             this.state = {
@@ -80,4 +80,4 @@ class Semicircle extends React.Component{
     }
 }
 
-export default Semicircle
+export default ValidatorApp

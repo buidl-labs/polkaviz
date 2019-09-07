@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
 import "./css/style.css";
-import App from "./validator_components/App";
+import Router from "./validator_components/Router";
 
-render(<App />, document.querySelector("#root"));
+render(<Router />, document.querySelector("#root"));
