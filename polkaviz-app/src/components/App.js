@@ -5,6 +5,7 @@ import Validator from "./Validator";
 import BlockAnimation from "./BlockAnimation";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import Bottombar from "./Bottombar";
+import { withRouter } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
@@ -39,6 +40,7 @@ class App extends React.Component {
   componentWillMount() {}
 
   render() {
+    console.log(this.props.history)
     const arr = this.state.validators;
     return (
       <div className="container">
@@ -58,6 +60,7 @@ class App extends React.Component {
                   key={index}
                   validatorAddress={this.state.validators[index]}
                   angle={180 - (index * 360) / arr.length}
+                  history={this.props.history}
                   x={
                     window.innerWidth +
                     360 *
@@ -134,4 +137,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

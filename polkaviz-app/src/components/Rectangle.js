@@ -4,8 +4,7 @@ import { Rect, Text} from "react-konva";
 class Rectangle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showValidatorAddress: false,
-                    redirectpath: false };
+    this.state = { showValidatorAddress: false };
   }
   
   componentDidMount() {
@@ -17,9 +16,8 @@ class Rectangle extends React.Component {
     this.setState({showValidatorAddress: false})
   }
   handleClick = () => {
-    this.setState({redirectpath: true})
-    //  this.props.history.push("/id")
     console.log("Clicked ",this.props.validatorAddress);
+    this.props.history.push("/id");
   }
 
   render() {

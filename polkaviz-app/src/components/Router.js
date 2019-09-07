@@ -1,6 +1,6 @@
 import React from "react";
-import ValidatorApp from "./ValidatorApp";
-import App from "../components/App";
+import ValidatorApp from "./validator_components/ValidatorApp";
+import App from "./App";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function Router() {
