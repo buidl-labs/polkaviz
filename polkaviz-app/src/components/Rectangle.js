@@ -1,4 +1,5 @@
 import React from "react";
+// import ReactDOM from 'react-dom';
 import { Rect, Text} from "react-konva";
 
 class Rectangle extends React.Component {
@@ -17,7 +18,10 @@ class Rectangle extends React.Component {
   }
   handleClick = () => {
     console.log("Clicked ",this.props.validatorAddress);
-    this.props.history.push("/id");
+    console.log(this.props)
+    this.props.history.push("/"+ this.props.validatorAddress);
+    // let container = document.querySelector(".container")
+    // ReactDOM.unmountComponentAtNode(container)
   }
 
   render() {

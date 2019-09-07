@@ -1,13 +1,37 @@
 import React from 'react'
-import {Circle, Line} from 'react-konva'
+import {Circle, Line, Text} from 'react-konva'
 
-function Circleandline(props){
+class Circleandline extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            showNominatorAddress : false
+        }
+    }
+    handleOnMouseOver = () => {
+        this.setState({showNominatorAddress: true})
+      }
+      handleOnMouseOut = () => {
+        this.setState({showNominatorAddress: false})
+      }
+    
+    render(){
     return(
         <React.Fragment>
-        <Circle x={props.x} y={props.y} radius={7} fill="white"/>
-        <Line points={[props.x,props.y,props.x2,props.y2]} stroke="white" opacity={0.2}/>
+        <Circle 
+        x={this.props.x} 
+        y={this.props.y} 
+        radius={7} 
+        fill="white"
+        onMouseOver={this.handleOnMouseOver}
+        onMouseOut={this.handleOnMouseOut}
+        />
+        <Line points={[this.props.x,this.props.y,this.props.x2,this.props.y2]} stroke="white" opacity={0.2}/>
+        
+        {this.state.showNominatorAddress && <Text text={this.props.text} x={this.props.x+10} y={this.props.y-20} fill="#FFFFFF" />}
+
         </React.Fragment>
     )
 }
-
+}
 export default Circleandline

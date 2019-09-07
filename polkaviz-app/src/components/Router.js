@@ -9,7 +9,7 @@ function Router() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={App} />
-          <Route exact path="/id" component={ValidatorApp} />
+          <Route exact path="/:validatorAddress" component={ValidatorApp} />
         </Switch>
       </BrowserRouter>
     </div>

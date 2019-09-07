@@ -17,8 +17,8 @@ class Bottombar extends React.Component {
       sessionsPerEra: 0,
       sessionProgress: 0
     };
+    this.mounted = true;
   }
-
   componentDidMount() {
     this.createApi2();
     this.createApi3();
@@ -35,12 +35,14 @@ class Bottombar extends React.Component {
       const eraProgress = header.eraProgress.toString();
       const sessionLength = header.sessionLength.toString();
       const sessionProgress = header.sessionProgress.toString();
+      if(this.mounted){
       this.setState({
         eraLength: eraLength,
         eraProgress: eraProgress,
         sessionLength: sessionLength,
         sessionProgress: sessionProgress
       });
+    }
     });
   }
   async createApi3() {
@@ -48,8 +50,15 @@ class Bottombar extends React.Component {
     const api = await ApiPromise.create(provider);
     await api.derive.chain.bestNumberFinalized(header => {
       // console.log(`Chain is at block: #${header}`);
+      if(this.mounted){
       this.setState({ finalblock: header.toString() });
+      }
     });
+
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
   }
   render() {
     return (
