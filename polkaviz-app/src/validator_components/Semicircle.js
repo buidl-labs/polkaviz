@@ -22,7 +22,11 @@ class Semicircle extends React.Component{
         render(){
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const radius = 100;
+        let radius = 100;
+        if(this.state.noOfCircle>10)
+        {
+            radius = 200;
+        }
         return(
             <div>
             <Form getNoOfCircles={this.getNoOfCircles} value={this.state.noOfCircle}/>

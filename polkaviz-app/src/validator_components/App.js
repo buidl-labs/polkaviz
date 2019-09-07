@@ -2,7 +2,7 @@ import React from 'react';
 import  Semicircle from './Semicircle';
 function App() {
   return (
-    <div className="App">
+    <div className="container">
       < Semicircle />
     </div>
   );

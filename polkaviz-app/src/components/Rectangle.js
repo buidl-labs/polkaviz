@@ -1,10 +1,13 @@
 import React from "react";
-import { Rect, Text } from "react-konva";
+import { Rect, Text} from "react-konva";
+import {BrowserRouter,Route, Redirect, Link} from 'react-router-dom'
+import App from '../validator_components/App'
 
 class Rectangle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showValidatorAddress: false };
+    this.state = { showValidatorAddress: false,
+                    redirectpath: false };
   }
 
   componentDidMount() {
@@ -15,10 +18,15 @@ class Rectangle extends React.Component {
   handleOnMouseOut = () => {
     this.setState({showValidatorAddress: false})
   }
+  handleClick = () => {
+    this.setState({redirectpath: true})
+    console.log("hi");
+  }
 
   render() {
     return (
       <React.Fragment>
+        <Link to="/id">
       <Rect
         x={this.props.x}
         y={this.props.y}
@@ -29,8 +37,14 @@ class Rectangle extends React.Component {
         rotation={this.props.angle}
         onMouseOver={this.handleOnMouseOver}
         onMouseOut={this.handleOnMouseOut}
+        onClick={this.handleClick}
       />
+      </Link>
       {this.state.showValidatorAddress && <Text text={this.props.validatorAddress} x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} fill="#FFFFFF" />}
+        <BrowserRouter>
+        <Route exact path='/id' component={App} />
+    {this.state.redirectpath && <Redirect to = {`/id`} />}
+    </BrowserRouter>
       </React.Fragment>
     );
   }

@@ -6,15 +6,17 @@ function WhiteCircles(props){
         var arr =[];
 
         if(props.n>5){
+            angle += Math.PI/4
             for(var j=0;j<props.n;j++)
             {
-                angle += 2*Math.PI/props.n 
+                angle += 3/4*(2*Math.PI/(Number(props.n)+1))
                 arr.push(<Circleandline x={props.r*Math.cos(angle)+props.x} 
                              y={props.r*Math.sin(angle)+props.y}
                              x2={props.x}
                              y2={props.y}
                              />
                 )
+                 
                 
             }
 
