@@ -16,6 +16,7 @@ class Validator extends React.Component {
           y={this.props.y / 2}
           angle={this.props.angle}
           validatorAddress={this.props.validatorAddress}
+          history={this.props.history}
         />
       </React.Fragment>
     );

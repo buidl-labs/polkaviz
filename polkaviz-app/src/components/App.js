@@ -5,6 +5,7 @@ import Validator from "./Validator";
 import BlockAnimation from "./BlockAnimation";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import Bottombar from "./Bottombar";
+import { withRouter } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
@@ -15,6 +16,7 @@ class App extends React.Component {
       lastAuthor: "",
       start: null,
     };
+    this.ismounted = true
   }
   componentDidMount() {
     this.createApi();
@@ -22,35 +24,44 @@ class App extends React.Component {
   async createApi() {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create(provider);
-
     await api.derive.chain.subscribeNewHead(block => {
-      console.log(`block #${block.author}`);
+      // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
+      if(this.ismounted){
       this.setState({ lastAuthor });
+      }
       const start = new Date();
+      if(this.ismounted){
       this.setState({ start: start });
+      }
     });
     await api.query.session.validators(validators => {
-      console.log(`validators ${validators}`);
+      // console.log(`validators ${validators}`);
       const sessionValidators = validators.map(x => x.toString());
+      if(this.ismounted){
       this.setState({ validators: sessionValidators });
+      }
     });
+  
   }
-  componentWillMount() {}
+  componentWillUnmount(){
+    this.ismounted = false;
+  }
 
   render() {
+    console.log(this.props.history)
     const arr = this.state.validators;
     return (
       <div className="container">
-        {console.log(this.state.validators.indexOf(this.state.lastAuthor))}
+        {/* {console.log(this.state.validators.indexOf(this.state.lastAuthor))}  */}
 
-        {console.log(arr)}
+        {/* {console.log(arr)}  */}
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
-            {console.log(window.innerWidth)}
+            {/* {console.log(window.innerWidth)} */}
             <Layer>
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
@@ -58,6 +69,7 @@ class App extends React.Component {
                   key={index}
                   validatorAddress={this.state.validators[index]}
                   angle={180 - (index * 360) / arr.length}
+                  history={this.props.history}
                   x={
                     window.innerWidth +
                     360 *
@@ -134,4 +146,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

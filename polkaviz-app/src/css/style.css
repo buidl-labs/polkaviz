@@ -72,3 +72,10 @@ html {
 body {
   margin: 0;
 }
+
+
+.nominator-input{
+  position: fixed;
+  left: 20px;
+  z-index: 1;
+}
