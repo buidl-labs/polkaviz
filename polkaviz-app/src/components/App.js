@@ -6,6 +6,7 @@ import BlockAnimation from "./BlockAnimation";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import Bottombar from "./Bottombar";
 import { withRouter } from 'react-router-dom';
+import Parachains from './Parachains'
 
 class App extends React.Component {
   constructor() {
@@ -51,6 +52,7 @@ class App extends React.Component {
   render() {
     console.log(this.props.history)
     const arr = this.state.validators;
+    const arr1 = [1,2,3,4,5,6,7,8]
     return (
       <div className="container">
         {/* {console.log(this.state.validators.indexOf(this.state.lastAuthor))}  */}
@@ -135,6 +137,7 @@ class App extends React.Component {
                 }
               />
               <Relay x={window.innerWidth} y={window.innerHeight} />
+              <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/>
             </Layer>
           </Stage>
         </div>
