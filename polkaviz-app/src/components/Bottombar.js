@@ -3,6 +3,7 @@ import Counter from "./Counter";
 import FinalizedBlock from "./FinalizedBlock";
 import Session from "./Session";
 import Era from "./Era";
+import ValidatorCount from './ValidatorCount'
 import { WsProvider, ApiPromise } from "@polkadot/api";
 
 class Bottombar extends React.Component {
@@ -15,7 +16,8 @@ class Bottombar extends React.Component {
       lastLengthChange: 0,
       sessionLength: 0,
       sessionsPerEra: 0,
-      sessionProgress: 0
+      sessionProgress: 0,
+      totalValidators: 0
     };
     this.mounted = true;
   }
@@ -26,6 +28,13 @@ class Bottombar extends React.Component {
   async createApi2() {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create(provider);
+    let totalValidators = await api.query.staking.validatorCount()
+    console.log("this",totalValidators.words["0"],totalValidators)
+    if(this.mounted){
+      this.setState({
+        totalValidators:totalValidators.words["0"]
+      })
+    }
     await api.derive.session.info(header => {
       // console.log(`eraLength #${header.eraLength}`);
       // console.log(`eraProgress #${header.eraProgress}`);
@@ -63,6 +72,9 @@ class Bottombar extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <ValidatorCount 
+          totalValidators={this.state.totalValidators}
+          activeValidators={this.props.activevalidators} />
         <Counter start={this.props.start} />
         <FinalizedBlock finalblock={this.state.finalblock} />
         <Session
