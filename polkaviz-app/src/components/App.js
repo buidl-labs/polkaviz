@@ -16,6 +16,7 @@ class App extends React.Component {
       validators: [],
       lastAuthor: "",
       start: null,
+      isloading:true
     };
     this.ismounted = true
   }
@@ -36,14 +37,17 @@ class App extends React.Component {
       this.setState({ start: start });
       }
     });
+
     await api.query.session.validators(validators => {
       // console.log(`validators ${validators}`);
       const sessionValidators = validators.map(x => x.toString());
       if(this.ismounted){
-      this.setState({ validators: sessionValidators });
+      this.setState({ 
+        validators: sessionValidators,
+        isloading: false
+       });
       }
     });
-  
   }
   componentWillUnmount(){
     this.ismounted = false;
@@ -52,8 +56,11 @@ class App extends React.Component {
   render() {
     console.log(this.props.history)
     const arr = this.state.validators;
+    // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     const arr1 = [1,2,3,4,5,6,7,8]
     return (
+      this.state.isloading ? (<React.Fragment><div class="lds-ripple"><div></div><div></div></div><div class="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
+      (
       <div className="container">
         {/* {console.log(this.state.validators.indexOf(this.state.lastAuthor))}  */}
 
@@ -142,9 +149,10 @@ class App extends React.Component {
           </Stage>
         </div>
         <div className="bottombar">
-          <Bottombar start={this.state.start} />
+          <Bottombar start={this.state.start} activevalidators={this.state.validators.length}/>
         </div>
       </div>
+      )
     );
   }
 }
