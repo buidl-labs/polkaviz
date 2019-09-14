@@ -17,11 +17,17 @@ class Rectangle extends React.Component {
     this.setState({showValidatorAddress: false})
   }
   handleClick = () => {
-    this.props.history.push("/val/"+ this.props.validatorAddress);
+    console.log("Clicked ",this.props.validatorAddress);
+    console.log(this.props)
+    this.props.history.push("/"+ this.props.validatorAddress);
+    // let container = document.querySelector(".container")
+    // ReactDOM.unmountComponentAtNode(container)
   }
 
   render() {
     return (
+        //  <BrowserRouter>
+        // <Link to="/id"> 
       <React.Fragment>
       <Rect
         x={this.props.x}
@@ -36,12 +42,19 @@ class Rectangle extends React.Component {
         onClick={this.handleClick}
       />
       
-      {this.state.showValidatorAddress && 
-      <Text text={this.props.validatorAddress} 
-        x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-        y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} 
-        fill="#FFFFFF" />}
+      {this.state.showValidatorAddress && <Text text={this.props.validatorAddress} x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} fill="#FFFFFF" />}
+      
+        {// <BrowserRouter>
+        //{this.state.redirectpath && <Redirect to = {`/id`} />}
+        //</BrowserRouter> */}
+      }
+
      </React.Fragment> 
+      
+      //    </Link> 
+      // </BrowserRouter> 
+
+      // </div>
     );
   }
 }

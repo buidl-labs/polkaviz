@@ -14,9 +14,6 @@ class Circleandline extends React.Component{
       handleOnMouseOut = () => {
         this.setState({showNominatorAddress: false})
       }
-      handleClick = () => {
-        this.props.history.push("/nom/"+ this.props.text);
-      }
     
     render(){
     return(
@@ -28,7 +25,6 @@ class Circleandline extends React.Component{
         fill="white"
         onMouseOver={this.handleOnMouseOver}
         onMouseOut={this.handleOnMouseOut}
-        onClick={this.handleClick}
         />
         <Line points={[this.props.x,this.props.y,this.props.x2,this.props.y2]} stroke="white" opacity={0.2}/>
         
