@@ -25,6 +25,34 @@ class Rectangle extends React.Component {
   )}
 
   render() {
+    let valtext = "Validator Address: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
+    console.log(this.props.angle)
+    let x1 = this.props.x
+    let y1 = this.props.y
+    if(this.props.angle<=45 && this.props.angle>0){
+      x1 = this.props.x + 50
+      y1 = this.props.y - 110
+    }
+    if(this.props.angle<=0 && this.props.angle>-45){
+      x1 = this.props.x -50
+      y1 = this.props.y -170
+    }
+    if(this.props.angle<=-45 && this.props.angle>-135){
+      x1 = this.props.x -285
+      y1 = this.props.y
+    }
+    if(this.props.angle<=135 && this.props.angle>45){
+      x1 = this.props.x +50
+      y1 = this.props.y
+    }
+    if(this.props.angle<=-135 && this.props.angle>-180){
+      x1 = this.props.x -50
+      y1 = this.props.y +50
+    }
+    if(this.props.angle<=180 && this.props.angle>135){
+      x1 = this.props.x + 50
+      y1 = this.props.y 
+    }
     return (
       <React.Fragment>
       <Rect
@@ -39,22 +67,35 @@ class Rectangle extends React.Component {
         onMouseOut={this.handleOnMouseOut}
         onClick={this.handleClick}
       />
-      
       {this.state.showValidatorAddress && 
-      <Text text={this.props.validatorAddress} 
-        x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-        y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} 
+      <Rect
+        x={x1+20*Math.sin(this.props.angle *  0.0174533)-10}
+        y={y1-20*Math.cos(this.props.angle *  0.0174533)-10}
+        width={260}
+        height={150}
+        cornerRadius={4.69457}
+        fill="#333333" />
+      }
+      {this.state.showValidatorAddress && 
+      <Text text={valtext} 
+        x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
+        y={y1-20*Math.cos(this.props.angle *  0.0174533) + 10} 
         fill="#FFFFFF" />   }
           {this.state.showValidatorAddress && 
           <Text text={this.props.nominators} 
-          x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-          y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)+20 } 
+          x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
+          y={y1-20*Math.cos(this.props.angle *  0.0174533)+40 } 
           fill="#FFFFFF" />}
           {this.state.showValidatorAddress && 
           <Text text={this.props.bondvalue} 
-            x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-            y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)+40} 
+            x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
+            y={y1-20*Math.cos(this.props.angle *  0.0174533)+70} 
             fill="#FFFFFF" /> }
+          {this.state.showValidatorAddress && 
+          <Text text="Click to show Validator Analytics" 
+            x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
+            y={y1-20*Math.cos(this.props.angle *  0.0174533)+120} 
+            fill="#9099B6" /> }
      </React.Fragment> 
     );
   }

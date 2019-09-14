@@ -50,9 +50,9 @@ class Validator extends React.Component {
     let totalbonded = 0
     totalbonded = totalvalue.toFixed(3)-ownvalue.toFixed(3)
     let bondvalue = ""
-    bondvalue = "bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
+    bondvalue = "Bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     let nomvalue = 0
-    nomvalue = "backed by " + this.props.valinfo.stakers.others.length + " nominators"
+    nomvalue = "Backed by: " + this.props.valinfo.stakers.others.length + " nominators"
     return (
       <React.Fragment>
         <Tail

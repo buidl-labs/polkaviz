@@ -69,20 +69,28 @@ this.ownvalue = 0
 
 
     let validatorname = "Validator: " +  this.state.validator
-    let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
-    let diffrentstash = "session: " + stashname
-    let controllername = this.state.controller.toString().slice(0,8) + "......" + this.state.controller.toString().slice(-8)
-    let diffrentcontroller = "controller: " + controllername
+    // let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
+    // let diffrentstash = "session: " + stashname
+    // let controllername = this.state.controller.toString().slice(0,8) + "......" + this.state.controller.toString().slice(-8)
+    // let diffrentcontroller = "controller: " + controllername
+
+
+    let totalbondedtext = "Total Staked: " + this.totalvalue.toFixed(3) + " DOT"
+    let selfbondedtext = "Validator Self Staked: " + this.ownvalue.toString().slice(0,5) + " DOT"
+
+    let totalbonded = 0
+    totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
+    let nominatorbondedtext = "Nominator Staked: " +  totalbonded.toString().slice(0,5) + " DOT"
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
-    let totalbonded = 0
+    
     // this.state.nominators.forEach(ele => {
     //     totalbonded +=ele.value
     // })
     // console.log(this.totalvalue,this.ownvalue+totalbonded)
-    totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
-    let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
+    
+    // let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     // console.log(this.state)
     return (
   this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
@@ -147,9 +155,9 @@ this.ownvalue = 0
 
             {this.state.showValidatorAddress && <Text text={this.state.validator} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
             <Text text={validatorname} x= {width/30} y={height/30} fill="#FFFFFF" fontSize={20}/>
-            <Text text={diffrentcontroller} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text ={diffrentstash} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text={bondvalue} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text ={selfbondedtext} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} />
           </Layer>
         </Stage>
       </div>

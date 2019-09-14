@@ -201,6 +201,7 @@ class App extends React.Component {
           <Bottombar start={this.state.start} activevalidators={this.state.validators.length}/>
         </div>
       </div>
+
       )
     );
   }
