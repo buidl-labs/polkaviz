@@ -6,7 +6,7 @@ import BlockAnimation from "./BlockAnimation";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import Bottombar from "./Bottombar";
 import { withRouter } from 'react-router-dom';
-import Parachains from './Parachains'
+// import Parachains from './Parachains'
 
 class App extends React.Component {
   constructor() {
@@ -57,7 +57,7 @@ class App extends React.Component {
     console.log(this.props.history)
     const arr = this.state.validators;
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
-    const arr1 = [1,2,3,4,5,6,7,8]
+    // const arr1 = [1,2,3,4,5,6,7,8]
     return (
       this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
       (
@@ -72,7 +72,7 @@ class App extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             {/* {console.log(window.innerWidth)} */}
             <Layer>
-            <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/>
+            {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
                 <Validator
