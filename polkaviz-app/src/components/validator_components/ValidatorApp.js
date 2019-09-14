@@ -13,8 +13,7 @@ class ValidatorApp extends React.Component {
       showValidatorAddress: false,
       showdifferent:true,
       stash:"",
-      controller: "",
-      isloading:true
+      controller: ""
     };
 
 this.totalvalue =0 
@@ -46,8 +45,7 @@ this.ownvalue = 0
       validator: value.accountId,
       nominators: value.stakers.others,
       stash: value.stashId,
-      controller: value.controllerId,
-      isloading:false
+      controller: value.controllerId
     });
     // console.log(value.stakers.others.length);
   }
@@ -81,8 +79,6 @@ this.ownvalue = 0
     let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     // console.log(this.state)
     return (
-  this.state.isloading ? (<React.Fragment><div class="lds-ripple"><div></div><div></div></div><div class="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
-      (
       <div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
@@ -147,7 +143,6 @@ this.ownvalue = 0
           </Layer>
         </Stage>
       </div>
-      )
     );
   }
 }
