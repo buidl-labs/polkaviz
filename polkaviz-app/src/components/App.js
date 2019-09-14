@@ -59,7 +59,7 @@ class App extends React.Component {
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     const arr1 = [1,2,3,4,5,6,7,8]
     return (
-      this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
+      this.state.isloading ? (<React.Fragment><div class="lds-ripple"><div></div><div></div></div><div class="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
       (
       <div className="container">
         {/* {console.log(this.state.validators.indexOf(this.state.lastAuthor))}  */}
@@ -72,7 +72,6 @@ class App extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             {/* {console.log(window.innerWidth)} */}
             <Layer>
-            <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/>
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
                 <Validator
@@ -145,7 +144,7 @@ class App extends React.Component {
                 }
               />
               <Relay x={window.innerWidth} y={window.innerHeight} />
-              
+              <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/>
             </Layer>
           </Stage>
         </div>
