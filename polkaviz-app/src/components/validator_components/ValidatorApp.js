@@ -2,7 +2,6 @@ import React from "react";
 import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 import { WsProvider, ApiPromise } from "@polkadot/api";
-import { withRouter } from 'react-router-dom';
 
 class ValidatorApp extends React.Component {
   constructor() {
@@ -22,7 +21,7 @@ this.ownvalue = 0
 
   componentDidMount() {
     this.createApi();
-    console.log("this",this.props.match.params.validatorAddress);
+    console.log(this.props.match.params.validatorAddress);
   }
 
   async createApi() {
@@ -31,7 +30,7 @@ this.ownvalue = 0
 
     const stakers = await api.derive.staking.info(this.props.match.params.validatorAddress);
     // 5FbuxWQuCd3N9kosfTXY1v63xV5bNfSpNutuRvERAWm6fmzt
-    // console.log(JSON.stringify(stakers));
+    console.log(JSON.stringify(stakers));
     const value = JSON.parse(stakers);
     this.totalvalue = value.stakers.total / Math.pow(10,15)
     this.ownvalue = value.stakers.own /Math.pow(10,15)
@@ -47,7 +46,7 @@ this.ownvalue = 0
       stash: value.stashId,
       controller: value.controllerId
     });
-    // console.log(value.stakers.others.length);
+    console.log(value.stakers.others.length);
   }
 
   handleOnMouseOver = () => {
@@ -63,10 +62,9 @@ this.ownvalue = 0
     const height = window.innerHeight;
     let radius = 100;
     let validatorname = "Validator: " +  this.state.validator
-    let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
-    let diffrentstash = "session: " + stashname
-    let controllername = this.state.controller.toString().slice(0,8) + "......" + this.state.controller.toString().slice(-8)
-    let diffrentcontroller = "controller: " + controllername
+    // let stashname= "controller/session: " + this.state.stash
+    let diffrentstash = "session: " + this.state.stash
+    let diffrentcontroller = "controller: " + this.state.controller
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
@@ -74,10 +72,10 @@ this.ownvalue = 0
     // this.state.nominators.forEach(ele => {
     //     totalbonded +=ele.value
     // })
-    // console.log(this.totalvalue,this.ownvalue+totalbonded)
+    console.log(this.totalvalue,this.ownvalue+totalbonded)
     totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
     let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
-    // console.log(this.state)
+    console.log(this.state)
     return (
       <div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
@@ -93,7 +91,6 @@ this.ownvalue = 0
               x={width / 2 + 10}
               y={height / 2 + 5}
               nominators={this.state.nominators}
-              history={this.props.history}
             />
 
             {/* Arc used to create the semicircle on the right, 
@@ -137,9 +134,9 @@ this.ownvalue = 0
 
             {this.state.showValidatorAddress && <Text text={this.state.validator} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
             <Text text={validatorname} x= {width/30} y={height/30} fill="#FFFFFF" fontSize={20}/>
-            <Text text={diffrentcontroller} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text ={diffrentstash} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text={bondvalue} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text={diffrentcontroller} x={width/60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text ={diffrentstash} x={width/3+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text={bondvalue} x={width-width/4} y={height-height/30} fill="#FFFFFF" fontSize={17} />
           </Layer>
         </Stage>
       </div>
@@ -147,4 +144,4 @@ this.ownvalue = 0
   }
 }
 
-export default withRouter(ValidatorApp);
+export default ValidatorApp;
