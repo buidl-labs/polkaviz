@@ -17,11 +17,14 @@ class Rectangle extends React.Component {
     this.setState({showValidatorAddress: false})
   }
   handleClick = () => {
-    this.props.history.push("/val/"+ this.props.validatorAddress);
-  }
+    this.props.history.push({
+      pathname:"/val/"+ this.props.validatorAddress,
+      state:{totalinfo:this.props.totalinfo,
+      valinfo:this.props.valinfo}
+}
+  )}
 
   render() {
-    console.log(this.props.nominators)
     return (
       <React.Fragment>
       <Rect
