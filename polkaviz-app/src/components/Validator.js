@@ -9,7 +9,8 @@ class Validator extends React.Component {
     super()
     this.state={
       nominators:[],
-      totalnominators:0
+      totalnominators:0,
+      datafetched:false
     }
     this.totalvalue=0
     this.ownvalue=0
@@ -35,7 +36,8 @@ class Validator extends React.Component {
     }
     this.setState({
       nominators: value.stakers.others,
-      totalnominators: value.stakers.others.length
+      totalnominators: value.stakers.others.length,
+      datafetched:true
     });
     // console.log(value.stakers.others.length);
   }
@@ -43,9 +45,10 @@ class Validator extends React.Component {
 
     let totalbonded = 0
     totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
-    let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
+    let bondvalue = ""
+    this.state.datafetched ? (bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT") : (bondvalue = "fetching stacked data")
     let nomvalue = 0
-    nomvalue = "backed by " + this.state.totalnominators + " nominators"
+    this.state.datafetched ? (nomvalue = "backed by " + this.state.totalnominators + " nominators") : (nomvalue = "fetching nominators") 
 
     return (
       <React.Fragment>
