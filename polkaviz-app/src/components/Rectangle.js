@@ -21,7 +21,6 @@ class Rectangle extends React.Component {
   }
 
   render() {
-    console.log(this.props.nominators)
     return (
       <React.Fragment>
       <Rect
@@ -41,17 +40,7 @@ class Rectangle extends React.Component {
       <Text text={this.props.validatorAddress} 
         x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
         y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)} 
-        fill="#FFFFFF" />   }
-          {this.state.showValidatorAddress && 
-          <Text text={this.props.nominators} 
-          x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-          y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)+20 } 
-          fill="#FFFFFF" />}
-          {this.state.showValidatorAddress && 
-          <Text text={this.props.bondvalue} 
-            x={this.props.x+20*Math.sin(this.props.angle *  0.0174533)} 
-            y={this.props.y-20*Math.cos(this.props.angle *  0.0174533)+40} 
-            fill="#FFFFFF" /> }
+        fill="#FFFFFF" />}
      </React.Fragment> 
     );
   }
