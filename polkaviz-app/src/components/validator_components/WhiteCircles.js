@@ -25,7 +25,7 @@ class WhiteCircles extends React.Component{
                             history={this.props.history}
                             />)
             });
-            
+        
             return(
                 arr
             )
