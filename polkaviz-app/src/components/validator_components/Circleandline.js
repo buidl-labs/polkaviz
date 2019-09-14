@@ -15,16 +15,10 @@ class Circleandline extends React.Component{
         this.setState({showNominatorAddress: false})
       }
       handleClick = () => {
-        this.props.history.push({
-          pathname:"/nom/"+ this.props.text,
-          state:{totalinfo:this.props.totalinfo,
-            valinfo:this.props.valinfo
-          }
-    })
+        this.props.history.push("/nom/"+ this.props.text);
       }
     
     render(){
-      console.log(this.props.totalinfo)
     return(
         <React.Fragment>
         <Circle 
