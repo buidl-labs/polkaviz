@@ -13,8 +13,7 @@ class NominatorApp extends React.Component{
           nominator: [],
           controllerId:"",
           valbacked:[],
-          totalbonded: 0,
-          isloading:true
+          totalbonded: 0
         };
         this.ismounted = true
       }
@@ -70,8 +69,7 @@ class NominatorApp extends React.Component{
         console.log(arr1)
         this.setState({
           valbacked:arr1,
-          totalbonded: bonded,
-          isloading:false
+          totalbonded: bonded
         })
       }
       start();
@@ -88,9 +86,7 @@ class NominatorApp extends React.Component{
         const width = window.innerWidth;
         const height = window.innerHeight;
         return(
-          
-      this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text" style={{left:"42%"}}>Fetching Validators.....</div></React.Fragment>) : (
-        <React.Fragment>
+            <React.Fragment>
                 <Stage width={width} height={height}>
                     <Layer>
                     <Validators allvals={arr}  rect_x={width/2} circ_x={width/2-200} circ_y={height/2}/>
@@ -116,11 +112,8 @@ class NominatorApp extends React.Component{
 
                     </Layer>
                 </Stage>
-                
             </React.Fragment>
-      )
-         )
-      
+        )
     }
 }
 
