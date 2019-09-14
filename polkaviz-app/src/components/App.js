@@ -16,16 +16,12 @@ class App extends React.Component {
       validators: [],
       lastAuthor: "",
       start: null,
-      isloading:true,
-      valtotalinfo:[]
+      isloading:true
     };
     this.ismounted = true
   }
   componentDidMount() {
-    console.log(this.props)
-    if(!this.props.data){
     this.createApi();
-    }
   }
   async createApi() {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
@@ -43,57 +39,15 @@ class App extends React.Component {
     });
 
     await api.query.session.validators(validators => {
+      // console.log(`validators ${validators}`);
       const sessionValidators = validators.map(x => x.toString());
       if(this.ismounted){
       this.setState({ 
-        validators: sessionValidators       
+        validators: sessionValidators,
+        isloading: false
        });
       }
     });
-
-
-
-
-
-    async function asyncForEach(array, callback) {
-      for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-      }
-    }
-    const start = async () => {
-      let arr1 =[]
-      let count =0
-      await asyncForEach(this.state.validators, async (val) => {
-        console.log(val,count++)
-        let stakers = await api.derive.staking.info(val)
-        let stakeinfo = JSON.parse(stakers)
-        console.log(stakeinfo.stakers.others)
-        arr1.push({
-          valname:val,
-          valinfo:stakeinfo
-          })
-        // stakeinfo.stakers.others.forEach(ele => {
-        //   if(ele.who === this.props.match.params.nominatorAddress)
-        //   {
-        //     arr1.push(val)
-        //     bonded += ele.value /Math.pow(10,15)
-        //   }
-        // })
-      });
-      console.log('Done');
-      console.log(arr1)
-      this.setState({
-        valtotalinfo:arr1,
-        isloading: false
-      })
-    }
-    start();
-    
-
-
-
-
-
   }
   componentWillUnmount(){
     this.ismounted = false;
@@ -101,7 +55,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.props.history)
-    const arr = this.state.valtotalinfo;
+    const arr = this.state.validators;
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
@@ -123,9 +77,7 @@ class App extends React.Component {
               {arr.map((person, index) => (
                 <Validator
                   key={index}
-                  validatorAddress={this.state.valtotalinfo[index].valname}
-                  valinfo={this.state.valtotalinfo[index].valinfo}
-                  totalinfo={this.state.valtotalinfo}
+                  validatorAddress={this.state.validators[index]}
                   angle={180 - (index * 360) / arr.length}
                   history={this.props.history}
                   x={

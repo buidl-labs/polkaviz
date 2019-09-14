@@ -1,7 +1,7 @@
 import React from "react";
 import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
-// import { WsProvider, ApiPromise } from "@polkadot/api";
+import { WsProvider, ApiPromise } from "@polkadot/api";
 import { withRouter } from 'react-router-dom';
 
 class ValidatorApp extends React.Component {
@@ -22,20 +22,18 @@ this.ownvalue = 0
   }
 
   componentDidMount() {
-    console.log(this.props)
     this.createApi();
     console.log("this",this.props.match.params.validatorAddress);
   }
 
   async createApi() {
-    // const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
-    // const api = await ApiPromise.create(provider);
+    const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
+    const api = await ApiPromise.create(provider);
 
-    // const stakers = await api.derive.staking.info(this.props.match.params.validatorAddress);
+    const stakers = await api.derive.staking.info(this.props.match.params.validatorAddress);
     // 5FbuxWQuCd3N9kosfTXY1v63xV5bNfSpNutuRvERAWm6fmzt
     // console.log(JSON.stringify(stakers));
-    // const value = JSON.parse(stakers);
-    const value = this.props.location.state.valinfo
+    const value = JSON.parse(stakers);
     this.totalvalue = value.stakers.total / Math.pow(10,15)
     this.ownvalue = value.stakers.own /Math.pow(10,15)
     if(value.stashId===value.controllerId)
@@ -66,8 +64,6 @@ this.ownvalue = 0
     const width = window.innerWidth;
     const height = window.innerHeight;
     let radius = 100;
-
-
     let validatorname = "Validator: " +  this.state.validator
     let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
     let diffrentstash = "session: " + stashname
@@ -102,8 +98,6 @@ this.ownvalue = 0
               y={height / 2 + 5}
               nominators={this.state.nominators}
               history={this.props.history}
-              totalinfo={this.props.location.state.totalinfo}
-              valinfo={this.props.location.state.valinfo}
             />
 
             {/* Arc used to create the semicircle on the right, 

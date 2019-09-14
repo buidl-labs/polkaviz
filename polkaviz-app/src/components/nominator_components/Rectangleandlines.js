@@ -2,19 +2,6 @@ import React from 'react'
 import {Line, Rect} from 'react-konva'
 
 class Rectangleandlines extends React.Component{
-    handleOnMouseOver = () => {
-        this.setState({showValidatorAddress: true})
-      }
-      handleOnMouseOut = () => {
-        this.setState({showValidatorAddress: false})
-      }
-      handleClick = () => {
-        this.props.history.push({
-          pathname:"/val/"+ this.props.validatorAddress,
-          state:{totalinfo:this.props.totalinfo,
-          valinfo:this.props.valinfo}
-    }
-      )}
     render(){
         return(
             <React.Fragment>
@@ -34,9 +21,6 @@ class Rectangleandlines extends React.Component{
             height={12}
             fill="purple"
             cornerRadius={10}
-            onMouseOver={this.handleOnMouseOver}
-            onMouseOut={this.handleOnMouseOut}
-            onClick={this.handleClick}
             />
             </React.Fragment>
         )

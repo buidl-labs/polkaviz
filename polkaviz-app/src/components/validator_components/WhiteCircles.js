@@ -13,19 +13,16 @@ class WhiteCircles extends React.Component{
                 maxAngle = 3/4*2*Math.PI
             }
 
-            this.props.nominators.forEach((element,index) => {
+            this.props.nominators.forEach(element => {
                 angle += maxAngle/(Number(this.props.n)+1)
                 arr.push(
                     <Circleandline 
-                            key={index}
                             x={this.props.r*Math.cos(angle)+this.props.x} 
                             y={this.props.r*Math.sin(angle)+this.props.y} 
                             x2={this.props.x}
                             y2={this.props.y}
                             text={element.who}
                             history={this.props.history}
-                            totalinfo={this.props.totalinfo}
-                            valinfo={this.props.valinfo}
                             />)
             });
             
