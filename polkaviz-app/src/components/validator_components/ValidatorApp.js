@@ -81,7 +81,7 @@ this.ownvalue = 0
     let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     // console.log(this.state)
     return (
-  this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
+  this.state.isloading ? (<React.Fragment><div class="lds-ripple"><div></div><div></div></div><div class="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
       (
       <div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
