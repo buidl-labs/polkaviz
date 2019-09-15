@@ -1,6 +1,7 @@
 import React from "react";
 // import ReactDOM from 'react-dom';
 import { Rect, Text} from "react-konva";
+// import {BrowserRouter as Route,Link} from 'react-router-dom'
 
 class Rectangle extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Rectangle extends React.Component {
 
   render() {
     let valtext = "Validator Address: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
-    console.log(this.props.angle)
+    // console.log(this.props.angle)
     let x1 = this.props.x
     let y1 = this.props.y
     if(this.props.angle<=45 && this.props.angle>0){
@@ -53,9 +54,11 @@ class Rectangle extends React.Component {
       x1 = this.props.x + 50
       y1 = this.props.y 
     }
+    // let linkaddress = "/val/" + this.props.validatorAddress
     return (
       <React.Fragment>
-      <Rect
+      {/* <Link to={linkaddress}> */}
+        <Rect
         x={this.props.x}
         y={this.props.y}
         width={6}
@@ -67,6 +70,7 @@ class Rectangle extends React.Component {
         onMouseOut={this.handleOnMouseOut}
         onClick={this.handleClick}
       />
+      {/* </Link> */}
       {this.state.showValidatorAddress && 
       <Rect
         x={x1+20*Math.sin(this.props.angle *  0.0174533)-10}

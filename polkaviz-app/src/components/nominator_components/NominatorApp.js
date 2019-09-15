@@ -2,8 +2,7 @@ import React from "react";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import { Stage, Layer, Arc, Circle, Text } from "react-konva";
 import Validators from "./Validators";
-import { withRouter } from 'react-router-dom';
-
+import {withRouter} from 'react-router-dom'
 
 class NominatorApp extends React.Component {
   constructor() {
@@ -39,9 +38,10 @@ class NominatorApp extends React.Component {
     //       bonded += ele.value / Math.pow(10, 15);
     //     }
     //   });
+
     // });
-    console.log(this.props.location.state.totalinfo)
-    this.props.location.state.totalinfo.forEach(ele => {
+    // console.log(this.props.location.state.totalinfo)
+    this.props.valtotalinfo.forEach(ele => {
       ele.valinfo.stakers.others.forEach(nom => {
         if (nom.who === this.props.match.params.nominatorAddress) {
           arr1.push(ele);
@@ -135,8 +135,8 @@ class NominatorApp extends React.Component {
               rect_x={width / 2}
               circ_x={width / 2 - 200}
               circ_y={height / 2}
-              totalinfo={this.props.location.state.totalinfo}
-              valinfo={this.props.location.state.valinfo}
+              totalinfo={this.props.valtotalinfo}
+              // valinfo={this.props.valinfo}
               history={this.props.history}
             />
             <Arc

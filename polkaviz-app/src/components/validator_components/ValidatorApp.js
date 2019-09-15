@@ -14,7 +14,9 @@ class ValidatorApp extends React.Component {
       showdifferent:true,
       stash:"",
       controller: "",
-      isloading:true
+      isloading:true,
+      totalinfo:[],
+      valinfo:{}
     };
 
 this.totalvalue =0 
@@ -34,8 +36,20 @@ this.ownvalue = 0
     // const stakers = await api.derive.staking.info(this.props.match.params.validatorAddress);
     // 5FbuxWQuCd3N9kosfTXY1v63xV5bNfSpNutuRvERAWm6fmzt
     // console.log(JSON.stringify(stakers));
-    // const value = JSON.parse(stakers);
-    const value = this.props.location.state.valinfo
+    // const value = JSON.parse(stakers);http://localhost:3000/val/5E27gZXVEkwLWjaCwmt9dC2sEgbdLEUZUPrxkg6BvG5RKpwW
+    // let value = this.props.location.state.valinfo
+    let value = ""
+    this.props.valtotalinfo.forEach(ele => {
+      if(ele.valinfo.accountId.toString() === this.props.match.params.validatorAddress.toString())
+      {
+        value = ele.valinfo
+      }
+    })
+console.log("huyi",value)
+let totalinfo = this.props.valtotalinfo
+    // if(!this.props.location.state.totalinfo){
+    //   totalinfo = this.props.valtotalinfo      
+    // }
     this.totalvalue = value.stakers.total / Math.pow(10,15)
     this.ownvalue = value.stakers.own /Math.pow(10,15)
     if(value.stashId===value.controllerId)
@@ -49,7 +63,9 @@ this.ownvalue = 0
       nominators: value.stakers.others,
       stash: value.stashId,
       controller: value.controllerId,
-      isloading:false
+      isloading:false,
+      valinfo:value,
+      totalinfo:totalinfo
     });
     // console.log(value.stakers.others.length);
   }
@@ -110,8 +126,8 @@ this.ownvalue = 0
               y={height / 2 + 5}
               nominators={this.state.nominators}
               history={this.props.history}
-              totalinfo={this.props.location.state.totalinfo}
-              valinfo={this.props.location.state.valinfo}
+              totalinfo={this.state.totalinfo}
+              valinfo={this.state.valinfo}
             />
 
             {/* Arc used to create the semicircle on the right, 

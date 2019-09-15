@@ -29,7 +29,7 @@ class Bottombar extends React.Component {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create(provider);
     let totalValidators = await api.query.staking.validatorCount()
-    console.log("this",totalValidators.words["0"],totalValidators)
+    // console.log("this",totalValidators.words["0"],totalValidators)
     if(this.mounted){
       this.setState({
         totalValidators:totalValidators.words["0"]

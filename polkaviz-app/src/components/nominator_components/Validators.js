@@ -16,7 +16,7 @@ class Validators extends React.Component{
                 <Rectangleandlines 
                     key={index}
                     totalinfo={this.props.totalinfo}
-                    valinfo={this.props.valinfo}
+                    valinfo={element.valinfo}
                     history={this.props.history}
                     x={this.props.rect_x}
                     y={y_cord}
