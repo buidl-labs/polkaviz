@@ -109,15 +109,12 @@ class App extends React.Component {
       // this.props.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
       // (
       <div className="container">
-        {/* {console.log(this.props.validators.indexOf(this.props.lastAuthor))}  */}
 
-        {/* {console.log(arr)}  */}
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
-            {/* {console.log(window.innerWidth)} */}
             <Layer>
             {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}

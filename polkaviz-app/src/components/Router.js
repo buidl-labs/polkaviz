@@ -15,7 +15,8 @@ class Router extends React.Component {
       lastAuthor: "",
       start: null,
       isloading:true,
-      valtotalinfo:[]
+      valtotalinfo:[],
+      apipromise:""
     };
     this.ismounted = true
   }
@@ -30,7 +31,8 @@ class Router extends React.Component {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       if(this.ismounted){
-      this.setState({ lastAuthor });
+      this.setState({ lastAuthor: lastAuthor,
+      apipromise:api });
       }
       const start = new Date();
       if(this.ismounted){
@@ -47,33 +49,67 @@ class Router extends React.Component {
       }
     });
 
-    async function asyncForEach(array, callback) {
-      for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-      }
-    }
+    // async function asyncForEach(array, callback) {
+    //   for (let index = 0; index < array.length; index++) {
+    //     await callback(array[index], index, array);
+    //   }
+    // }
+    // const start = async () => {
+    //   let arr1 =[]
+    //   let count =0
+    //   await asyncForEach(this.state.validators, async (val) => {
+    //     console.log(val,count++)
+    //     let stakers = await api.derive.staking.info(val)
+    //     let stakeinfo = JSON.parse(stakers)
+    //     // console.log(stakeinfo.stakers.others)
+    //     arr1.push({
+    //       valname:val,
+    //       valinfo:stakeinfo
+    //       })
+    //   });
     const start = async () => {
       let arr1 =[]
-      let count =0
-      await asyncForEach(this.state.validators, async (val) => {
-        console.log(val,count++)
-        let stakers = await api.derive.staking.info(val)
-        let stakeinfo = JSON.parse(stakers)
-        // console.log(stakeinfo.stakers.others)
-        arr1.push({
-          valname:val,
-          valinfo:stakeinfo
+
+      const validatorstotalinfo = await Promise.all(this.state.validators.map(val => api.derive.staking.info(val)))
+      console.log("hi",JSON.parse(validatorstotalinfo[0]))
+        arr1 = validatorstotalinfo.map(info => {
+          return({
+            valname:info.accountId,
+            valinfo:JSON.parse(info)
           })
-      });
-      console.log('Done');
-      console.log(arr1)
+        })
+
+      // this.state.validators.map(async (val) => {
+      //   console.log(val,count++)
+      //   // let stakers = await api.derive.staking.info(val)
+      //   // let stakeinfo = JSON.parse(stakers)
+      //   // // console.log(stakeinfo.stakers.others)
+        
+        
+        
+        
+      //   // arr1.push({
+      //   //   valname:val,
+      //   //   valinfo:stakeinfo
+      //   //   })
+      // })
       if(this.ismounted){
-      this.setState({
-        valtotalinfo:arr1,
-        isloading: false
-      })
-    }}
-    start();  
+        this.setState({
+          valtotalinfo:arr1,
+          isloading: false
+        })
+      }
+    }
+
+    //   console.log('Done');
+    //   console.log(arr1)
+    //   if(this.ismounted){
+    //   this.setState({
+    //     valtotalinfo:arr1,
+    //     isloading: false
+    //   })
+    // }}
+     start();  
   }
   componentWillUnmount(){
     this.ismounted=false
@@ -87,9 +123,9 @@ render(){
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={props => 
-              <App valtotalinfo={this.state.valtotalinfo} createApi={this.createApi} validators={this.state.validators} start={this.state.start} lastAuthor={this.state.lastAuthor}/>} />
+              <App valtotalinfo={this.state.valtotalinfo} createApi={this.createApi} validators={this.state.validators} start={this.state.start} lastAuthor={this.state.lastAuthor} api={this.state.apipromise}/>} />
           <Route exact path="/val/:validatorAddress" component={props => <ValidatorApp valtotalinfo={this.state.valtotalinfo}/>} />
-          <Route exact path="/nom/:nominatorAddress" component={props => <NominatorApp valtotalinfo={this.state.valtotalinfo} />} />
+          <Route exact path="/nom/:nominatorAddress" component={props => <NominatorApp valtotalinfo={this.state.valtotalinfo} api={this.state.apipromise}/>} />
         </Switch>
       </BrowserRouter>
     </div>
