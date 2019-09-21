@@ -2,7 +2,7 @@ import React from "react";
 import ValidatorApp from "./validator_components/ValidatorApp";
 import App from "./App";
 import NominatorApp from "./nominator_components/NominatorApp";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 
 class Router extends React.Component {
@@ -123,7 +123,7 @@ class Router extends React.Component {
       </React.Fragment>
     ) : (
       <div className="container">
-        <BrowserRouter>
+        <HashRouter>
           <Switch>
             <Route
               exact
@@ -157,7 +157,7 @@ class Router extends React.Component {
               )}
             />
           </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     );
   }
