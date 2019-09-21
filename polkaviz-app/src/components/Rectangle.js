@@ -21,7 +21,9 @@ class Rectangle extends React.Component {
     this.props.history.push({
       pathname:"/val/"+ this.props.validatorAddress,
       state:{totalinfo:this.props.totalinfo,
-      valinfo:this.props.valinfo}
+      valinfo:this.props.valinfo,
+      // nominatorinfo:this.props.nominatorinfo
+    }
 }
   )}
 

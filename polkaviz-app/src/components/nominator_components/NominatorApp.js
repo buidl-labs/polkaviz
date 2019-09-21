@@ -14,16 +14,20 @@ class NominatorApp extends React.Component {
       controllerId: "",
       valbacked: [],
       totalbonded: 0,
+      nominatorvalue: {
+        controllerId:0
+      },
       isloading: true
     };
     this.ismounted = true;
   }
   componentDidMount() {
+    console.log("nom",this.props)
     this.start()
     this.createApi()
   }
 
-  async start() {
+   start() {
     let arr1 = [];
     let bonded = 0;
     // await asyncForEach(this.state.validators, async val => {
@@ -49,13 +53,23 @@ class NominatorApp extends React.Component {
       });
     });
 
-    console.log("Done");
+    let nominatorvalue = ""
+    this.props.nominatorinfo.forEach( (ele) => {
+      if(ele.accountId === this.props.match.params.nominatorAddress)
+      {
+        nominatorvalue = ele
+      }
+    })
+
+    console.log("Done",nominatorvalue);
     console.log(arr1);
     if(this.ismounted){
     this.setState({
       valbacked: arr1,
       totalbonded: bonded,
-      isloading: false
+      nominatorvalue: nominatorvalue
+    },() => {
+      this.setState({isloading:false})
     });
   }
   }
@@ -73,9 +87,9 @@ class NominatorApp extends React.Component {
      const value = JSON.parse(stakers);
      console.log(value, value.controllerId);
     if(this.ismounted){
-     this.setState({
-      controllerId: value.controllerId
-    });
+    //  this.setState({
+    //   controllerId: value.controllerId
+    // });
   }
     // await api.query.session.validators(validators => {
     //   const sessionValidators = validators.map(x => x.toString());
@@ -101,13 +115,13 @@ class NominatorApp extends React.Component {
 
   render() {
     
-
+    console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
       "Nominator: " + this.props.match.params.nominatorAddress;
     let stashname =
-      this.state.controllerId.toString().slice(0, 8) +
+      this.state.nominatorvalue.controllerId.toString().slice(0, 8) +
       "......" +
-      this.state.controllerId.toString().slice(-8);
+      this.state.nominatorvalue.controllerId.toString().slice(-8);
     let controllername = "Controller: " + stashname;
     let bondvalue =
       "bonded: " + this.state.totalbonded.toString().slice(0, 5) + " DOT";

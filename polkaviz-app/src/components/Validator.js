@@ -68,6 +68,7 @@ class Validator extends React.Component {
           valinfo={this.props.valinfo}
           bondvalue={bondvalue}
           nominators={nomvalue}
+          nominatorinfo={this.props.nominatorinfo}
           history={this.props.history}
           totalinfo={this.props.totalinfo}
         />

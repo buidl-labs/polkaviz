@@ -1,10 +1,9 @@
 import React from "react";
 import ValidatorApp from "./validator_components/ValidatorApp";
 import App from "./App";
-import NominatorApp from './nominator_components/NominatorApp'
+import NominatorApp from "./nominator_components/NominatorApp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { WsProvider, ApiPromise } from "@polkadot/api";
-
 
 class Router extends React.Component {
   constructor() {
@@ -14,11 +13,20 @@ class Router extends React.Component {
       validators: [],
       lastAuthor: "",
       start: null,
-      isloading:true,
-      valtotalinfo:[],
-      apipromise:""
+      isloading: true,
+      valtotalinfo: [],
+      apipromise: "",
+      bottombarinfo: {
+        eraLength: 0,
+        eraProgress: 0,
+        sessionLength: 0,
+        sessionProgress: 0
+      },
+      totalValidators: 0,
+      finalblock: 0,
+      nominatorinfo:[]
     };
-    this.ismounted = true
+    this.ismounted = true;
   }
   componentDidMount() {
     // console.log(this.props)
@@ -30,22 +38,21 @@ class Router extends React.Component {
     await api.derive.chain.subscribeNewHead(block => {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
-      if(this.ismounted){
-      this.setState({ lastAuthor: lastAuthor,
-      apipromise:api });
+      if (this.ismounted) {
+        this.setState({ lastAuthor: lastAuthor, apipromise: api });
       }
       const start = new Date();
-      if(this.ismounted){
-      this.setState({ start: start });
+      if (this.ismounted) {
+        this.setState({ start: start });
       }
     });
 
     await api.query.session.validators(validators => {
       const sessionValidators = validators.map(x => x.toString());
-      if(this.ismounted){
-      this.setState({ 
-        validators: sessionValidators       
-       });
+      if (this.ismounted) {
+        this.setState({
+          validators: sessionValidators
+        });
       }
     });
 
@@ -67,39 +74,50 @@ class Router extends React.Component {
     //       valinfo:stakeinfo
     //       })
     //   });
-    const start = async () => {
-      let arr1 =[]
 
-      const validatorstotalinfo = await Promise.all(this.state.validators.map(val => api.derive.staking.info(val)))
-      console.log("hi",JSON.parse(validatorstotalinfo[0]))
-        arr1 = validatorstotalinfo.map(info => {
-          return({
-            valname:info.accountId,
-            valinfo:JSON.parse(info)
-          })
-        })
+    let totalValidators = await api.query.staking.validatorCount();
+    console.log("this", totalValidators.words["0"], totalValidators);
+    if (this.ismounted) {
+      this.setState({
+        totalValidators: totalValidators.words["0"]
+      });
+    }
+
+    const start = async () => {
+      let arr1 = [];
+
+      const validatorstotalinfo = await Promise.all(
+        this.state.validators.map(val => api.derive.staking.info(val))
+      );
+      console.log("hi", JSON.parse(validatorstotalinfo[0]));
+      arr1 = validatorstotalinfo.map(info => {
+        return {
+          valname: info.accountId,
+          valinfo: JSON.parse(info)
+        };
+      });
 
       // this.state.validators.map(async (val) => {
       //   console.log(val,count++)
       //   // let stakers = await api.derive.staking.info(val)
       //   // let stakeinfo = JSON.parse(stakers)
       //   // // console.log(stakeinfo.stakers.others)
-        
-        
-        
-        
+
       //   // arr1.push({
       //   //   valname:val,
       //   //   valinfo:stakeinfo
       //   //   })
       // })
-      if(this.ismounted){
-        this.setState({
-          valtotalinfo:arr1,
-          isloading: false
-        })
+      if (this.ismounted) {
+        console.log("arr1",arr1)
+        this.setState(
+          {
+            valtotalinfo: arr1,
+            isloading: false
+          },() => this.getnominators()
+        );
       }
-    }
+    };
 
     //   console.log('Done');
     //   console.log(arr1)
@@ -109,28 +127,137 @@ class Router extends React.Component {
     //     isloading: false
     //   })
     // }}
-     start();  
-  }
-  componentWillUnmount(){
-    this.ismounted=false
+    start();
+
+    await api.derive.session.info(header => {
+      // console.log(`eraLength #${header.eraLength}`);
+      // console.log(`eraProgress #${header.eraProgress}`);
+      // console.log(`sessionLength #${header.sessionLength}`);
+      // console.log(`sessionProgress #${header.sessionProgress}`);
+      const eraLength = header.eraLength.toString();
+      const eraProgress = header.eraProgress.toString();
+      const sessionLength = header.sessionLength.toString();
+      const sessionProgress = header.sessionProgress.toString();
+      if (this.ismounted) {
+        this.setState({
+          bottombarinfo: {
+            eraLength: eraLength,
+            eraProgress: eraProgress,
+            sessionLength: sessionLength,
+            sessionProgress: sessionProgress
+          }
+        });
+      }
+    });
+
+    await api.derive.chain.bestNumberFinalized(header => {
+      // console.log(`Chain is at block: #${header}`);
+      if (this.ismounted) {
+        this.setState({ finalblock: header.toString() });
+      }
+    });
   }
 
-render(){
-  return (
-    this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
-      (
-    <div className="container">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={props => 
-              <App valtotalinfo={this.state.valtotalinfo} createApi={this.createApi} validators={this.state.validators} start={this.state.start} lastAuthor={this.state.lastAuthor} api={this.state.apipromise}/>} />
-          <Route exact path="/val/:validatorAddress" component={props => <ValidatorApp valtotalinfo={this.state.valtotalinfo}/>} />
-          <Route exact path="/nom/:nominatorAddress" component={props => <NominatorApp valtotalinfo={this.state.valtotalinfo} api={this.state.apipromise}/>} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-      )
-  );
-}
+  getnominators = async () => {
+    let arr = [];
+    console.log("valtotal", this.state.valtotalinfo);
+    this.state.valtotalinfo.forEach(ele => {
+      console.log(ele);
+      ele.valinfo.stakers.others.forEach(nom => {
+        arr.push(nom.who);
+      });
+    });
+
+    console.log("here are unfiltered", arr);
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+
+    let nominators = arr.filter(onlyUnique);
+    console.log("total", nominators);
+
+    const nominatorstotalinfo = await Promise.all(
+      nominators.map(val => this.state.apipromise.derive.staking.info(val))
+    );
+
+    // let nominatorinfo = nominators.map(async nom => {
+    //   let nominfo = await this.state.apipromise.derive.staking.info(nom)
+    //   console.log(nominfo)
+    //   return(JSON.parse(nominfo))
+    // })
+    console.log("nominfo",nominatorstotalinfo)
+    let arr2 = nominatorstotalinfo.map(nom => JSON.parse(nom))
+    this.setState({
+      nominatorinfo:arr2
+    })
+
+  };
+
+
+
+  componentWillUnmount() {
+    this.ismounted = false;
+  }
+
+  render() {
+    console.log("route", this.state.bottombarinfo);
+    console.log("nom",this.state.nominatorinfo)
+    let bottombarobject = {
+      bottombarinfo: this.state.bottombarinfo,
+      finalblock: this.state.finalblock,
+      validatorcount: this.state.totalValidators
+    };
+    return this.state.isloading ? (
+      <React.Fragment>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+        <div className="lds-text">Waiting for API to be connected.....</div>
+      </React.Fragment>
+    ) : (
+      <div className="container">
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={props => (
+                <App
+                  valtotalinfo={this.state.valtotalinfo}
+                  createApi={this.createApi}
+                  validators={this.state.validators}
+                  start={this.state.start}
+                  lastAuthor={this.state.lastAuthor}
+                  api={this.state.apipromise}
+                  validatorcount={this.state.totalValidators}
+                  bottombarobject={bottombarobject}
+                  nominatorinfo={this.state.nominatorinfo}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/val/:validatorAddress"
+              component={props => (
+                <ValidatorApp valtotalinfo={this.state.valtotalinfo} valiiinfo={0+1+2+3+4}/>
+              )}
+            />
+            <Route
+              exact
+              path="/nom/:nominatorAddress"
+              component={props => (
+                <NominatorApp
+                  valtotalinfo={this.state.valtotalinfo}
+                  api={this.state.apipromise}
+                  nominatorinfo={this.state.nominatorinfo}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 export default Router;

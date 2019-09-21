@@ -24,7 +24,7 @@ this.ownvalue = 0
   }
 
   componentDidMount() {
-    console.log(this.props)
+    console.log("val",this.props)
     this.createApi();
     console.log("this",this.props.match.params.validatorAddress);
   }

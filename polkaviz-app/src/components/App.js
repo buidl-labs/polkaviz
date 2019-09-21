@@ -124,6 +124,7 @@ class App extends React.Component {
                   validatorAddress={this.props.valtotalinfo[index].valname}
                   valinfo={this.props.valtotalinfo[index].valinfo}
                   totalinfo={this.props.valtotalinfo}
+                  nominatorinfo={this.props.nominatorinfo}
                   angle={180 - (index * 360) / arr.length}
                   history={this.props.history}
                   x={
@@ -196,7 +197,7 @@ class App extends React.Component {
           </Stage>
         </div>
         <div className="bottombar">
-          <Bottombar start={this.props.start} activevalidators={this.props.validators.length}/>
+          <Bottombar start={this.props.start} activevalidators={this.props.validators.length} validatorcount={this.props.validatorcount} bottombarobject ={this.props.bottombarobject}/>
         </div>
       </div>
 
