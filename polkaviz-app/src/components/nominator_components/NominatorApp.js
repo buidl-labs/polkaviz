@@ -2,7 +2,7 @@ import React from "react";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import { Stage, Layer, Arc, Circle, Text } from "react-konva";
 import Validators from "./Validators";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 class NominatorApp extends React.Component {
   constructor() {
@@ -19,8 +19,8 @@ class NominatorApp extends React.Component {
     this.ismounted = true;
   }
   componentDidMount() {
-    this.start()
-    this.createApi()
+    this.start();
+    this.createApi();
   }
 
   async start() {
@@ -40,8 +40,8 @@ class NominatorApp extends React.Component {
 
     // });
     // console.log(this.props.location.state.totalinfo)
-    this.props.valtotalinfo.forEach( (ele) => {
-      ele.valinfo.stakers.others.forEach( (nom) => {
+    this.props.valtotalinfo.forEach(ele => {
+      ele.valinfo.stakers.others.forEach(nom => {
         if (nom.who === this.props.match.params.nominatorAddress) {
           arr1.push(ele);
           bonded += nom.value / Math.pow(10, 15);
@@ -51,32 +51,33 @@ class NominatorApp extends React.Component {
 
     console.log("Done");
     console.log(arr1);
-    if(this.ismounted){
-    this.setState({
-      valbacked: arr1,
-      totalbonded: bonded,
-      isloading: false
-    });
+    if (this.ismounted) {
+      this.setState({
+        valbacked: arr1,
+        totalbonded: bonded,
+        isloading: false
+      });
+    }
   }
-  }
-
 
   async createApi() {
     //  const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     //  const api = await ApiPromise.create(provider);
-     const stakers = await this.props.api.derive.staking.info(this.props.match.params.nominatorAddress)
+    const stakers = await this.props.api.derive.staking.info(
+      this.props.match.params.nominatorAddress
+    );
     //  "5F7RKWLXYMPvDi7Z5vW75QUHKnN4D4DY9RzFhgzfMeVNEswE"
 
     //  vals = 5CnDngcL3NE8x1rdxrmDWEjmgLrPm5KBsCy8uTqRQCRWx74m
     //         5Enp67VYwLviZWuyf2XfM5mJXgTWHaa45podYXhUhDCUeYfg
 
-     const value = JSON.parse(stakers);
-     console.log(value, value.controllerId);
-    if(this.ismounted){
-     this.setState({
-      controllerId: value.controllerId
-    });
-  }
+    const value = JSON.parse(stakers);
+    console.log(value, value.controllerId);
+    if (this.ismounted) {
+      this.setState({
+        controllerId: value.controllerId
+      });
+    }
     // await api.query.session.validators(validators => {
     //   const sessionValidators = validators.map(x => x.toString());
     //   if(this.ismounted){
@@ -90,18 +91,12 @@ class NominatorApp extends React.Component {
     //     await callback(array[index], index, array);
     //   }
     // }
-
-  
-
-
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.ismounted = false;
   }
 
   render() {
-    
-
     let nominatorname =
       "Nominator: " + this.props.match.params.nominatorAddress;
     let stashname =

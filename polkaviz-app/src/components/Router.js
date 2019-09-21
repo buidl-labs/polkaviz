@@ -1,10 +1,9 @@
 import React from "react";
 import ValidatorApp from "./validator_components/ValidatorApp";
 import App from "./App";
-import NominatorApp from './nominator_components/NominatorApp'
+import NominatorApp from "./nominator_components/NominatorApp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { WsProvider, ApiPromise } from "@polkadot/api";
-
 
 class Router extends React.Component {
   constructor() {
@@ -14,11 +13,11 @@ class Router extends React.Component {
       validators: [],
       lastAuthor: "",
       start: null,
-      isloading:true,
-      valtotalinfo:[],
-      apipromise:""
+      isloading: true,
+      valtotalinfo: [],
+      apipromise: ""
     };
-    this.ismounted = true
+    this.ismounted = true;
   }
   componentDidMount() {
     // console.log(this.props)
@@ -30,22 +29,21 @@ class Router extends React.Component {
     await api.derive.chain.subscribeNewHead(block => {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
-      if(this.ismounted){
-      this.setState({ lastAuthor: lastAuthor,
-      apipromise:api });
+      if (this.ismounted) {
+        this.setState({ lastAuthor: lastAuthor, apipromise: api });
       }
       const start = new Date();
-      if(this.ismounted){
-      this.setState({ start: start });
+      if (this.ismounted) {
+        this.setState({ start: start });
       }
     });
 
     await api.query.session.validators(validators => {
       const sessionValidators = validators.map(x => x.toString());
-      if(this.ismounted){
-      this.setState({ 
-        validators: sessionValidators       
-       });
+      if (this.ismounted) {
+        this.setState({
+          validators: sessionValidators
+        });
       }
     });
 
@@ -68,38 +66,37 @@ class Router extends React.Component {
     //       })
     //   });
     const start = async () => {
-      let arr1 =[]
+      let arr1 = [];
 
-      const validatorstotalinfo = await Promise.all(this.state.validators.map(val => api.derive.staking.info(val)))
-      console.log("hi",JSON.parse(validatorstotalinfo[0]))
-        arr1 = validatorstotalinfo.map(info => {
-          return({
-            valname:info.accountId,
-            valinfo:JSON.parse(info)
-          })
-        })
+      const validatorstotalinfo = await Promise.all(
+        this.state.validators.map(val => api.derive.staking.info(val))
+      );
+      console.log("hi", JSON.parse(validatorstotalinfo[0]));
+      arr1 = validatorstotalinfo.map(info => {
+        return {
+          valname: info.accountId,
+          valinfo: JSON.parse(info)
+        };
+      });
 
       // this.state.validators.map(async (val) => {
       //   console.log(val,count++)
       //   // let stakers = await api.derive.staking.info(val)
       //   // let stakeinfo = JSON.parse(stakers)
       //   // // console.log(stakeinfo.stakers.others)
-        
-        
-        
-        
+
       //   // arr1.push({
       //   //   valname:val,
       //   //   valinfo:stakeinfo
       //   //   })
       // })
-      if(this.ismounted){
+      if (this.ismounted) {
         this.setState({
-          valtotalinfo:arr1,
+          valtotalinfo: arr1,
           isloading: false
-        })
+        });
       }
-    }
+    };
 
     //   console.log('Done');
     //   console.log(arr1)
@@ -109,28 +106,60 @@ class Router extends React.Component {
     //     isloading: false
     //   })
     // }}
-     start();  
+    start();
   }
-  componentWillUnmount(){
-    this.ismounted=false
+  componentWillUnmount() {
+    this.ismounted = false;
   }
 
-render(){
-  return (
-    this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
-      (
-    <div className="container">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={props => 
-              <App valtotalinfo={this.state.valtotalinfo} createApi={this.createApi} validators={this.state.validators} start={this.state.start} lastAuthor={this.state.lastAuthor} api={this.state.apipromise}/>} />
-          <Route exact path="/val/:validatorAddress" component={props => <ValidatorApp valtotalinfo={this.state.valtotalinfo}/>} />
-          <Route exact path="/nom/:nominatorAddress" component={props => <NominatorApp valtotalinfo={this.state.valtotalinfo} api={this.state.apipromise}/>} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-      )
-  );
-}
+  render() {
+    return this.state.isloading ? (
+      <React.Fragment>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+        <div className="lds-text">Waiting for API to be connected.....</div>
+      </React.Fragment>
+    ) : (
+      <div className="container">
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={props => (
+                <App
+                  valtotalinfo={this.state.valtotalinfo}
+                  createApi={this.createApi}
+                  validators={this.state.validators}
+                  start={this.state.start}
+                  lastAuthor={this.state.lastAuthor}
+                  api={this.state.apipromise}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/val/:validatorAddress"
+              component={props => (
+                <ValidatorApp valtotalinfo={this.state.valtotalinfo} />
+              )}
+            />
+            <Route
+              exact
+              path="/nom/:nominatorAddress"
+              component={props => (
+                <NominatorApp
+                  valtotalinfo={this.state.valtotalinfo}
+                  api={this.state.apipromise}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 export default Router;

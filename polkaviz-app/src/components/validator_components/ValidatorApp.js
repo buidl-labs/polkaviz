@@ -2,7 +2,7 @@ import React from "react";
 import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 class ValidatorApp extends React.Component {
   constructor() {
@@ -11,22 +11,22 @@ class ValidatorApp extends React.Component {
       validator: "",
       nominators: [],
       showValidatorAddress: false,
-      showdifferent:true,
-      stash:"",
+      showdifferent: true,
+      stash: "",
       controller: "",
-      isloading:true,
-      totalinfo:[],
-      valinfo:{}
+      isloading: true,
+      totalinfo: [],
+      valinfo: {}
     };
 
-this.totalvalue =0 
-this.ownvalue = 0
+    this.totalvalue = 0;
+    this.ownvalue = 0;
   }
 
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props);
     this.createApi();
-    console.log("this",this.props.match.params.validatorAddress);
+    console.log("this", this.props.match.params.validatorAddress);
   }
 
   async createApi() {
@@ -38,79 +38,88 @@ this.ownvalue = 0
     // console.log(JSON.stringify(stakers));
     // const value = JSON.parse(stakers);http://localhost:3000/val/5E27gZXVEkwLWjaCwmt9dC2sEgbdLEUZUPrxkg6BvG5RKpwW
     // let value = this.props.location.state.valinfo
-    let value = ""
+    let value = "";
     this.props.valtotalinfo.forEach(ele => {
-      if(ele.valinfo.accountId.toString() === this.props.match.params.validatorAddress.toString())
-      {
-        value = ele.valinfo
+      if (
+        ele.valinfo.accountId.toString() ===
+        this.props.match.params.validatorAddress.toString()
+      ) {
+        value = ele.valinfo;
       }
-    })
-console.log("huyi",value)
-let totalinfo = this.props.valtotalinfo
+    });
+    console.log("huyi", value);
+    let totalinfo = this.props.valtotalinfo;
     // if(!this.props.location.state.totalinfo){
-    //   totalinfo = this.props.valtotalinfo      
+    //   totalinfo = this.props.valtotalinfo
     // }
-    this.totalvalue = value.stakers.total / Math.pow(10,15)
-    this.ownvalue = value.stakers.own /Math.pow(10,15)
-    if(value.stashId===value.controllerId)
-    {
-        this.setState({
-            showdifferent:false
-        })
+    this.totalvalue = value.stakers.total / Math.pow(10, 15);
+    this.ownvalue = value.stakers.own / Math.pow(10, 15);
+    if (value.stashId === value.controllerId) {
+      this.setState({
+        showdifferent: false
+      });
     }
     this.setState({
       validator: value.accountId,
       nominators: value.stakers.others,
       stash: value.stashId,
       controller: value.controllerId,
-      isloading:false,
-      valinfo:value,
-      totalinfo:totalinfo
+      isloading: false,
+      valinfo: value,
+      totalinfo: totalinfo
     });
     // console.log(value.stakers.others.length);
   }
 
   handleOnMouseOver = () => {
-    this.setState({showValidatorAddress: true})
-  }
+    this.setState({ showValidatorAddress: true });
+  };
   handleOnMouseOut = () => {
-    this.setState({showValidatorAddress: false})
-  }
-
+    this.setState({ showValidatorAddress: false });
+  };
 
   render() {
     const width = window.innerWidth;
     const height = window.innerHeight;
     let radius = 100;
 
-
-    let validatorname = "Validator: " +  this.state.validator
+    let validatorname = "Validator: " + this.state.validator;
     // let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
     // let diffrentstash = "session: " + stashname
     // let controllername = this.state.controller.toString().slice(0,8) + "......" + this.state.controller.toString().slice(-8)
     // let diffrentcontroller = "controller: " + controllername
 
+    let totalbondedtext =
+      "Total Staked: " + this.totalvalue.toFixed(3) + " DOT";
+    let selfbondedtext =
+      "Validator Self Staked: " + this.ownvalue.toString().slice(0, 5) + " DOT";
 
-    let totalbondedtext = "Total Staked: " + this.totalvalue.toFixed(3) + " DOT"
-    let selfbondedtext = "Validator Self Staked: " + this.ownvalue.toString().slice(0,5) + " DOT"
-
-    let totalbonded = 0
-    totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
-    let nominatorbondedtext = "Nominator Staked: " +  totalbonded.toString().slice(0,5) + " DOT"
+    let totalbonded = 0;
+    totalbonded = this.totalvalue.toFixed(3) - this.ownvalue.toFixed(3);
+    let nominatorbondedtext =
+      "Nominator Staked: " + totalbonded.toString().slice(0, 5) + " DOT";
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
-    
+
     // this.state.nominators.forEach(ele => {
     //     totalbonded +=ele.value
     // })
     // console.log(this.totalvalue,this.ownvalue+totalbonded)
-    
+
     // let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     // console.log(this.state)
-    return (
-  this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
-      (
+    return this.state.isloading ? (
+      <React.Fragment>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+        <div className="lds-text" style={{ left: "42%" }}>
+          Fetching Nominators.....
+        </div>
+      </React.Fragment>
+    ) : (
       <div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
@@ -169,15 +178,45 @@ let totalinfo = this.props.valtotalinfo
               onMouseOut={this.handleOnMouseOut}
             />
 
-            {this.state.showValidatorAddress && <Text text={this.state.validator} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
-            <Text text={validatorname} x= {width/30} y={height/30} fill="#FFFFFF" fontSize={20}/>
-            <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text ={selfbondedtext} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            {this.state.showValidatorAddress && (
+              <Text
+                text={this.state.validator}
+                x={width / 2 + 10}
+                y={height / 2 - 20}
+                fill="#FFFFFF"
+              />
+            )}
+            <Text
+              text={validatorname}
+              x={width / 30}
+              y={height / 30}
+              fill="#FFFFFF"
+              fontSize={20}
+            />
+            <Text
+              text={totalbondedtext}
+              x={width / 30}
+              y={height - height / 30}
+              fill="#FFFFFF"
+              fontSize={17}
+            />
+            <Text
+              text={selfbondedtext}
+              x={width / 4 + 60}
+              y={height - height / 30}
+              fill="#FFFFFF"
+              fontSize={17}
+            />
+            <Text
+              text={nominatorbondedtext}
+              x={width / 2}
+              y={height - height / 30}
+              fill="#FFFFFF"
+              fontSize={17}
+            />
           </Layer>
         </Stage>
       </div>
-      )
     );
   }
 }

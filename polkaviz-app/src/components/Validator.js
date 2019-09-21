@@ -2,7 +2,6 @@ import React from "react";
 import Rectangle from "./Rectangle";
 import Tail from "./Tail";
 
-
 class Validator extends React.Component {
   // constructor(){
   //   super()
@@ -45,14 +44,20 @@ class Validator extends React.Component {
   //   this.ismounted = false;
   // }
   render() {
-    let totalvalue = this.props.valinfo.stakers.total / Math.pow(10,15)
-    let ownvalue = this.props.valinfo.stakers.own /Math.pow(10,15)
-    let totalbonded = 0
-    totalbonded = totalvalue.toFixed(3)-ownvalue.toFixed(3)
-    let bondvalue = ""
-    bondvalue = "Bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
-    let nomvalue = 0
-    nomvalue = "Backed by: " + this.props.valinfo.stakers.others.length + " nominators"
+    let totalvalue = this.props.valinfo.stakers.total / Math.pow(10, 15);
+    let ownvalue = this.props.valinfo.stakers.own / Math.pow(10, 15);
+    let totalbonded = 0;
+    totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
+    let bondvalue = "";
+    bondvalue =
+      "Bonded: " +
+      ownvalue.toString().slice(0, 5) +
+      " (+ " +
+      totalbonded.toString().slice(0, 5) +
+      " ) DOT";
+    let nomvalue = 0;
+    nomvalue =
+      "Backed by: " + this.props.valinfo.stakers.others.length + " nominators";
     return (
       <React.Fragment>
         <Tail

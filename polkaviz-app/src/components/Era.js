@@ -1,6 +1,5 @@
 import React from "react";
 
-
 class Era extends React.Component {
   render() {
     return (

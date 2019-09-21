@@ -5,7 +5,7 @@ import Validator from "./Validator";
 import BlockAnimation from "./BlockAnimation";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import Bottombar from "./Bottombar";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 // import Parachains from './Parachains'
 
 class App extends React.Component {
@@ -22,10 +22,9 @@ class App extends React.Component {
   //   this.ismounted = true
   // }
 
-
   componentDidMount() {
-    if(!this.props.valtotalinfo){
-    this.props.createApi();
+    if (!this.props.valtotalinfo) {
+      this.props.createApi();
     }
   }
 
@@ -47,15 +46,11 @@ class App extends React.Component {
   //   await api.query.session.validators(validators => {
   //     const sessionValidators = validators.map(x => x.toString());
   //     if(this.ismounted){
-  //     this.setState({ 
-  //       validators: sessionValidators       
+  //     this.setState({
+  //       validators: sessionValidators
   //      });
   //     }
   //   });
-
-
-
-
 
   //   async function asyncForEach(array, callback) {
   //     for (let index = 0; index < array.length; index++) {
@@ -90,13 +85,7 @@ class App extends React.Component {
   //     })
   //   }
   //   start();
-    
 
-
-
-
-
-  
   // componentWillUnmount(){
   //   this.ismounted = false;
   // }
@@ -106,17 +95,16 @@ class App extends React.Component {
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
-      // this.props.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
+      // this.props.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) :
       // (
       <div className="container">
-
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
-            {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
+              {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
                 <Validator
@@ -129,12 +117,16 @@ class App extends React.Component {
                   x={
                     window.innerWidth +
                     360 *
-                      Math.cos((90 - 1 - (index * 360) / arr.length) * 0.0174533)
+                      Math.cos(
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533
+                      )
                   }
                   y={
                     window.innerHeight +
                     360 *
-                      Math.sin((90 - 1 - (index * 360) / arr.length) * 0.0174533)
+                      Math.sin(
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533
+                      )
                   }
                 />
               ))}
@@ -191,12 +183,14 @@ class App extends React.Component {
                 }
               />
               <Relay x={window.innerWidth} y={window.innerHeight} />
-              
             </Layer>
           </Stage>
         </div>
         <div className="bottombar">
-          <Bottombar start={this.props.start} activevalidators={this.props.validators.length}/>
+          <Bottombar
+            start={this.props.start}
+            activevalidators={this.props.validators.length}
+          />
         </div>
       </div>
 
