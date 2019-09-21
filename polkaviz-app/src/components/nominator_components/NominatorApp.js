@@ -53,21 +53,21 @@ class NominatorApp extends React.Component {
       });
     });
 
-    let nominatorvalue = ""
-    this.props.nominatorinfo.forEach( (ele) => {
-      if(ele.accountId === this.props.match.params.nominatorAddress)
-      {
-        nominatorvalue = ele
-      }
-    })
+    // let nominatorvalue = ""
+    // this.props.nominatorinfo.forEach( (ele) => {
+    //   if(ele.accountId === this.props.match.params.nominatorAddress)
+    //   {
+    //     nominatorvalue = ele
+    //   }
+    // })
 
-    console.log("Done",nominatorvalue);
+    // console.log("Done",nominatorvalue);
     console.log(arr1);
     if(this.ismounted){
     this.setState({
       valbacked: arr1,
       totalbonded: bonded,
-      nominatorvalue: nominatorvalue
+      // nominatorvalue: nominatorvalue
     },() => {
       this.setState({isloading:false})
     });
@@ -87,9 +87,9 @@ class NominatorApp extends React.Component {
      const value = JSON.parse(stakers);
      console.log(value, value.controllerId);
     if(this.ismounted){
-    //  this.setState({
-    //   controllerId: value.controllerId
-    // });
+     this.setState({
+      controllerId: value.controllerId
+    });
   }
     // await api.query.session.validators(validators => {
     //   const sessionValidators = validators.map(x => x.toString());
