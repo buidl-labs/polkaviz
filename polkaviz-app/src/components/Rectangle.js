@@ -31,7 +31,7 @@ class Rectangle extends React.PureComponent {
   )}
 
   render() {
-    let valtext = "Validator Address: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
+    let valtext = "accountId: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
     // console.log(this.props.angle)
     let x1 = this.props.x
     let y1 = this.props.y
@@ -81,29 +81,30 @@ class Rectangle extends React.PureComponent {
         x={x1+20*Math.sin(this.props.angle *  0.0174533)-10}
         y={y1-20*Math.cos(this.props.angle *  0.0174533)-10}
         width={260}
-        height={150}
+        height={110}
         cornerRadius={4.69457}
         fill="#333333" />
       }
       {this.state.showValidatorAddress && 
       <Text text={valtext} 
         x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
-        y={y1-20*Math.cos(this.props.angle *  0.0174533) + 10} 
+        y={y1-20*Math.cos(this.props.angle *  0.0174533) + 10}
+        fontFamily="Roboto Mono" 
         fill="#FFFFFF" />   }
           {this.state.showValidatorAddress && 
           <Text text={this.props.nominators} 
           x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
-          y={y1-20*Math.cos(this.props.angle *  0.0174533)+40 } 
+          y={y1-20*Math.cos(this.props.angle *  0.0174533)+30 } 
           fill="#FFFFFF" />}
           {this.state.showValidatorAddress && 
           <Text text={this.props.bondvalue} 
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
-            y={y1-20*Math.cos(this.props.angle *  0.0174533)+70} 
+            y={y1-20*Math.cos(this.props.angle *  0.0174533)+50} 
             fill="#FFFFFF" /> }
           {this.state.showValidatorAddress && 
           <Text text="Click to show Validator Analytics" 
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
-            y={y1-20*Math.cos(this.props.angle *  0.0174533)+120} 
+            y={y1-20*Math.cos(this.props.angle *  0.0174533)+80} 
             fill="#9099B6" /> }
      </React.Fragment> 
     );

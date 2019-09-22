@@ -24,6 +24,25 @@
 
   color: #ffffff;
 }
+
+.valheading h2 {
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  width: 1087.81px;
+  height: 21.13px;
+  left: 58px;
+  top: 71px;
+
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 23.4729px;
+  line-height: 28px;
+
+  color: #ffffff;
+}
+
 .relay-circle {
   margin: 0 auto;
   display: inline-block;
@@ -69,6 +88,9 @@
   line-height: 18px;
 
   color: #ffffff;
+}
+.finalizedblock{
+  width: 245.81px;
 }
 
 .totalbonded, .selfbonded, .nominatorbonded{

@@ -126,6 +126,9 @@ let totalinfo = this.props.valtotalinfo
         <div className="back-arrow" onClick={this.handleClick} onMouseOver={this.BackbtnhandleOnMouseOver} onMouseOut={this.BackbtnhandleOnMouseOut}>
          &#8592;
         </div>
+        <div className="valheading">
+          <h2>{validatorname}</h2>
+        </div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             {/* Here n is number of white circles to draw
@@ -208,7 +211,7 @@ let totalinfo = this.props.valtotalinfo
                   /> */}
 
             {this.state.showValidatorAddress && <Text text={valaddress} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
-            <Text text={validatorname} x= {68} y={71} fill="#FFFFFF" fontSize={20}/>
+            {/* <Text text={validatorname} x= {68} y={71} fill="#FFFFFF" fontSize={20}/> */}
             {/* <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
             <Text text ={selfbondedtext} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
             <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} /> */}

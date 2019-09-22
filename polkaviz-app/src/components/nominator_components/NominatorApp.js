@@ -176,6 +176,9 @@ class NominatorApp extends React.Component {
         <div className="back-arrow" onClick={this.handleClick} onMouseOver={this.BackbtnhandleOnMouseOver} onMouseOut={this.BackbtnhandleOnMouseOut}>
          &#8592;
         </div>
+        <div className="valheading">
+          <h2>{nominatorname}</h2>
+        </div>
         <Stage width={width} height={height}>
           <Layer>
             <Validators
@@ -206,13 +209,13 @@ class NominatorApp extends React.Component {
               onMouseOver={this.handleOnMouseOver}
               onMouseOut={this.handleOnMouseOut}
             />
-            <Text
+            {/* <Text
               text={nominatorname}
               x={68}
               y={71}
               fill="#FFFFFF"
               fontSize={20}
-            />
+            /> */}
             {/* <Text
               text={controllername}
               x={width / 30}
