@@ -2,7 +2,7 @@ import React from 'react'
 
 class NomBottombar extends React.Component{
     render(){
-        console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        // console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         return(
             <React.Fragment>
                 <div className="controllername">

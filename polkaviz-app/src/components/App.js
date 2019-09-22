@@ -139,8 +139,8 @@ class App extends React.Component {
                   }
                 />
               ))}
-              {console.log(this.props.bottombarobject.finalblock)}
-              {console.log(this.props.previousBlock)}
+              {/* {console.log(this.props.bottombarobject.finalblock)}
+              {console.log(this.props.previousBlock)} */}
               {this.props.previousBlock !== undefined && <BlockAnimation
                 key={this.props.validators.indexOf(this.props.lastAuthor)}
                 angle={

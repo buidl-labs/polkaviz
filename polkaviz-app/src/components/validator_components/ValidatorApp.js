@@ -24,9 +24,9 @@ this.ownvalue = 0
   }
 
   componentDidMount() {
-    console.log("val",this.props)
+    // console.log("val",this.props)
     this.createApi();
-    console.log("this",this.props.match.params.validatorAddress);
+    // console.log("this",this.props.match.params.validatorAddress);
   }
 
   async createApi() {
@@ -38,7 +38,7 @@ this.ownvalue = 0
         value = ele.valinfo
       }
     })
-console.log("huyi",value)
+// console.log("huyi",value)
 let totalinfo = this.props.valtotalinfo
     this.totalvalue = value.stakers.total / Math.pow(10,15)
     this.ownvalue = value.stakers.own /Math.pow(10,15)

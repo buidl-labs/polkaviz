@@ -27,7 +27,7 @@ class Circleandline extends React.Component{
       }
     
     render(){
-      console.log(this.props.totalinfo)
+      // console.log(this.props.totalinfo)
       let nomaddress = this.props.text.toString().slice(0,8) + "......" + this.props.text.toString().slice(-8)
     return(
         <React.Fragment>

@@ -70,7 +70,7 @@ class Bottombar extends React.Component {
     this.mounted = false;
   }
   render() {
-    console.log(this.props.validatorcount)
+    // console.log(this.props.validatorcount)
     return (
       <React.Fragment>
         <ValidatorCount 

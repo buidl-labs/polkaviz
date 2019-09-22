@@ -23,7 +23,7 @@ class NominatorApp extends React.Component {
     this.ismounted = true;
   }
   componentDidMount() {
-    console.log("nom",this.props)
+    // console.log("nom",this.props)
     this.start()
     // this.createApi()
   }
@@ -49,8 +49,8 @@ class NominatorApp extends React.Component {
       }
     })
 
-    console.log("Done",nominatorvalue);
-    console.log(arr1);
+    // console.log("Done",nominatorvalue);
+    // console.log(arr1);
     if(this.ismounted){
     this.setState({
       valbacked: arr1,
@@ -94,7 +94,7 @@ class NominatorApp extends React.Component {
 
   render() {
     
-    console.log("nomvalue",this.state.nominatorvalue)
+    // console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
       "Nominator Address: " +   this.props.match.params.nominatorAddress.toString().slice(0,8) + "......" + this.props.match.params.nominatorAddress.toString().slice(-8);
     let stashname =
@@ -110,7 +110,7 @@ class NominatorApp extends React.Component {
     let arr = this.state.valbacked;
     const width = window.innerWidth;
     const height = window.innerHeight;
-    console.log("valstate",this.state.showValidatorAddress)
+    // console.log("valstate",this.state.showValidatorAddress)
     return this.state.isloading ? (
       <React.Fragment>
         <div className="lds-ripple">

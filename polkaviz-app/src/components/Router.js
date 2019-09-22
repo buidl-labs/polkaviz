@@ -41,7 +41,7 @@ class Router extends React.Component {
   tick() {
     // console.log("here " + this.props.start)
     this.elapsed = new Date() - this.state.start
-    console.log('elapsed'+ this.elapsed)
+    // console.log('elapsed'+ this.elapsed)
     if (this.state.previousBlock !== undefined && this.elapsed > 3000 ) {
       this.setState({previousBlock: undefined})
     }
@@ -91,7 +91,7 @@ class Router extends React.Component {
     //   });
 
     let totalValidators = await api.query.staking.validatorCount();
-    console.log("this", totalValidators.words["0"], totalValidators);
+    // console.log("this", totalValidators.words["0"], totalValidators);
     if (this.ismounted) {
       this.setState({
         totalValidators: totalValidators.words["0"]
@@ -104,7 +104,7 @@ class Router extends React.Component {
       const validatorstotalinfo = await Promise.all(
         this.state.validators.map(val => api.derive.staking.info(val))
       );
-      console.log("hi", JSON.parse(validatorstotalinfo[0]));
+      // console.log("hi", JSON.parse(validatorstotalinfo[0]));
       arr1 = validatorstotalinfo.map(info => {
         return {
           valname: info.accountId,
@@ -124,7 +124,7 @@ class Router extends React.Component {
       //   //   })
       // })
       if (this.ismounted) {
-        console.log("arr1",arr1)
+        // console.log("arr1",arr1)
         this.setState(
           {
             valtotalinfo: arr1,
@@ -175,21 +175,21 @@ class Router extends React.Component {
 
   getnominators = async () => {
     let arr = [];
-    console.log("valtotal", this.state.valtotalinfo);
+    // console.log("valtotal", this.state.valtotalinfo);
     this.state.valtotalinfo.forEach(ele => {
-      console.log(ele);
+      // console.log(ele);
       ele.valinfo.stakers.others.forEach(nom => {
         arr.push(nom.who);
       });
     });
 
-    console.log("here are unfiltered", arr);
+    // console.log("here are unfiltered", arr);
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
 
     let nominators = arr.filter(onlyUnique);
-    console.log("total", nominators);
+    // console.log("total", nominators);
 
     const nominatorstotalinfo = await Promise.all(
       nominators.map(val => this.state.apipromise.derive.staking.info(val))
@@ -200,7 +200,7 @@ class Router extends React.Component {
     //   console.log(nominfo)
     //   return(JSON.parse(nominfo))
     // })
-    console.log("nominfo",nominatorstotalinfo)
+    // console.log("nominfo",nominatorstotalinfo)
     let arr2 = nominatorstotalinfo.map(nom => JSON.parse(nom))
     this.setState({
       nominatorinfo:arr2
@@ -216,8 +216,8 @@ class Router extends React.Component {
   }
 
   render() {
-    console.log("route", this.state.bottombarinfo);
-    console.log("nom",this.state.nominatorinfo)
+    // console.log("route", this.state.bottombarinfo);
+    // console.log("nom",this.state.nominatorinfo)
     let bottombarobject = {
       bottombarinfo: this.state.bottombarinfo,
       finalblock: this.state.finalblock,
