@@ -24,13 +24,27 @@ class Router extends React.Component {
       },
       totalValidators: 0,
       finalblock: 0,
-      nominatorinfo:[]
+      previousBlock: undefined,
+      nominatorinfo:[],
     };
+    this.elapsed = 0;
     this.ismounted = true;
   }
   componentDidMount() {
     // console.log(this.props)
     this.createApi();
+    this.interval = setInterval(() => {
+      // console.log(this.state.elapsed, this.props.counter);
+      this.tick()
+    }, 1000);
+  }
+  tick() {
+    // console.log("here " + this.props.start)
+    this.elapsed = new Date() - this.state.start
+    console.log('elapsed'+ this.elapsed)
+    if (this.state.previousBlock !== undefined && this.elapsed > 3000 ) {
+      this.setState({previousBlock: undefined})
+    }
   }
   async createApi() {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
@@ -42,8 +56,9 @@ class Router extends React.Component {
         this.setState({ lastAuthor: lastAuthor, apipromise: api });
       }
       const start = new Date();
+      const blockNumber = block.number.toString();
       if (this.ismounted) {
-        this.setState({ start: start });
+        this.setState({ start: start, finalblock: blockNumber, previousBlock: blockNumber });
       }
     });
 
@@ -150,12 +165,12 @@ class Router extends React.Component {
       }
     });
 
-    await api.derive.chain.bestNumberFinalized(header => {
-      // console.log(`Chain is at block: #${header}`);
-      if (this.ismounted) {
-        this.setState({ finalblock: header.toString() });
-      }
-    });
+    // await api.derive.chain.bestNumberFinalized(header => {
+    //   // console.log(`Chain is at block: #${header}`);
+    //   if (this.ismounted) {
+    //     this.setState({ finalblock: header.toString() });
+    //   }
+    // });
   }
 
   getnominators = async () => {
@@ -197,6 +212,7 @@ class Router extends React.Component {
 
   componentWillUnmount() {
     this.ismounted = false;
+    clearInterval(this.interval);
   }
 
   render() {
@@ -233,6 +249,7 @@ class Router extends React.Component {
                   validatorcount={this.state.totalValidators}
                   bottombarobject={bottombarobject}
                   nominatorinfo={this.state.nominatorinfo}
+                  previousBlock={this.state.previousBlock}
                 />
               )}
             />

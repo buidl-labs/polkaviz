@@ -139,7 +139,9 @@ class App extends React.Component {
                   }
                 />
               ))}
-              <BlockAnimation
+              {console.log(this.props.bottombarobject.finalblock)}
+              {console.log(this.props.previousBlock)}
+              {this.props.previousBlock !== undefined && <BlockAnimation
                 key={this.props.validators.indexOf(this.props.lastAuthor)}
                 angle={
                   180 -
@@ -190,7 +192,7 @@ class App extends React.Component {
                         0.0174533
                     )
                 }
-              />
+              />}
               <Relay x={window.innerWidth} y={window.innerHeight} />
               
             </Layer>
