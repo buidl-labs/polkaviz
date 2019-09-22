@@ -36,7 +36,7 @@ class Router extends React.Component {
     this.interval = setInterval(() => {
       // console.log(this.state.elapsed, this.props.counter);
       this.tick()
-    }, 500);
+    }, 1000);
   }
   tick() {
     // console.log("here " + this.props.start)

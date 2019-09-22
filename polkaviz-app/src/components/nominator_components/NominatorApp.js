@@ -146,12 +146,12 @@ class NominatorApp extends React.Component {
     
     console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
-      "Nominator: " + this.props.match.params.nominatorAddress;
+      "Nominator Address: " + this.props.match.params.nominatorAddress;
     let stashname =
       this.state.controllerId.toString().slice(0, 8) +
       "......" +
       this.state.controllerId.toString().slice(-8);
-    let controllername = "Controller: " + stashname;
+    let controllername = "controller: " + stashname;
     let bondvalue =
       "bonded: " + this.state.totalbonded.toString().slice(0, 5) + " DOT";
 

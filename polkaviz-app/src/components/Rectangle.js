@@ -83,7 +83,11 @@ class Rectangle extends React.PureComponent {
         width={260}
         height={110}
         cornerRadius={4.69457}
-        fill="#333333" />
+        fill="#333333"
+        shadowOffsetY={10}
+        shadowBlur={10}
+        shadowColor="black"
+        shadowOpacity={0.5} />
       }
       {this.state.showValidatorAddress && 
       <Text text={valtext} 

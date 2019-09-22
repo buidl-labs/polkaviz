@@ -103,15 +103,15 @@ let totalinfo = this.props.valtotalinfo
     let radius = 120;
 
 
-    let validatorname = "Validator: " +  this.state.validator
+    let validatorname = "Validator Address: " +  this.state.validator
 
 
-    let totalbondedtext = "Total Staked: " + this.totalvalue.toFixed(3) + " DOT"
-    let selfbondedtext = "Validator Self Staked: " + this.ownvalue.toString().slice(0,5) + " DOT"
+    let totalbondedtext = "total staked: " + this.totalvalue.toFixed(3) + " DOT"
+    let selfbondedtext = "validator self stake: " + this.ownvalue.toString().slice(0,5) + " DOT"
 
     let totalbonded = 0
     totalbonded = this.totalvalue.toFixed(3)-this.ownvalue.toFixed(3)
-    let nominatorbondedtext = "Nominator Staked: " +  totalbonded.toString().slice(0,5) + " DOT"
+    let nominatorbondedtext = "nominator stake: " +  totalbonded.toString().slice(0,5) + " DOT"
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
