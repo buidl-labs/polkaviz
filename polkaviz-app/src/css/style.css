@@ -73,13 +73,13 @@
   top: 50%; */
 }
 
-.counter, .era, .session, .finalizedblock, .validatorcount{
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue{
   margin: 0 auto;
   position: relative;
   width: 225.81px;
   height: 21.13px;
   left: 58px;
-  bottom: 60px;
+  bottom: 45px;
 
   font-family: "Roboto Mono";
   font-style: normal;
@@ -94,38 +94,12 @@
 }
 
 .totalbonded, .selfbonded, .nominatorbonded{
-  margin: 0 auto;
-  position: relative;
   width: 550.81px;
-  height: 21.13px;
-  left: 58px;
-  bottom: 60px;
-
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 18px;
-
-  color: #ffffff;
 }
 
 
 .controllername, .bondvalue{
-  margin: 0 auto;
-  position: relative;
   width: 700.81px;
-  height: 21.13px;
-  left: 58px;
-  bottom: 60px;
-
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 18px;
-
-  color: #ffffff;
 }
 
 
@@ -207,10 +181,11 @@ body {
 
 .back-arrow{
   position:absolute;
-  left:29px;
-  color: white;
+  left:32px;
+  top:25px;
+  color:#ffffff;
   font-family:"Arial";
-  font-size:70px;
+  font-size:35px;
   width:34px;
   height: 30px;
   z-index: 1;

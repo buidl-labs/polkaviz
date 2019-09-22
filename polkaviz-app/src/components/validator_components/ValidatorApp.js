@@ -103,7 +103,7 @@ let totalinfo = this.props.valtotalinfo
     let radius = 120;
 
 
-    let validatorname = "Validator Address: " +  this.state.validator
+    let validatorname = "Validator Address: " + this.state.validator.toString().slice(0,8) + "......" + this.state.validator.toString().slice(-8)
 
 
     let totalbondedtext = "total staked: " + this.totalvalue.toFixed(3) + " DOT"
