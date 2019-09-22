@@ -1,7 +1,6 @@
 import React from "react";
-import { Stage, Layer, Arc, Line, Rect, Text} from "react-konva";
+import { Stage, Layer, Arc, Line, Rect} from "react-konva";
 import WhiteCircles from "./WhiteCircles";
-// import { WsProvider, ApiPromise } from "@polkadot/api";
 import { withRouter } from 'react-router-dom';
 import ValBottombar from './ValBottombar'
 
@@ -31,14 +30,7 @@ this.ownvalue = 0
   }
 
   async createApi() {
-    // const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
-    // const api = await ApiPromise.create(provider);
-
-    // const stakers = await api.derive.staking.info(this.props.match.params.validatorAddress);
-    // 5FbuxWQuCd3N9kosfTXY1v63xV5bNfSpNutuRvERAWm6fmzt
-    // console.log(JSON.stringify(stakers));
-    // const value = JSON.parse(stakers);http://localhost:3000/val/5E27gZXVEkwLWjaCwmt9dC2sEgbdLEUZUPrxkg6BvG5RKpwW
-    // let value = this.props.location.state.valinfo
+  
     let value = ""
     this.props.valtotalinfo.forEach(ele => {
       if(ele.valinfo.accountId.toString() === this.props.match.params.validatorAddress.toString())
@@ -48,9 +40,6 @@ this.ownvalue = 0
     })
 console.log("huyi",value)
 let totalinfo = this.props.valtotalinfo
-    // if(!this.props.location.state.totalinfo){
-    //   totalinfo = this.props.valtotalinfo      
-    // }
     this.totalvalue = value.stakers.total / Math.pow(10,15)
     this.ownvalue = value.stakers.own /Math.pow(10,15)
     if(value.stashId===value.controllerId)
@@ -68,7 +57,6 @@ let totalinfo = this.props.valtotalinfo
       valinfo:value,
       totalinfo:totalinfo
     });
-    // console.log(value.stakers.others.length);
   }
 
   handleOnMouseOver = () => {
@@ -92,7 +80,6 @@ let totalinfo = this.props.valtotalinfo
       pathname:"/",
       state:{totalinfo:this.props.totalinfo,
       valinfo:this.props.valinfo,
-      // nominatorinfo:this.props.nominatorinfo
     }
   })
 }
@@ -117,7 +104,6 @@ let totalinfo = this.props.valtotalinfo
     }
     
 
-    let valaddress = this.state.validator.toString().slice(0,8) + "......" + this.state.validator.toString().slice(-8)
 
     return (
   this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div></React.Fragment>) : 
@@ -186,36 +172,7 @@ let totalinfo = this.props.valtotalinfo
               onMouseOver={this.handleOnMouseOver}
               onMouseOut={this.handleOnMouseOut}
             />
-
-{/* 
-              <Shape 
-                  sceneFunc={(context, shape) => {
-                    context.beginPath();
-                    context.moveTo(63, 39);
-                    context.lineTo(92, 39);
-                    context.moveTo(63, 39);
-                    context.lineTo(72, 29);
-                    context.moveTo(63, 39);
-                    context.lineTo(72, 49);
-                    // context.quadraticCurveTo(150, 100, 260, 170);
-                    // context.closePath();
-                    // (!) Konva specific method, it is very important
-                    context.fillStrokeShape(shape);
-                  }}
-                  fill="#00D2FF"
-                  stroke="white"
-                  strokeWidth={2}
-                  onMouseOver={this.BackbtnhandleOnMouseOver}
-                  onMouseOut={this.BackbtnhandleOnMouseOut}
-                  onClick={this.handleClick}
-                  /> */}
-
-            {this.state.showValidatorAddress && <Text text={valaddress} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
-            {/* <Text text={validatorname} x= {68} y={71} fill="#FFFFFF" fontSize={20}/> */}
-            {/* <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text ={selfbondedtext} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} /> */}
-          </Layer>
+</Layer>
         </Stage>
               <div className="valbottombar">
                 <ValBottombar totalbondedtext={totalbondedtext} selfbondedtext={selfbondedtext} nominatorbondedtext={nominatorbondedtext} />

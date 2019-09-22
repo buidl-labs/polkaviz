@@ -22,7 +22,7 @@ class Rectangle extends React.PureComponent {
   handleClick = () => {
     document.body.style.cursor = "default";
     this.props.history.push({
-      pathname:"/val/"+ this.props.validatorAddress,
+      pathname:"/validator/"+ this.props.validatorAddress,
       state:{totalinfo:this.props.totalinfo,
       valinfo:this.props.valinfo,
       // nominatorinfo:this.props.nominatorinfo
@@ -35,13 +35,13 @@ class Rectangle extends React.PureComponent {
     // console.log(this.props.angle)
     let x1 = this.props.x
     let y1 = this.props.y
-    if(this.props.angle<=45 && this.props.angle>0){
+    if(this.props.angle<=45 && this.props.angle>=0){
       x1 = this.props.x + 50
-      y1 = this.props.y - 110
+      y1 = this.props.y - 80
     }
-    if(this.props.angle<=0 && this.props.angle>-45){
+    if(this.props.angle<0 && this.props.angle>-45){
       x1 = this.props.x -50
-      y1 = this.props.y -170
+      y1 = this.props.y -140
     }
     if(this.props.angle<=-45 && this.props.angle>-135){
       x1 = this.props.x -285

@@ -1,5 +1,4 @@
 import React from "react";
-// import { WsProvider, ApiPromise } from "@polkadot/api";
 import { Stage, Layer, Arc, Circle, Text } from "react-konva";
 import Validators from "./Validators";
 import {withRouter} from 'react-router-dom'
@@ -32,20 +31,7 @@ class NominatorApp extends React.Component {
    start() {
     let arr1 = [];
     let bonded = 0;
-    // await asyncForEach(this.state.validators, async val => {
-    //   console.log(val, count++);
-    //   let stakers = await api.derive.staking.info(val);
-    //   let stakeinfo = JSON.parse(stakers);
-    //   console.log(stakeinfo.stakers.others);
-    //   stakeinfo.stakers.others.forEach(ele => {
-    //     if (ele.who === this.props.match.params.nominatorAddress) {
-    //       arr1.push(val);
-    //       bonded += ele.value / Math.pow(10, 15);
-    //     }
-    //   });
 
-    // });
-    // console.log(this.props.location.state.totalinfo)
     this.props.valtotalinfo.forEach( (ele) => {
       ele.valinfo.stakers.others.forEach( (nom) => {
         if (nom.who === this.props.match.params.nominatorAddress) {
@@ -76,41 +62,6 @@ class NominatorApp extends React.Component {
   }
   }
 
-
-  // async createApi() {
-  //   //  const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
-  //   //  const api = await ApiPromise.create(provider);
-  //    const stakers = await this.props.api.derive.staking.info(this.props.match.params.nominatorAddress)
-  //   //  "5F7RKWLXYMPvDi7Z5vW75QUHKnN4D4DY9RzFhgzfMeVNEswE"
-
-  //   //  vals = 5CnDngcL3NE8x1rdxrmDWEjmgLrPm5KBsCy8uTqRQCRWx74m
-  //   //         5Enp67VYwLviZWuyf2XfM5mJXgTWHaa45podYXhUhDCUeYfg
-
-  //    const value = JSON.parse(stakers);
-  //    console.log(value, value.controllerId);
-  //   if(this.ismounted){
-  //    this.setState({
-  //     controllerId: value.controllerId
-  //   });
-  // }
-  //   // await api.query.session.validators(validators => {
-  //   //   const sessionValidators = validators.map(x => x.toString());
-  //   //   if(this.ismounted){
-  //   //   this.setState({ validators: sessionValidators });
-  //   //   }
-  //   // });
-  //   console.log(this.state.nominator, this.state.validators);
-
-  //   // async function asyncForEach(array, callback) {
-  //   //   for (let index = 0; index < array.length; index++) {
-  //   //     await callback(array[index], index, array);
-  //   //   }
-  //   // }
-
-  
-
-
-  // }
   componentWillUnmount(){
     this.ismounted = false;
   }
@@ -136,7 +87,6 @@ class NominatorApp extends React.Component {
       pathname:"/",
       state:{totalinfo:this.props.totalinfo,
       valinfo:this.props.valinfo,
-      // nominatorinfo:this.props.nominatorinfo
     }
   })
 }
@@ -209,27 +159,7 @@ class NominatorApp extends React.Component {
               onMouseOver={this.handleOnMouseOver}
               onMouseOut={this.handleOnMouseOut}
             />
-            {/* <Text
-              text={nominatorname}
-              x={68}
-              y={71}
-              fill="#FFFFFF"
-              fontSize={20}
-            /> */}
-            {/* <Text
-              text={controllername}
-              x={width / 30}
-              y={height - height / 30}
-              fill="#FFFFFF"
-              fontSize={17}
-            />
-            <Text
-              text={bondvalue}
-              x={width / 3}
-              y={height - height / 30}
-              fill="#FFFFFF"
-              fontSize={17}
-            /> */}
+            
              {this.state.showValidatorAddress && 
       <Text text={valtext} 
         x={width/2-200} 

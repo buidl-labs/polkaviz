@@ -89,6 +89,9 @@
 
   color: #ffffff;
 }
+.counter, .era, .session, .finalizedblock, .validatorcount{
+  bottom: 70px;
+}
 .finalizedblock{
   width: 245.81px;
 }

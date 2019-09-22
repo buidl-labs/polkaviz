@@ -255,14 +255,14 @@ class Router extends React.Component {
             />
             <Route
               exact
-              path="/val/:validatorAddress"
+              path="/validator/:validatorAddress"
               component={props => (
                 <ValidatorApp valtotalinfo={this.state.valtotalinfo} valiiinfo={0+1+2+3+4}/>
               )}
             />
             <Route
               exact
-              path="/nom/:nominatorAddress"
+              path="/nominator/:nominatorAddress"
               component={props => (
                 <NominatorApp
                   valtotalinfo={this.state.valtotalinfo}
