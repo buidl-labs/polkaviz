@@ -6,6 +6,7 @@
   left: 0;
   top: 0;
 }
+
 .heading h2 {
   margin: 0 auto;
   position: absolute;
@@ -36,6 +37,22 @@
   width: 100%;
   height: 100%;
 }
+.nombottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
+.valbottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
 
 .counter, .era, .session, .finalizedblock, .validatorcount{
   margin: 0 auto;
@@ -53,6 +70,42 @@
 
   color: #ffffff;
 }
+
+.totalbonded, .selfbonded, .nominatorbonded{
+  margin: 0 auto;
+  position: relative;
+  width: 550.81px;
+  height: 21.13px;
+  left: 58px;
+  bottom: 60px;
+
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #ffffff;
+}
+
+
+.controllername, .bondvalue{
+  margin: 0 auto;
+  position: relative;
+  width: 700.81px;
+  height: 21.13px;
+  left: 58px;
+  bottom: 60px;
+
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #ffffff;
+}
+
 
 .validator {
   margin: 0 auto;
@@ -82,7 +135,7 @@ body {
 
 .lds-ripple {
   display: inline-block;
-  position: relative;
+  position: absolute;
   width: 64px;
   height: 64px;
   top: 36%;
@@ -90,10 +143,13 @@ body {
 }
 .lds-ripple div {
   position: absolute;
+  top: 40%;
   border: 4px solid #dfc;
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  width: 100%;
+  height: 100vh;
 }
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
@@ -124,4 +180,19 @@ body {
   top: 60%;
   left: 39%;
   color: white;
+}
+
+
+.back-arrow{
+  position:absolute;
+  left:29px;
+  color: white;
+  font-family:"Arial";
+  font-size:70px;
+  width:34px;
+  height: 30px;
+  z-index: 1;
+}
+.back-arrow:hover{
+  transform: scale(1.1);
 }

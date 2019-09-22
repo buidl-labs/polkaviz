@@ -1,8 +1,9 @@
 import React from "react";
-import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
+import { Stage, Layer, Arc, Line, Rect, Text} from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import { withRouter } from 'react-router-dom';
+import ValBottombar from './ValBottombar'
 
 class ValidatorApp extends React.Component {
   constructor() {
@@ -78,17 +79,31 @@ let totalinfo = this.props.valtotalinfo
   }
 
 
+  BackbtnhandleOnMouseOver = () => {
+    document.body.style.cursor = "pointer";
+  }
+  BackbtnhandleOnMouseOut = () => {
+    document.body.style.cursor = "default";
+  }
+
+  handleClick = () => {
+    document.body.style.cursor = "default";
+    this.props.history.push({
+      pathname:"/",
+      state:{totalinfo:this.props.totalinfo,
+      valinfo:this.props.valinfo,
+      // nominatorinfo:this.props.nominatorinfo
+    }
+  })
+}
+
   render() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    let radius = 100;
+    let radius = 120;
 
 
     let validatorname = "Validator: " +  this.state.validator
-    // let stashname= this.state.stash.toString().slice(0,8) + "......" + this.state.stash.toString().slice(-8)
-    // let diffrentstash = "session: " + stashname
-    // let controllername = this.state.controller.toString().slice(0,8) + "......" + this.state.controller.toString().slice(-8)
-    // let diffrentcontroller = "controller: " + controllername
 
 
     let totalbondedtext = "Total Staked: " + this.totalvalue.toFixed(3) + " DOT"
@@ -101,17 +116,16 @@ let totalinfo = this.props.valtotalinfo
       radius = 200;
     }
     
-    // this.state.nominators.forEach(ele => {
-    //     totalbonded +=ele.value
-    // })
-    // console.log(this.totalvalue,this.ownvalue+totalbonded)
-    
-    // let bondvalue = "bonded: " + this.ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
-    // console.log(this.state)
+
+    let valaddress = this.state.validator.toString().slice(0,8) + "......" + this.state.validator.toString().slice(-8)
+
     return (
-  this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text" style={{left:"42%"}}>Fetching Nominators.....</div></React.Fragment>) : 
+  this.state.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div></React.Fragment>) : 
       (
       <div>
+        <div className="back-arrow" onClick={this.handleClick} onMouseOver={this.BackbtnhandleOnMouseOver} onMouseOut={this.BackbtnhandleOnMouseOut}>
+         &#8592;
+        </div>
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             {/* Here n is number of white circles to draw
@@ -122,8 +136,8 @@ let totalinfo = this.props.valtotalinfo
             <WhiteCircles
               n={this.state.nominators.length}
               r={radius}
-              x={width / 2 + 10}
-              y={height / 2 + 5}
+              x={width / 2 + 13}
+              y={height / 2 + 6}
               nominators={this.state.nominators}
               history={this.props.history}
               totalinfo={this.state.totalinfo}
@@ -140,7 +154,8 @@ let totalinfo = this.props.valtotalinfo
               outerRadius={height / 2 - 24}
               rotation={90}
               angle={180}
-              stroke="white"
+              stroke="#97A1BF"
+              strokeWidth={4}
             />
             {/* Adding 6 to stating and ending y point and 24 to length of line
                     because the upper left corner of rectangle is at width/2,height/2
@@ -150,18 +165,18 @@ let totalinfo = this.props.valtotalinfo
               points={[
                 width / 2,
                 height / 2 + 6,
-                width - height / 2 + 24,
+                width - height / 2 + 23,
                 height / 2 + 6
               ]}
               fill="white"
               stroke="white"
-              opacity={0.2}
+              opacity={0.3}
             />
 
             <Rect
               x={width / 2}
               y={height / 2}
-              width={24}
+              width={26}
               height={12}
               fill="purple"
               cornerRadius={10}
@@ -169,13 +184,40 @@ let totalinfo = this.props.valtotalinfo
               onMouseOut={this.handleOnMouseOut}
             />
 
-            {this.state.showValidatorAddress && <Text text={this.state.validator} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
-            <Text text={validatorname} x= {width/30} y={height/30} fill="#FFFFFF" fontSize={20}/>
-            <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+{/* 
+              <Shape 
+                  sceneFunc={(context, shape) => {
+                    context.beginPath();
+                    context.moveTo(63, 39);
+                    context.lineTo(92, 39);
+                    context.moveTo(63, 39);
+                    context.lineTo(72, 29);
+                    context.moveTo(63, 39);
+                    context.lineTo(72, 49);
+                    // context.quadraticCurveTo(150, 100, 260, 170);
+                    // context.closePath();
+                    // (!) Konva specific method, it is very important
+                    context.fillStrokeShape(shape);
+                  }}
+                  fill="#00D2FF"
+                  stroke="white"
+                  strokeWidth={2}
+                  onMouseOver={this.BackbtnhandleOnMouseOver}
+                  onMouseOut={this.BackbtnhandleOnMouseOut}
+                  onClick={this.handleClick}
+                  /> */}
+
+            {this.state.showValidatorAddress && <Text text={valaddress} x={width/2+10} y={height/2-20} fill="#FFFFFF" />}
+            <Text text={validatorname} x= {68} y={71} fill="#FFFFFF" fontSize={20}/>
+            {/* <Text text={totalbondedtext} x={width/30} y={height-height/30} fill="#FFFFFF" fontSize={17} />
             <Text text ={selfbondedtext} x={width/4+60} y={height-height/30} fill="#FFFFFF" fontSize={17} />
-            <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} />
+            <Text text={nominatorbondedtext} x={width/2} y={height-height/30} fill="#FFFFFF" fontSize={17} /> */}
           </Layer>
         </Stage>
+              <div className="valbottombar">
+                <ValBottombar totalbondedtext={totalbondedtext} selfbondedtext={selfbondedtext} nominatorbondedtext={nominatorbondedtext} />
+              </div>
+
       </div>
       )
     );

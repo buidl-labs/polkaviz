@@ -3,7 +3,7 @@ import Rectangle from "./Rectangle";
 import Tail from "./Tail";
 
 
-class Validator extends React.Component {
+class Validator extends React.PureComponent {
   // constructor(){
   //   super()
   //   this.state={

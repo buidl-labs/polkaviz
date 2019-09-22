@@ -3,7 +3,7 @@ import React from "react";
 import { Rect, Text} from "react-konva";
 // import {BrowserRouter as Route,Link} from 'react-router-dom'
 
-class Rectangle extends React.Component {
+class Rectangle extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { showValidatorAddress: false };
@@ -12,12 +12,15 @@ class Rectangle extends React.Component {
   componentDidMount() {
   }
   handleOnMouseOver = () => {
+    document.body.style.cursor = "pointer";
     this.setState({showValidatorAddress: true})
   }
   handleOnMouseOut = () => {
+    document.body.style.cursor = "default";
     this.setState({showValidatorAddress: false})
   }
   handleClick = () => {
+    document.body.style.cursor = "default";
     this.props.history.push({
       pathname:"/val/"+ this.props.validatorAddress,
       state:{totalinfo:this.props.totalinfo,

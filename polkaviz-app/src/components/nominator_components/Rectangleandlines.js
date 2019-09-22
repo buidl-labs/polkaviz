@@ -9,12 +9,15 @@ class Rectangleandlines extends React.Component{
     }
   }
     handleOnMouseOver = () => {
+      document.body.style.cursor = "pointer";
         this.setState({showValidatorAddress: true})
       }
       handleOnMouseOut = () => {
+        document.body.style.cursor = "default";
         this.setState({showValidatorAddress: false})
       }
       handleClick = () => {
+        document.body.style.cursor = "default";
         this.props.history.push({
           pathname:"/val/"+ this.props.valinfo.accountId,
           state:{totalinfo:this.props.totalinfo,
@@ -22,6 +25,7 @@ class Rectangleandlines extends React.Component{
     }
       )}
     render(){
+      let valtext = this.props.valinfo.accountId.toString().slice(0,8) + "......" + this.props.valinfo.accountId.toString().slice(-8)
         return(
             <React.Fragment>
             <Line points={[this.props.circ_x, this.props.circ_y, this.props.x-12, this.props.y]}
@@ -46,7 +50,7 @@ class Rectangleandlines extends React.Component{
             />
 
 
-            {this.state.showValidatorAddress && <Text text={this.props.valinfo.accountId} x={this.props.x-12} y={this.props.y-18} fill="#FFFFFF" />}
+            {this.state.showValidatorAddress && <Text text={valtext} x={this.props.x-12} y={this.props.y-18} fill="#FFFFFF" />}
 
 
             </React.Fragment>
