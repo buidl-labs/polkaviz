@@ -25,7 +25,8 @@
   color: #ffffff;
 }
 
-.valheading h2 {
+
+.valheading h2, span{
   margin: 0 auto;
   position: absolute;
   display: inline-block;
@@ -40,6 +41,17 @@
   font-size: 23.4729px;
   line-height: 28px;
 
+  color: #ffffff;
+}
+.valheading span{
+    left: 650px;
+    z-index: 1;
+}
+.valheading span:hover{
+  cursor: pointer;
+  color: red;
+}
+.valheading span img{
   color: #ffffff;
 }
 

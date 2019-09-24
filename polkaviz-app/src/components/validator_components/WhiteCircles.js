@@ -23,6 +23,7 @@ class WhiteCircles extends React.Component{
                             x2={this.props.x}
                             y2={this.props.y}
                             text={element.who}
+                            nombonded={element.value}
                             history={this.props.history}
                             totalinfo={this.props.totalinfo}
                             valinfo={this.props.valinfo}

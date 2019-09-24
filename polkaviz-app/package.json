@@ -8,6 +8,7 @@
     "bs58": "^4.0.1",
     "konva": "^3.4.1",
     "react": "^16.8.6",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-konva": "^16.8.7-3",
     "react-number-format": "^4.2.0",

@@ -11,11 +11,19 @@ class Rectangle extends React.PureComponent {
   
   componentDidMount() {
   }
-  handleOnMouseOver = () => {
+  handleOnMouseOver = (e) => {
+    e.target.setAttrs({
+      scaleX: 1.3,
+      scaleY: 1.3
+    });
     document.body.style.cursor = "pointer";
     this.setState({showValidatorAddress: true})
   }
-  handleOnMouseOut = () => {
+  handleOnMouseOut = (e) => {
+    e.target.setAttrs({
+      scaleX: 1,
+      scaleY: 1
+    });
     document.body.style.cursor = "default";
     this.setState({showValidatorAddress: false})
   }

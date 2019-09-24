@@ -17,12 +17,14 @@ class Validators extends React.Component{
         let height = window.innerHeight
         let rad = ((height/2)-24)
         this.props.allvals.forEach((element,index) => {
+            // console.log(element)
             y_cord += windowlength/(this.props.allvals.length+1)
             arr1.push(
                 <Rectangleandlines 
                     key={index}
                     totalinfo={this.props.totalinfo}
-                    valinfo={element.valinfo}
+                    valinfo={element.validator.valinfo}
+                    staked={element.staked}
                     history={this.props.history}
                     x={this.props.rect_x}
                     y={y_cord}

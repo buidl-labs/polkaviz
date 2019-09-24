@@ -8,11 +8,19 @@ class Rectangleandlines extends React.Component{
       showValidatorAddress:false
     }
   }
-    handleOnMouseOver = () => {
+    handleOnMouseOver = (e) => {
+      e.target.setAttrs({
+        scaleX: 1.2,
+        scaleY: 1.2
+      });
       document.body.style.cursor = "pointer";
         this.setState({showValidatorAddress: true})
       }
-      handleOnMouseOut = () => {
+      handleOnMouseOut = (e) => {
+        e.target.setAttrs({
+          scaleX: 1,
+          scaleY: 1
+        });
         document.body.style.cursor = "default";
         this.setState({showValidatorAddress: false})
       }
@@ -25,7 +33,8 @@ class Rectangleandlines extends React.Component{
     }
       )}
     render(){
-      let valtext = this.props.valinfo.accountId.toString().slice(0,8) + "......" + this.props.valinfo.accountId.toString().slice(-8)
+      let valtext = "accountId: "+this.props.valinfo.accountId.toString().slice(0,8) + "......" + this.props.valinfo.accountId.toString().slice(-8)
+      let stakedtext = "Bonded: " + this.props.staked.toString().slice(0, 7) + " DOT";
         return(
             <React.Fragment>
             <Line points={[this.props.circ_x, this.props.circ_y, this.props.x-12, this.props.y]}
@@ -51,7 +60,7 @@ class Rectangleandlines extends React.Component{
 
 
             {this.state.showValidatorAddress && <Text text={valtext} x={this.props.x-12} y={this.props.y-18} fill="#FFFFFF" />}
-
+            {this.state.showValidatorAddress && <Text text={stakedtext} x={this.props.x+220} y={this.props.y-18} fill="#FFFFFF" />}
 
             </React.Fragment>
 
