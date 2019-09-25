@@ -11,13 +11,6 @@ class Rectangle extends React.Component {
   
   componentDidMount() {
   }
-  shouldComponentUpdate(nextProps,nextState){
-    // if(this.props.validatorAddress !== nextProps.validatorAddress || this.state.showValidatorAddress !== nextState.showValidatorAddress)
-    if(this.state.showValidatorAddress !== nextState.showValidatorAddress)
-    {return true}
-    else
-      return false
-  }
 
   handleOnMouseOver = (e) => {
     e.target.setAttrs({

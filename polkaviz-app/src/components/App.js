@@ -103,7 +103,6 @@ class App extends React.Component {
 
   render() {
     const arr = this.props.valtotalinfo;
-    console.count("hi")
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
