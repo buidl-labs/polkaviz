@@ -26,7 +26,7 @@
 }
 
 
-.valheading h2, span{
+.valheading h2,.valheading span{
   margin: 0 auto;
   position: absolute;
   display: inline-block;

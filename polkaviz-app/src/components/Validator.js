@@ -3,7 +3,20 @@ import Rectangle from "./Rectangle";
 import Tail from "./Tail";
 
 
-class Validator extends React.PureComponent {
+class Validator extends React.Component {
+  
+
+  shouldComponentUpdate(nextProps,nextState){
+    // if(this.props.validatorAddress !== nextProps.validatorAddress || this.state.showValidatorAddress !== nextState.showValidatorAddress)
+    // if(1==3)
+    // { console.count("poi")
+    //   return true}
+    // else
+    // {
+    //   console.count("jio")
+    //   return false
+    return nextProps.validatorAddress !== this.props.validatorAddress
+  }
   // constructor(){
   //   super()
   //   this.state={

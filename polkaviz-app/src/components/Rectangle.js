@@ -3,7 +3,7 @@ import React from "react";
 import { Rect, Text} from "react-konva";
 // import {BrowserRouter as Route,Link} from 'react-router-dom'
 
-class Rectangle extends React.PureComponent {
+class Rectangle extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showValidatorAddress: false };
@@ -11,10 +11,18 @@ class Rectangle extends React.PureComponent {
   
   componentDidMount() {
   }
+  shouldComponentUpdate(nextProps,nextState){
+    // if(this.props.validatorAddress !== nextProps.validatorAddress || this.state.showValidatorAddress !== nextState.showValidatorAddress)
+    if(this.state.showValidatorAddress !== nextState.showValidatorAddress)
+    {return true}
+    else
+      return false
+  }
+
   handleOnMouseOver = (e) => {
     e.target.setAttrs({
-      scaleX: 1.3,
-      scaleY: 1.3
+      scaleX: 1.4,
+      scaleY: 1.4
     });
     document.body.style.cursor = "pointer";
     this.setState({showValidatorAddress: true})

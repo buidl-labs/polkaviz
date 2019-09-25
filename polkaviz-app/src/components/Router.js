@@ -238,7 +238,7 @@ class Router extends React.Component {
             <Route
               exact
               path="/"
-              component={props => (
+              render={props => (
                 <App
                   valtotalinfo={this.state.valtotalinfo}
                   createApi={this.createApi}
@@ -256,14 +256,14 @@ class Router extends React.Component {
             <Route
               exact
               path="/validator/:validatorAddress"
-              component={props => (
-                <ValidatorApp valtotalinfo={this.state.valtotalinfo} valiiinfo={0+1+2+3+4}/>
+              render={props => (
+                <ValidatorApp valtotalinfo={this.state.valtotalinfo}/>
               )}
             />
             <Route
               exact
               path="/nominator/:nominatorAddress"
-              component={props => (
+              render={props => (
                 <NominatorApp
                   valtotalinfo={this.state.valtotalinfo}
                   api={this.state.apipromise}

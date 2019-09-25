@@ -20,12 +20,13 @@ class ValidatorApp extends React.Component {
       valinfo: {},
       copied: false
     };
-
+    this.ismounted = false;
     this.totalvalue = 0;
     this.ownvalue = 0;
   }
 
   componentDidMount() {
+    this.ismounted = true;
     // console.log("val",this.props)
     this.createApi();
     // console.log("this",this.props.match.params.validatorAddress);
@@ -84,13 +85,18 @@ class ValidatorApp extends React.Component {
   };
 
   onCopy = () => {
+    if(this.ismounted){
     this.setState({ copied: true }, () =>
       setInterval(() => {
         this.setState({ copied: false });
       }, 3000)
     );
   };
+}
 
+  componentWillUnmount(){
+    this.ismounted = false
+  }
   render() {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -146,18 +152,18 @@ class ValidatorApp extends React.Component {
               >
                 <g
                   fill="none"
-                  fill-rule="nonzero"
+                  fillRule="nonzero"
                   stroke="none"
-                  stroke-width="1"
-                  stroke-linecap="butt"
-                  stroke-linejoin="miter"
-                  stroke-miterlimit="10"
-                  stroke-dasharray=""
-                  stroke-dashoffset="0"
-                  font-family="none"
-                  font-weight="none"
-                  font-size="none"
-                  text-anchor="none"
+                  strokeWidth="1"
+                  strokeLinecap="butt"
+                  strokeLinejoin="miter"
+                  strokeMiterlimit="10"
+                  strokeDasharray=""
+                  strokeDashoffset="0"
+                  fontFamily="none"
+                  fontWeight="none"
+                  fontSize="none"
+                  textAnchor="none"
                   >
                   <path d="M0,226v-226h226v226z" fill="none"></path>
                   <g fill="#ffffff">
