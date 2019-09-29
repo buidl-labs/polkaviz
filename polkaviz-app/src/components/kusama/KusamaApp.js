@@ -1,14 +1,14 @@
 import React from "react";
-import Relay from "./Relay";
+import Relay from "../Relay";
 import { Stage, Layer } from "react-konva";
-import Validator from "./Validator";
-import BlockAnimation from "./BlockAnimation";
+import Validator from "../Validator";
+import BlockAnimationNew from "./BlockAnimation-new";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
-import Bottombar from "./Bottombar";
+import Bottombar from "../Bottombar";
 import { withRouter } from 'react-router-dom';
 // import Parachains from './Parachains'
 
-class App extends React.Component {
+class KusamaApp extends React.Component {
   // constructor() {
   //   super();
   //   this.latestBlockAuthor = undefined;
@@ -102,6 +102,7 @@ class App extends React.Component {
   // }
 
   render() {
+    // console.log(this.props)
     const arr = this.props.valtotalinfo;
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
@@ -137,11 +138,12 @@ class App extends React.Component {
                     360 *
                       Math.sin((90 - 1 - (index * 360) / arr.length) * 0.0174533)
                   }
+                  isKusama={true}
                 />
               ))}
               {/* {console.log(this.props.bottombarobject.finalblock)}
               {console.log(this.props.previousBlock)} */}
-              {this.props.previousBlock !== undefined && <BlockAnimation
+              {this.props.previousBlock !== undefined && <BlockAnimationNew
                 key={this.props.validators.indexOf(this.props.lastAuthor)}
                 angle={
                   180 -
@@ -193,13 +195,13 @@ class App extends React.Component {
                     )
                 }
               />}
-              <Relay x={window.innerWidth} y={window.innerHeight} />
+              <Relay x={window.innerWidth} y={window.innerHeight} isKusama={true}/>
               
             </Layer>
           </Stage>
         </div>
         <div className="bottombar">
-          <Bottombar start={this.props.start} activevalidators={this.props.validators.length} validatorcount={this.props.validatorcount} bottombarobject ={this.props.bottombarobject}/>
+          <Bottombar start={this.props.start} activevalidators={this.props.validators.length} validatorcount={this.props.validatorcount} bottombarobject ={this.props.bottombarobject} isKusama={true}/>
         </div>
       </div>
 
@@ -208,4 +210,4 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+export default withRouter(KusamaApp);

@@ -31,7 +31,7 @@ class Rectangle extends React.Component {
   handleClick = () => {
     document.body.style.cursor = "default";
     this.props.history.push({
-      pathname:"/validator/"+ this.props.validatorAddress,
+      pathname:"/alexander/validator/"+ this.props.validatorAddress,
       state:{totalinfo:this.props.totalinfo,
       valinfo:this.props.valinfo,
       // nominatorinfo:this.props.nominatorinfo
@@ -40,10 +40,12 @@ class Rectangle extends React.Component {
   )}
 
   render() {
-    let valtext = "accountId: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
-    // console.log(this.props.angle)
     let x1 = this.props.x
     let y1 = this.props.y
+    let valtext = ""
+    if(!this.props.isMainWrapper){
+    valtext = "accountId: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
+    // console.log(this.props.angle)
     if(this.props.angle<=45 && this.props.angle>=0){
       x1 = this.props.x + 50
       y1 = this.props.y - 80
@@ -68,10 +70,10 @@ class Rectangle extends React.Component {
       x1 = this.props.x + 50
       y1 = this.props.y 
     }
+  }
     // let linkaddress = "/val/" + this.props.validatorAddress
     return (
       <React.Fragment>
-      {/* <Link to={linkaddress}> */}
         <Rect
         x={this.props.x}
         y={this.props.y}
@@ -80,12 +82,12 @@ class Rectangle extends React.Component {
         fill={"#9335A3"}
         cornerRadius={4.69457}
         rotation={this.props.angle}
-        onMouseOver={this.handleOnMouseOver}
-        onMouseOut={this.handleOnMouseOut}
-        onClick={this.handleClick}
+        onMouseOver={!this.props.isMainWrapper ? this.handleOnMouseOver : undefined}
+        onMouseOut={!this.props.isMainWrapper ? this.handleOnMouseOut : undefined}
+        onClick={!this.props.isMainWrapper && !this.props.isKusama ? this.handleClick : undefined}
       />
-      {/* </Link> */}
-      {this.state.showValidatorAddress && 
+
+        {this.state.showValidatorAddress && !this.props.isMainWrapper &&
       <Rect
         x={x1+20*Math.sin(this.props.angle *  0.0174533)-10}
         y={y1-20*Math.cos(this.props.angle *  0.0174533)-10}
@@ -98,27 +100,28 @@ class Rectangle extends React.Component {
         shadowColor="black"
         shadowOpacity={0.5} />
       }
-      {this.state.showValidatorAddress && 
+      {this.state.showValidatorAddress && !this.props.isMainWrapper &&
       <Text text={valtext} 
         x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
         y={y1-20*Math.cos(this.props.angle *  0.0174533) + 10}
         fontFamily="Roboto Mono" 
         fill="#FFFFFF" />   }
-          {this.state.showValidatorAddress && 
+          {this.state.showValidatorAddress && !this.props.isMainWrapper &&
           <Text text={this.props.nominators} 
           x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
           y={y1-20*Math.cos(this.props.angle *  0.0174533)+30 } 
           fill="#FFFFFF" />}
-          {this.state.showValidatorAddress && 
+          {this.state.showValidatorAddress && !this.props.isMainWrapper &&
           <Text text={this.props.bondvalue} 
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
             y={y1-20*Math.cos(this.props.angle *  0.0174533)+50} 
             fill="#FFFFFF" /> }
-          {this.state.showValidatorAddress && 
+          {this.state.showValidatorAddress && !this.props.isMainWrapper &&
           <Text text="Click to show Validator Analytics" 
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
             y={y1-20*Math.cos(this.props.angle *  0.0174533)+80} 
             fill="#9099B6" /> }
+          
      </React.Fragment> 
     );
   }

@@ -27,7 +27,7 @@ class Circleandline extends React.Component {
   handleClick = () => {
     document.body.style.cursor = "default";
     this.props.history.push({
-      pathname: "/nominator/" + this.props.text,
+      pathname: "/alexander/nominator/" + this.props.text,
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo }
     });
   };

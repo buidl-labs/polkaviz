@@ -48,14 +48,17 @@ class Validator extends React.Component {
   //   this.ismounted = false;
   // }
   render() {
+    let bondvalue = ""
+    let nomvalue = 0
+
+    if(!this.props.isMainWrapper && !this.props.isKusama){
     let totalvalue = this.props.valinfo.stakers.total / Math.pow(10,15)
     let ownvalue = this.props.valinfo.stakers.own /Math.pow(10,15)
     let totalbonded = 0
     totalbonded = totalvalue.toFixed(3)-ownvalue.toFixed(3)
-    let bondvalue = ""
     bondvalue = "Bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
-    let nomvalue = 0
     nomvalue = "Backed by: " + this.props.valinfo.stakers.others.length + " nominators"
+    }
     return (
       <React.Fragment>
         <Tail
@@ -74,6 +77,8 @@ class Validator extends React.Component {
           nominatorinfo={this.props.nominatorinfo}
           history={this.props.history}
           totalinfo={this.props.totalinfo}
+          isMainWrapper={this.props.isMainWrapper}
+          isKusama={this.props.isKusama}
         />
       </React.Fragment>
     );

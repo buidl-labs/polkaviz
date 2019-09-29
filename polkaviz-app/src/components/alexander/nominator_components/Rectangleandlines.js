@@ -27,7 +27,7 @@ class Rectangleandlines extends React.Component{
       handleClick = () => {
         document.body.style.cursor = "default";
         this.props.history.push({
-          pathname:"/validator/"+ this.props.valinfo.accountId,
+          pathname:"/alexander/validator/"+ this.props.valinfo.accountId,
           state:{totalinfo:this.props.totalinfo,
           valinfo:this.props.valinfo}
     }

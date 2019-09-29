@@ -81,6 +81,7 @@ class Bottombar extends React.Component {
         <Session
           sessionProgress={this.props.bottombarobject.bottombarinfo.sessionProgress}
           sessionLength={this.props.bottombarobject.bottombarinfo.sessionLength}
+          isKusama={this.props.isKusama}
         />
         <Era
           eraLength={this.props.bottombarobject.bottombarinfo.eraLength}

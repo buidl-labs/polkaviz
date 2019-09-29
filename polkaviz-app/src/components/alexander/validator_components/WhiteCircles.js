@@ -1,5 +1,5 @@
 import React from 'react'
-import Circleandline from './Circleandline.js'
+import Circleandline from './Circleandline'
 
 class WhiteCircles extends React.Component{
     render(){
