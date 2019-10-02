@@ -24,9 +24,9 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    if(!this.props.valtotalinfo){
-    this.props.createApi();
-    }
+    // if(!this.props.valtotalinfo){
+    // this.props.createApi();
+    // }
   }
 
   // async createApi() {
@@ -102,7 +102,9 @@ class App extends React.Component {
   // }
 
   render() {
-    const arr = this.props.valtotalinfo;
+    const arr = this.props.finalvalue;
+    // console.log(arr)
+    const intentionsarr = this.props.intentions
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
@@ -113,6 +115,19 @@ class App extends React.Component {
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
+
+        <div className="intentions">
+          <div>Next Up:</div>
+          {intentionsarr.map((ele,index) => {
+            return (
+            <div className="inten" key={index}>
+              <span className="valsign"></span>
+              {ele.toString().slice(0,8) + "......" + ele.toString().slice(-8)}
+            </div>
+            )
+          })}
+        </div>
+
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
@@ -121,12 +136,13 @@ class App extends React.Component {
               {arr.map((person, index) => (
                 <Validator
                   key={index}
-                  validatorAddress={this.props.valtotalinfo[index].valname}
-                  valinfo={this.props.valtotalinfo[index].valinfo}
+                  validatorAddress={person.valname}
+                  valinfo={person.valinfo}
                   totalinfo={this.props.valtotalinfo}
                   nominatorinfo={this.props.nominatorinfo}
                   angle={180 - (index * 360) / arr.length}
                   history={this.props.history}
+                  intentions={this.props.intentions}
                   x={
                     window.innerWidth +
                     360 *

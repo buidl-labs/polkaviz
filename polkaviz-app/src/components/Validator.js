@@ -59,16 +59,31 @@ class Validator extends React.Component {
     bondvalue = "Bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     nomvalue = "Backed by: " + this.props.valinfo.stakers.others.length + " nominators"
     }
+    let x1 = this.props.x
+    let y1 = this.props.y
+    let x2 = this.props.x
+    let y2 = this.props.y
+    let color ="#9335A3"
+    let opacity =1
+    if(!this.props.isMainWrapper && !this.props.isKusama){
+    if(this.props.intentions.includes(this.props.validatorAddress)){
+      x1=((x1-window.innerWidth)/360*390)+window.innerWidth
+      y1=((y1-window.innerHeight)/360*390)+window.innerHeight
+      color="yellow"
+      opacity=0
+    }
+  }
     return (
       <React.Fragment>
         <Tail
-          x={this.props.x / 2}
-          y={this.props.y / 2}
+          x={x2 / 2}
+          y={y2 / 2}
           angle={this.props.angle}
+          opacity={opacity}
         />
         <Rectangle
-          x={this.props.x / 2}
-          y={this.props.y / 2}
+          x={x1 / 2}
+          y={y1 / 2}
           angle={this.props.angle}
           validatorAddress={this.props.validatorAddress}
           valinfo={this.props.valinfo}
@@ -79,6 +94,8 @@ class Validator extends React.Component {
           totalinfo={this.props.totalinfo}
           isMainWrapper={this.props.isMainWrapper}
           isKusama={this.props.isKusama}
+          intentions={this.props.intentions}
+          color={color}
         />
       </React.Fragment>
     );

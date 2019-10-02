@@ -104,16 +104,31 @@ class KusamaApp extends React.Component {
   render() {
     // console.log(this.props)
     const arr = this.props.valtotalinfo;
+    const intentionsarr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
       // this.props.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) : 
       // (
+
       <div className="container">
 
         <div className="heading">
           <h2>Polkadot Network</h2>
         </div>
+
+        <div className="intentions">
+          <div>Next Up:</div>
+          {intentionsarr.map((ele,index) => {
+            return (
+            <div className="inten" key={index}>
+              <span className="valsign"></span>
+              {ele.toString().slice(0,8) + "......" + ele.toString().slice(-8)}
+            </div>
+            )
+          })}
+        </div>
+        
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>

@@ -219,3 +219,33 @@ body {
 .right-stage{
   background-color: black;
 }
+
+
+.intentions{
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  overflow: auto;
+  scroll-behavior: smooth;
+  z-index: 1;
+  top:100px;
+  right: 100px;
+  color: white;
+  font-size: 14px;
+  line-height: 26px;
+}
+.valsign{
+  width: 15px;
+  height: 8px;
+  background-color: yellow;
+  border-radius: 4.69px;
+  display: inline-block;
+  margin-right: 10px;
+}
+/* .inten ::before {
+  content:"   ";
+  height: 20px;
+  width: 30px;
+  border-radius:20%;
+  background-color: yellow;
+} */

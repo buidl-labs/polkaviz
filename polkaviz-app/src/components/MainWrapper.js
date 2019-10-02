@@ -20,9 +20,9 @@ class MainWrapper extends React.Component {
   // }
 
   componentDidMount() {
-    if (!this.props.valtotalinfo) {
-      this.props.createApi();
-    }
+    // if (!this.props.valtotalinfo) {
+    //   this.props.createApi();
+    // }
   }
 
   handleOnMouseOver = () => {

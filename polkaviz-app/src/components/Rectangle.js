@@ -42,6 +42,7 @@ class Rectangle extends React.Component {
   render() {
     let x1 = this.props.x
     let y1 = this.props.y
+    // let x2 = this.props.x/
     let valtext = ""
     if(!this.props.isMainWrapper){
     valtext = "accountId: " + this.props.validatorAddress.toString().slice(0,8) + "......" + this.props.validatorAddress.toString().slice(-8)
@@ -71,6 +72,9 @@ class Rectangle extends React.Component {
       y1 = this.props.y 
     }
   }
+  // if(this.props.intentions.includes(this.props.validatorAddress)){
+
+  // }
     // let linkaddress = "/val/" + this.props.validatorAddress
     return (
       <React.Fragment>
@@ -79,7 +83,7 @@ class Rectangle extends React.Component {
         y={this.props.y}
         width={6}
         height={12}
-        fill={"#9335A3"}
+        fill={this.props.color}
         cornerRadius={4.69457}
         rotation={this.props.angle}
         onMouseOver={!this.props.isMainWrapper ? this.handleOnMouseOver : undefined}
@@ -94,7 +98,7 @@ class Rectangle extends React.Component {
         width={260}
         height={110}
         cornerRadius={4.69457}
-        fill="#333333"
+        fill={this.props.color}
         shadowOffsetY={10}
         shadowBlur={10}
         shadowColor="black"

@@ -16,7 +16,6 @@ class Router extends React.Component {
       start: null,
       isloading: true,
       valtotalinfo: [],
-      apipromise: "",
       bottombarinfo: {
         eraLength: 0,
         eraProgress: 0,
@@ -27,13 +26,14 @@ class Router extends React.Component {
       finalblock: 0,
       previousBlock: undefined,
       nominatorinfo: [],
+      intentions:[],
+      finalvalue:[],
 
       kuvalidators: [],
       kulastAuthor: "",
       kustart: null,
       kuisloading: true,
       kuvaltotalinfo: [],
-      kuapipromise: "",
       kubottombarinfo: {
         eraLength: 0,
         eraProgress: 0,
@@ -43,6 +43,7 @@ class Router extends React.Component {
       kutotalValidators: 0,
       kufinalblock: 0,
       kupreviousBlock: undefined,
+      kuintentions: []
     };
     this.elapsed = 0;
     this.kuelapsed = 0;
@@ -51,7 +52,7 @@ class Router extends React.Component {
   componentDidMount() {
     // console.log(this.props)
     
-    // this.createApi();
+    this.createApi();
     this.createApi2();
     this.interval = setInterval(() => {
       // console.log(this.state.elapsed, this.props.counter);
@@ -83,13 +84,21 @@ class Router extends React.Component {
   async createApi2() {
 
 
-    let provider = new WsProvider("wss://kusama-rpc.polkadot.io");
-    const apinew = await ApiPromise.create({ provider });
+  let provider = new WsProvider("wss://kusama-rpc.polkadot.io");
+  const apinew = await ApiPromise.create({ provider });
+  
+  // const intentions = await apinew.query.staking.validators()
+  // console.log(JSON.parse(JSON.stringify(intentions)))
+  
+  // this.setState({
+  //   intentions: JSON.parse(JSON.stringify(intentions))
+  // })
+
     await apinew.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       if (this.ismounted) {
-        this.setState({ kulastAuthor: lastAuthor, kuapipromise: apinew });
+        this.setState({ kulastAuthor: lastAuthor});
       }
       const start = new Date();
       const blockNumber = block.number.toString();
@@ -141,6 +150,7 @@ class Router extends React.Component {
       //   console.log(JSON.stringify(val))
       // })
       // console.log(JSON.stringify(infyui))
+
       if (this.ismounted) {
         // console.log("arr1",arr1)
         this.setState(
@@ -155,6 +165,7 @@ class Router extends React.Component {
 
     start();
 
+    // console.log(intentions.toJSON())
     await apinew.derive.session.info(header => {
       // console.log(`eraLength #${header.eraLength}`);
       // console.log(`eraProgress #${header.eraProgress}`);
@@ -174,7 +185,7 @@ class Router extends React.Component {
             sessionProgress: sessionProgress
           }
         },
-        () => this.createApi()
+        // () => this.createApi()
         );
       }
     });
@@ -217,7 +228,7 @@ class Router extends React.Component {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       if (this.ismounted) {
-        this.setState({ lastAuthor: lastAuthor, apipromise: api });
+        this.setState({ lastAuthor: lastAuthor });
       }
       const start = new Date();
       const blockNumber = block.number.toString();
@@ -264,14 +275,51 @@ class Router extends React.Component {
         };
       });
 
+
+
+
+const intentions = await api.query.staking.validators()
+console.log(JSON.parse(JSON.stringify(intentions)))
+const allvals = JSON.parse(JSON.stringify(intentions))[0]
+console.log(allvals)
+// allvals.forEach(ele => {
+//   this.state.validators.forEach(val => {
+    
+//   })
+// })
+const arr2 = arr1.map(ele => ele.valname)
+console.log(this.state.validators)
+const arr3 = allvals.filter(e => !arr2.includes(e))
+console.log(arr3)
+const intentionstotalinfo = await Promise.all(
+  arr3.map(val => api.derive.staking.info(val))
+);
+const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
+  return {
+    valname: info.accountId,
+    valinfo: info
+  };
+});
+// let arr5 = this.state.validators.push(arr4);
+let arr5 = [...arr1,...arr4]
+console.log(arr4,arr5)
+// this.setState({
+//   finalvalue:arr5
+// })
+// const ans = await api.derive.staking.info("DdFp1EWazfocKdYuCinGyNCPAQRYr6LDkwURG7k9vQg51WS")
+// console.log(JSON.parse(JSON.stringify(ans)))
+
+
       if (this.ismounted) {
         // console.log("arr1",arr1)
         this.setState(
           {
+            finalvalue:arr5,
             valtotalinfo: arr1,
+            intentions: arr3,
             isloading: false
           },
-          () => this.getnominators()
+          () => getnominators()
         );
       }
     };
@@ -299,36 +347,40 @@ class Router extends React.Component {
       }
     });
 
+    const getnominators = async () => {
+      let arr = [];
+      // console.log("valtotal", this.state.valtotalinfo);
+      this.state.valtotalinfo.forEach(ele => {
+        // console.log(ele);
+        ele.valinfo.stakers.others.forEach(nom => {
+          arr.push(nom.who);
+        });
+      });
+  
+      // console.log("here are unfiltered", arr);
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+  
+      let nominators = arr.filter(onlyUnique);
+      // console.log("total", nominators);
+  
+      const nominatorstotalinfo = await Promise.all(
+        nominators.map(val => api.derive.staking.info(val))
+      );
+  
+      let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
+      if(this.ismounted){
+      this.setState({
+        nominatorinfo: arr2
+      });
+    }
+      // console.log(arr2)
+    };
+
   }
 
-  getnominators = async () => {
-    let arr = [];
-    // console.log("valtotal", this.state.valtotalinfo);
-    this.state.valtotalinfo.forEach(ele => {
-      // console.log(ele);
-      ele.valinfo.stakers.others.forEach(nom => {
-        arr.push(nom.who);
-      });
-    });
-
-    // console.log("here are unfiltered", arr);
-    function onlyUnique(value, index, self) {
-      return self.indexOf(value) === index;
-    }
-
-    let nominators = arr.filter(onlyUnique);
-    // console.log("total", nominators);
-
-    const nominatorstotalinfo = await Promise.all(
-      nominators.map(val => this.state.apipromise.derive.staking.info(val))
-    );
-
-    let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
-    this.setState({
-      nominatorinfo: arr2
-    });
-    // console.log(arr2)
-  };
+  
 
   componentWillUnmount() {
     this.ismounted = false;
@@ -336,10 +388,13 @@ class Router extends React.Component {
   }
 
   render() {
-    console.count("hi")
-    // console.log("route", this.state.bottombarinfo);
-    // console.log("nom",this.state.nominatorinfo)
-    // console.log(this.state.kubottombarinfo)
+    
+    // console.count("hi")
+    let loadingdone = false
+    if(!this.state.isloading && !this.state.kuisloading){
+      loadingdone = true
+    }
+    // console.table(this.state.isloading,this.state.kuisloading,loadingdone)
     let bottombarobject = {
       bottombarinfo: this.state.bottombarinfo,
       finalblock: this.state.finalblock,
@@ -350,7 +405,7 @@ class Router extends React.Component {
       finalblock: this.state.kufinalblock,
       validatorcount: this.state.kutotalValidators
     };
-    return this.state.isloading ? (
+    return !loadingdone ? (
       <React.Fragment>
         <div className="lds-ripple">
           <div></div>
@@ -367,11 +422,10 @@ class Router extends React.Component {
             render={props => (
               <MainWrapper
                 valtotalinfo={this.state.valtotalinfo}
-                createApi={this.createApi}
+                // createApi={this.createApi}
                 validators={this.state.validators}
                 start={this.state.start}
                 lastAuthor={this.state.lastAuthor}
-                api={this.state.apipromise}
                 validatorcount={this.state.totalValidators}
                 bottombarobject={bottombarobject}
                 nominatorinfo={this.state.nominatorinfo}
@@ -381,7 +435,6 @@ class Router extends React.Component {
                 kuvalidators={this.state.kuvalidators}
                 kustart={this.state.kustart}
                 kulastAuthor={this.state.kulastAuthor}
-                kuapi={this.state.kuapipromise}
                 kuvalidatorcount={this.state.kutotalValidators}
                 kubottombarobject={bottombarobject2}
                 kunominatorinfo={this.state.kunominatorinfo}
@@ -399,11 +452,12 @@ class Router extends React.Component {
                 validators={this.state.validators}
                 start={this.state.start}
                 lastAuthor={this.state.lastAuthor}
-                api={this.state.apipromise}
                 validatorcount={this.state.totalValidators}
                 bottombarobject={bottombarobject}
                 nominatorinfo={this.state.nominatorinfo}
                 previousBlock={this.state.previousBlock}
+                intentions={this.state.intentions}
+                finalvalue={this.state.finalvalue}
               />
             )}
           />
@@ -417,7 +471,6 @@ class Router extends React.Component {
                 validators={this.state.kuvalidators}
                 start={this.state.kustart}
                 lastAuthor={this.state.kulastAuthor}
-                api={this.state.kuapipromise}
                 validatorcount={this.state.kutotalValidators}
                 bottombarobject={bottombarobject2}
                 nominatorinfo={this.state.kunominatorinfo}
@@ -438,7 +491,6 @@ class Router extends React.Component {
             render={props => (
               <NominatorApp
                 valtotalinfo={this.state.valtotalinfo}
-                api={this.state.apipromise}
                 nominatorinfo={this.state.nominatorinfo}
               />
             )}
