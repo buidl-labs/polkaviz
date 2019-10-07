@@ -1,11 +1,18 @@
-.container {
+*{
+  margin: 0;
+}
+.container , .kusamacontainer{
   background: #262733;
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
 }
+.kusamacontainer{
+  background:#000000;
+}
+
 .heading h2 {
   margin: 0 auto;
   position: absolute;
@@ -23,6 +30,37 @@
 
   color: #ffffff;
 }
+
+
+.valheading h2,.valheading span{
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  width: 1087.81px;
+  height: 21.13px;
+  left: 58px;
+  top: 71px;
+
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 23.4729px;
+  line-height: 28px;
+
+  color: #ffffff;
+}
+.valheading span{
+    left: 650px;
+    z-index: 1;
+}
+.valheading span:hover{
+  cursor: pointer;
+  color: red;
+}
+.valheading span img{
+  color: #ffffff;
+}
+
 .relay-circle {
   margin: 0 auto;
   display: inline-block;
@@ -36,14 +74,30 @@
   width: 100%;
   height: 100%;
 }
+.nombottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
+.valbottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
 
-.counter, .era, .session, .finalizedblock, .validatorcount{
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue{
   margin: 0 auto;
   position: relative;
   width: 225.81px;
   height: 21.13px;
   left: 58px;
-  bottom: 60px;
+  bottom: 45px;
 
   font-family: "Roboto Mono";
   font-style: normal;
@@ -53,6 +107,22 @@
 
   color: #ffffff;
 }
+.counter, .era, .session, .finalizedblock, .validatorcount{
+  bottom: 70px;
+}
+.finalizedblock{
+  width: 245.81px;
+}
+
+.totalbonded, .selfbonded, .nominatorbonded{
+  width: 550.81px;
+}
+
+
+.controllername, .bondvalue{
+  width: 700.81px;
+}
+
 
 .validator {
   margin: 0 auto;
@@ -71,12 +141,18 @@ html {
 }
 body {
   margin: 0;
+  background: #262733;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
 
 
 .lds-ripple {
   display: inline-block;
-  position: relative;
+  position: absolute;
   width: 64px;
   height: 64px;
   top: 36%;
@@ -84,10 +160,13 @@ body {
 }
 .lds-ripple div {
   position: absolute;
+  top: 40%;
   border: 4px solid #dfc;
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  width: 100%;
+  height: 100vh;
 }
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
@@ -118,4 +197,144 @@ body {
   top: 60%;
   left: 39%;
   color: white;
+}
+
+
+.back-arrow{
+  position:absolute;
+  left:32px;
+  top:25px;
+  color:#ffffff;
+  font-family:"Arial";
+  font-size:35px;
+  width:34px;
+  height: 30px;
+  z-index: 1;
+}
+.back-arrow:hover{
+  transform: scale(1.1);
+}
+
+.home{
+  position:absolute;
+  left:82px;
+  top:28px;
+  color:#ffffff;
+  font-family:"Arial";
+  font-size:25px;
+  width:34px;
+  height: 30px;
+  z-index: 1;
+}
+.home:hover{
+  transform: scale(1.1);
+}
+
+
+.mainWrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+
+.right-stage{
+  background-color: black;
+}
+
+
+.intentions{
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  overflow: auto;
+  /* scroll-behavior: smooth; */
+  z-index: 1;
+  top:100px;
+  right: 100px;
+  color: white;
+  font-size: 14px;
+  line-height: 26px;
+  scrollbar-color: blue red;
+  scrollbar-width: thin;
+}
+
+.intentions::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.intentions::-webkit-scrollbar-track-piece  {
+  background-color: #C2D2E4;
+}
+
+.intentions::-webkit-scrollbar-thumb:vertical {
+  height: 30px;
+  background-color: #0A4C95;
+}
+
+.valsign{
+  width: 15px;
+  height: 8px;
+  background-color: yellow;
+  border-radius: 4.69px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.mainwrapper-text{
+  background-color:#c1cfda;
+  padding-left: 58px;
+  padding-top:51px;
+  height: 120px;
+}
+.mainwrapper-text h2{
+  padding-top: 10px;
+  font-size: 16px;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+}
+.mainwrapper-text h1{
+  font-size: 24px;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+}
+/* .inten ::before {
+  content:"   ";
+  height: 20px;
+  width: 30px;
+  border-radius:20%;
+  background-color: yellow;
+} */
+
+.headingmainwrapper1 h2, .headingmainwrapper2 h2 {
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 21.13px;
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: #ffffff;
+  text-align: center;
+}
+ .headingmainwrapper1 h2 {
+  bottom: 30%;
+}
+.headingmainwrapper2 h2 {
+  right: -27%;
+  bottom: 11%;
+} 
+.kusamaconnecting{
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: #ffffff; 
+  margin-top:45%;
+  margin-left:10%;
 }

@@ -1,8 +1,9 @@
 import React from 'react'
-import Circleandline from './Circleandline.js'
+import Circleandline from './Circleandline'
 
 class WhiteCircles extends React.Component{
     render(){
+        console.log("whitecircle")
         let angle= 2/3*Math.PI;
         let maxAngle = 2/3*Math.PI
         var arr =[];
@@ -23,9 +24,12 @@ class WhiteCircles extends React.Component{
                             x2={this.props.x}
                             y2={this.props.y}
                             text={element.who}
+                            nombonded={element.value}
                             history={this.props.history}
                             totalinfo={this.props.totalinfo}
                             valinfo={this.props.valinfo}
+                            angle = {angle}
+                            radius = {this.props.r}
                             />)
             });
             
