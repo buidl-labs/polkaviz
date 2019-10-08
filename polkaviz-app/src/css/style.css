@@ -325,7 +325,6 @@ body {
   bottom: 30%;
 }
 .headingmainwrapper2 h2 {
-  right: -27%;
   bottom: 11%;
 } 
 .kusamaconnecting{
@@ -337,4 +336,37 @@ body {
   color: #ffffff; 
   margin-top:45%;
   margin-left:10%;
+}
+
+.animate{
+  position: relative;
+  animation-name: fadeinup;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeinup{
+  from{
+      top: 90%;
+      opacity: 0;
+  }
+  to{
+      top: 70%;
+      opacity: 1;
+  }
+}
+.animatereverse{
+  position: relative;
+  animation-name: fadeoutdown;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeoutdown{
+  from{
+      top: 70%;
+      opacity: 1;
+  }
+  to{
+      top: 90%;
+      opacity: 0;
+  }
 }

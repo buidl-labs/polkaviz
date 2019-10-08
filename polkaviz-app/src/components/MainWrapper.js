@@ -28,16 +28,23 @@ class MainWrapper extends React.Component {
 
   handleOnMouseOverstage1 = () => {
     document.body.style.cursor = "pointer";
-    // document.getElementById("alexanderRelay").setAttrs({
-    //   scaleX:1.1,
-    //   scaleY:1.1
-    // })
+    document.getElementById("alexandertext").classList.remove("animatereverse")
+    document.getElementById("alexandertext").classList.add("animate")
   }
   handleOnMouseOverstage2 = () => {
     document.body.style.cursor = "pointer";
+    document.getElementById("kusamatext").classList.remove("animatereverse")
+    document.getElementById("kusamatext").classList.add("animate")
   }
-  handleOnMouseOut = () => {
+  handleOnMouseOutstage1 = () => {
     document.body.style.cursor = "default";
+    document.getElementById("alexandertext").classList.remove("animate")
+    document.getElementById("alexandertext").classList.add("animatereverse")
+   }
+   handleOnMouseOutstage2 = () => {
+    document.body.style.cursor = "default";
+    document.getElementById("kusamatext").classList.remove("animate")
+    document.getElementById("kusamatext").classList.add("animatereverse")
    }
   alexanderClick = () => {
     document.body.style.cursor = "default";
@@ -78,12 +85,17 @@ class MainWrapper extends React.Component {
       <div className="mainWrapper">
         
         <div className="container">
-          <div className="headingmainwrapper1">
+          <div className="headingmainwrapper1" id="alexandertext">
             <h2>Alexander Network</h2>
           </div>
           <div className="relay-circle">
             {this.props.isloading ? <p className="alexanderconnecting">Please wait while we connect to alexander network</p>:
-            <Stage width={window.innerWidth/2} height={window.innerHeight} onClick={this.alexanderClick} onMouseOver={this.handleOnMouseOverstage1} onMouseOut={this.handleOnMouseOut} >
+            <Stage 
+            width={window.innerWidth/2} 
+            height={window.innerHeight} 
+            onClick={this.alexanderClick} 
+            onMouseOver={() => this.handleOnMouseOverstage1()} 
+            onMouseOut={() => this.handleOnMouseOutstage1()} >
               
               <Layer>
                 {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
@@ -192,10 +204,14 @@ class MainWrapper extends React.Component {
         <div className="right-stage">
         {this.props.kusamaisloading ? <p className="kusamaconnecting">Please Wait while we connect to Kusama Network</p>:
         <React.Fragment>
-        <div className="headingmainwrapper2">
+        <div className="headingmainwrapper2" id="kusamatext">
             <h2>Kusama Network</h2>
           </div>
-         <Stage width={window.innerWidth/2} height={window.innerHeight - 200} onClick={this.kusamaClick} onMouseOver={this.handleOnMouseOverstage2} onMouseOut={this.handleOnMouseOut} >
+         <Stage width={window.innerWidth/2} 
+         height={window.innerHeight - 200} 
+         onClick={this.kusamaClick} 
+         onMouseOver={() => this.handleOnMouseOverstage2()} 
+         onMouseOut={() => this.handleOnMouseOutstage2()} >
               <Layer>
                 {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
                 {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
