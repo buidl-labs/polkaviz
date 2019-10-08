@@ -321,6 +321,12 @@ body {
   color: #ffffff;
   text-align: center;
 }
+.headingmainwrapper1{
+  opacity:0;
+}
+.headingmainwrapper2{
+  opacity:0;
+}
  .headingmainwrapper1 h2 {
   bottom: 30%;
 }
