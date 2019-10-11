@@ -69,7 +69,6 @@ class MainWrapper extends React.Component {
     let arr = this.props.validators;
     if(this.props.validatorsandintentions.length !== 0 ){
     arr = this.props.validatorsandintentions;
-    console.log("intentions are loaded")
         }
     const arr2 = this.props.kusamavalidators;
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
@@ -244,12 +243,12 @@ class MainWrapper extends React.Component {
                 ))}
                 {/* {console.log(this.props.bottombarobject.finalblock)}
               {console.log(this.props.previousBlock)} */}
-                {this.props.kupreviousBlock !== undefined && (
+                {this.props.kusamapreviousBlock !== undefined && (
                   <BlockAnimationNew
-                    key={this.props.kuvalidators.indexOf(this.props.kulastAuthor)}
+                    key={this.props.kusamavalidators.indexOf(this.props.kusamalastAuthor)}
                     angle={
                       180 -
-                      (this.props.kuvalidators.indexOf(this.props.kulastAuthor) *
+                      (this.props.kusamavalidators.indexOf(this.props.kusamalastAuthor) *
                         360) /
                         arr2.length
                     }
@@ -258,8 +257,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.cos(
                           (90 -
-                            (this.props.kuvalidators.indexOf(
-                              this.props.kulastAuthor
+                            (this.props.kusamavalidators.indexOf(
+                              this.props.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -271,8 +270,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.sin(
                           (90 -
-                            (this.props.kuvalidators.indexOf(
-                              this.props.kulastAuthor
+                            (this.props.kusamavalidators.indexOf(
+                              this.props.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -284,8 +283,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.cos(
                           (90 -
-                            (this.props.kuvalidators.indexOf(
-                              this.props.kulastAuthor
+                            (this.props.kusamavalidators.indexOf(
+                              this.props.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -297,8 +296,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.sin(
                           (90 -
-                            (this.props.kuvalidators.indexOf(
-                              this.props.kulastAuthor
+                            (this.props.kusamavalidators.indexOf(
+                              this.props.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *

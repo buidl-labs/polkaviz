@@ -12,13 +12,15 @@ class App extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
     return this.props.lastAuthor !== nextProps.lastAuthor || this.props.bottombarobject !== nextProps.bottombarobject
 }
+  componentDidMount(){
+  }
   render() {
     let arr = this.props.validators;
     if(this.props.validatorsandintentions.length !== 0 ){
     arr = this.props.validatorsandintentions;
         }    // console.log(arr)
     const intentionsarr = this.props.intentions
-    console.log(this.props.validatorsandintentions)
+    // console.log(this.props.validatorsandintentions)
     // console.log(this.props.lastAuthor,this.props.validators,this.props.valtotalinfo)
     // console.log(this.props.validators.indexOf(this.props.lastAuthor))
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators

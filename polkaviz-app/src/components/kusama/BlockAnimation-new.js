@@ -8,6 +8,7 @@ class BlockAnimationNew extends React.Component {
 }
   handleClick = () => this.setState(state => ({ flag: !state.flag }));
   render() {
+    console.count("kusama animation")
     const hexagonRadius=6
     const duration=1000
     return (
