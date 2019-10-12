@@ -6,6 +6,9 @@ import { Route, Switch, HashRouter } from "react-router-dom";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import MainWrapper from "./MainWrapper";
 import KusamaApp from "./kusama/KusamaApp";
+import {NavLink} from "react-router-dom"
+
+
 class Router extends React.Component {
   constructor() {
     super();
@@ -28,7 +31,7 @@ class Router extends React.Component {
       nominatorinfo: [],
       intentions: [],
       validatorsandintentions: [],
-      validatorandintentionloading : true,
+      validatorandintentionloading: true,
 
       kusamavalidators: [],
       kusamalastAuthor: "",
@@ -77,7 +80,10 @@ class Router extends React.Component {
     // console.log("here " + this.props.start)
     this.kusamaelapsed = new Date() - this.state.kusamastart;
     // console.log('elapsed'+ this.elapsed)
-    if (this.state.kusamapreviousBlock !== undefined && this.kusamaelapsed > 3000) {
+    if (
+      this.state.kusamapreviousBlock !== undefined &&
+      this.kusamaelapsed > 3000
+    ) {
       this.setState({ kusamapreviousBlock: undefined });
     }
   }
@@ -117,7 +123,7 @@ class Router extends React.Component {
       if (this.ismounted) {
         this.setState({
           kusamavalidators: sessionValidators,
-          kusamaisloading:false
+          kusamaisloading: false
         });
       }
     });
@@ -242,7 +248,7 @@ class Router extends React.Component {
     await api.query.session.validators(validators => {
       // console.log(validators)
       const sessionValidators = validators.map(x => x.toString());
-      console.log(sessionValidators)
+      console.log(sessionValidators);
       if (this.ismounted) {
         this.setState({
           validators: sessionValidators,
@@ -311,7 +317,7 @@ class Router extends React.Component {
             validatorsandintentions: arr5,
             valtotalinfo: arr1,
             intentions: arr3,
-            validatorandintentionloading:false
+            validatorandintentionloading: false
           },
           () => getnominators()
         );
@@ -378,6 +384,23 @@ class Router extends React.Component {
     clearInterval(this.interval);
   }
 
+  /* Set the width of the side navigation to 250px */
+  openNav = () => {
+    document.getElementById("mySidenav").style.width = "25%";
+    document.getElementById("main").style.opacity="0.5";
+  };
+
+  /* Set the width of the side navigation to 0 */
+  closeNav = () => {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.opacity="1";
+  };
+  handleNavClick = () => {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.opacity="1";
+  }
+  
+
   render() {
     // console.count("hi")
     let loadingdone = false;
@@ -403,102 +426,122 @@ class Router extends React.Component {
         </div>
       </React.Fragment>
     ) : (
-      <HashRouter>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <MainWrapper
-                valtotalinfo={this.state.valtotalinfo}
-                // createApi={this.createApi}
-                validators={this.state.validators}
-                start={this.state.start}
-                lastAuthor={this.state.lastAuthor}
-                validatorcount={this.state.totalValidators}
-                bottombarobject={bottombarobject}
-                nominatorinfo={this.state.nominatorinfo}
-                previousBlock={this.state.previousBlock}
-                isloading={this.state.isloading}
-                intentions={this.state.intentions}
-                validatorsandintentions={this.state.validatorsandintentions}
-                kusamavaltotalinfo={this.state.kusamavaltotalinfo}
-                kusamacreateApi={this.createApi2}
-                kusamavalidators={this.state.kusamavalidators}
-                kusamastart={this.state.kusamastart}
-                kusamalastAuthor={this.state.kusamalastAuthor}
-                kusamavalidatorcount={this.state.kusamatotalValidators}
-                kusamabottombarobject={bottombarobject2}
-                kusamanominatorinfo={this.state.kusamanominatorinfo}
-                kusamapreviousBlock={this.state.kusamapreviousBlock}
-                kusamaisloading = {this.state.kusamaisloading}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/alexander"
-            render={props => (
-              <App
-                valtotalinfo={this.state.valtotalinfo}
-                createApi={this.createApi}
-                validators={this.state.validators}
-                start={this.state.start}
-                lastAuthor={this.state.lastAuthor}
-                validatorcount={this.state.totalValidators}
-                bottombarobject={bottombarobject}
-                nominatorinfo={this.state.nominatorinfo}
-                previousBlock={this.state.previousBlock}
-                intentions={this.state.intentions}
-                validatorsandintentions={this.state.validatorsandintentions}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/kusama"
-            render={props => (
-              <KusamaApp
-                valtotalinfo={this.state.kusamavaltotalinfo}
-                createApi={this.createApi2}
-                validators={this.state.kusamavalidators}
-                start={this.state.kusamastart}
-                lastAuthor={this.state.kusamalastAuthor}
-                validatorcount={this.state.kusamatotalValidators}
-                bottombarobject={bottombarobject2}
-                nominatorinfo={this.state.kusamanominatorinfo}
-                previousBlock={this.state.kusamapreviousBlock}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/alexander/validator/:validatorAddress"
-            render={props => (
-              <ValidatorApp 
-                valtotalinfo={this.state.valtotalinfo}
-                intentions={this.state.intentions}
-                validatorsandintentions = {this.state.validatorsandintentions}
-                validatorandintentionloading = {this.state.validatorandintentionloading}
-                />
-            )}
-          />
-          <Route
-            exact
-            path="/alexander/nominator/:nominatorAddress"
-            render={props => (
-              <NominatorApp
-                valtotalinfo={this.state.valtotalinfo}
-                nominatorinfo={this.state.nominatorinfo}
-                intentions={this.state.intentions}
-                validatorsandintentions = {this.state.validatorsandintentions}
-                validatorandintentionloading = {this.state.validatorandintentionloading}
+      <React.Fragment>
+        <HashRouter>
+        <div id="mySidenav" className="sidenav">
+          <div className="closebtn" onClick={this.closeNav}>
+            &times;
+          </div>
+          <h2>Menu</h2>
+          <NavLink exact to = "/" className = "navlink" onClick={this.handleNavClick}>Home</NavLink>
+          <NavLink to = "/alexander" className = "navlink" onClick={this.handleNavClick}>Alexander</NavLink>
+          <NavLink to = "/kusama" className = "navlink" onClick={this.handleNavClick}>Kusama</NavLink>
+        </div>
 
+        <span onClick={this.openNav} className="opennav"> &#9776; </span>
+
+        <div id="main">
+          
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <MainWrapper
+                    valtotalinfo={this.state.valtotalinfo}
+                    // createApi={this.createApi}
+                    validators={this.state.validators}
+                    start={this.state.start}
+                    lastAuthor={this.state.lastAuthor}
+                    validatorcount={this.state.totalValidators}
+                    bottombarobject={bottombarobject}
+                    nominatorinfo={this.state.nominatorinfo}
+                    previousBlock={this.state.previousBlock}
+                    isloading={this.state.isloading}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                    kusamavaltotalinfo={this.state.kusamavaltotalinfo}
+                    kusamacreateApi={this.createApi2}
+                    kusamavalidators={this.state.kusamavalidators}
+                    kusamastart={this.state.kusamastart}
+                    kusamalastAuthor={this.state.kusamalastAuthor}
+                    kusamavalidatorcount={this.state.kusamatotalValidators}
+                    kusamabottombarobject={bottombarobject2}
+                    kusamanominatorinfo={this.state.kusamanominatorinfo}
+                    kusamapreviousBlock={this.state.kusamapreviousBlock}
+                    kusamaisloading={this.state.kusamaisloading}
+                  />
+                )}
               />
-            )}
-          />
-        </Switch>
-      </HashRouter>
+              <Route
+                exact
+                path="/alexander"
+                render={props => (
+                  <App
+                    valtotalinfo={this.state.valtotalinfo}
+                    createApi={this.createApi}
+                    validators={this.state.validators}
+                    start={this.state.start}
+                    lastAuthor={this.state.lastAuthor}
+                    validatorcount={this.state.totalValidators}
+                    bottombarobject={bottombarobject}
+                    nominatorinfo={this.state.nominatorinfo}
+                    previousBlock={this.state.previousBlock}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/kusama"
+                render={props => (
+                  <KusamaApp
+                    valtotalinfo={this.state.kusamavaltotalinfo}
+                    createApi={this.createApi2}
+                    validators={this.state.kusamavalidators}
+                    start={this.state.kusamastart}
+                    lastAuthor={this.state.kusamalastAuthor}
+                    validatorcount={this.state.kusamatotalValidators}
+                    bottombarobject={bottombarobject2}
+                    nominatorinfo={this.state.kusamanominatorinfo}
+                    previousBlock={this.state.kusamapreviousBlock}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/alexander/validator/:validatorAddress"
+                render={props => (
+                  <ValidatorApp
+                    valtotalinfo={this.state.valtotalinfo}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                    validatorandintentionloading={
+                      this.state.validatorandintentionloading
+                    }
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/alexander/nominator/:nominatorAddress"
+                render={props => (
+                  <NominatorApp
+                    valtotalinfo={this.state.valtotalinfo}
+                    nominatorinfo={this.state.nominatorinfo}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                    validatorandintentionloading={
+                      this.state.validatorandintentionloading
+                    }
+                  />
+                )}
+              />
+            </Switch>
+        </div>
+          </HashRouter>
+      </React.Fragment>
     );
   }
 }

@@ -376,3 +376,77 @@ body {
       opacity: 0;
   }
 }
+
+
+
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #006989;
+  
+}
+.opennav{
+  z-index: 1;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: white;
+  font-size: 2em;
+}
+.opennav:hover{
+  cursor: pointer;
+  color: #006989;
+}
+
+/* The navigation menu links */
+.navlink {
+  padding: 8px 8px 8px 0px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  margin: 5% 10%;
+  transition: border 0.3s ease-in-out 0s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.navlink:hover {
+  color: #f1f1f1;
+  border-bottom-color: rgba(255,255,255,1)
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: white;
+}
+.sidenav .closebtn:hover{
+  cursor: pointer;
+  color: #000000;
+}
+.sidenav h2{
+  color: white;
+  margin-left: 10%;
+  margin-top: 8%;
+  font-weight: 900;
+  font-size: 2em;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
