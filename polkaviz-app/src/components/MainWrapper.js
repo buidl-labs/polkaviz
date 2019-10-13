@@ -5,8 +5,123 @@ import Validator from "./Validator";
 import BlockAnimation from "./alexander/BlockAnimation";
 import BlockAnimationNew from "./kusama/BlockAnimation-new";
 import { withRouter } from "react-router-dom";
+import { WsProvider, ApiPromise } from "@polkadot/api";
+
 
 class MainWrapper extends React.Component {
+  constructor() {
+    super();
+    this.latestBlockAuthor = undefined;
+    this.state = {
+      validators: [],
+      lastAuthor: "",
+      start: null,
+      isloading: true,
+      previousBlock: undefined,
+
+      kusamavalidators: [],
+      kusamalastAuthor: "",
+      kusamastart: null,
+      kusamaisloading: true,
+      kusamapreviousBlock: undefined,
+    };
+    this.elapsed = 0;
+    this.kusamaelapsed = 0;
+    this.ismounted = true;
+  }
+
+  componentDidMount(){
+    this.createApi2()
+    this.createApi()
+  }
+
+  async createApi2() {
+    let provider = new WsProvider("wss://kusama-rpc.polkadot.io");
+    const apinew = await ApiPromise.create({ provider });
+
+    await apinew.derive.chain.subscribeNewHeads(block => {
+      // console.log(`block #${block.author}`);
+      const lastAuthor = block.author.toString();
+      if (this.ismounted) {
+        this.setState({ kusamalastAuthor: lastAuthor });
+      }
+      const start = new Date();
+      const blockNumber = block.number.toString();
+      if (this.ismounted) {
+        this.setState({
+          kusamastart: start,
+          kusamafinalblock: blockNumber,
+          kusamapreviousBlock: blockNumber
+        });
+      }
+    });
+
+    await apinew.query.session.validators(validators => {
+      // console.log(validators)
+      const sessionValidators = validators.map(x => x.toString());
+      // console.log(sessionValidators)
+      if (this.ismounted) {
+        this.setState({
+          kusamavalidators: sessionValidators,
+          kusamaisloading: false
+        });
+      }
+    });
+
+  }
+
+
+  async createApi() {
+    const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
+    const api = await ApiPromise.create({ provider });
+    // console.log(api.derive.chain.subscribeNewHeads())
+    await api.derive.chain.subscribeNewHeads(block => {
+      // console.log(`block #${block.author}`);
+      const lastAuthor = block.author.toString();
+      if (this.ismounted) {
+        this.setState({ lastAuthor: lastAuthor });
+      }
+      const start = new Date();
+      const blockNumber = block.number.toString();
+      if (this.ismounted) {
+        this.setState({
+          start: start,
+          finalblock: blockNumber,
+          previousBlock: blockNumber
+        });
+      }
+    });
+
+    await api.query.session.validators(validators => {
+      // console.log(validators)
+      const sessionValidators = validators.map(x => x.toString());
+      if (this.ismounted) {
+        this.setState({
+          validators: sessionValidators,
+          isloading: false
+        });
+      }
+    });
+
+  }
+
+
+
+
+
+
+  componentWillUnmount() {
+    this.ismounted = false;
+  }
+
+
+
+
+
+
+
+
+
 
   handleOnMouseOverstage1 = () => {
     document.body.style.cursor = "pointer";
@@ -44,20 +159,29 @@ class MainWrapper extends React.Component {
       state:{totalinfo:this.props.totalinfo,
       valinfo:this.props.valinfo,
     }
+})
+setInterval(() => {
+  window.location.reload()      
+}, 1000);
 }
-  )}
 
   render() {
-    let arr = this.props.validators;
+    let arr = this.state.validators;
+    console.log(arr)
     // if(this.props.validatorsandintentions.length !== 0 ){
     // arr = this.props.validatorsandintentions;
     //     }
-    const arr2 = this.props.kusamavalidators;
+    const arr2 = this.state.kusamavalidators;
+    let loadingdone = false;
+    if (!this.state.isloading || !this.state.kusamaisloading) {
+      loadingdone = true;
+    }
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return (
-      // this.props.isloading ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div><div className="lds-text">Waiting for API to be connected.....</div></React.Fragment>) :
-      // (
+     
+      !loadingdone ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div></React.Fragment>) :
+      (
         <div>
           <div className="mainwrapper-text">
             <h1>Polkaviz</h1>
@@ -84,10 +208,10 @@ class MainWrapper extends React.Component {
                 {arr.map((person, index) => (
                   <Validator
                     key={index}
-                    validatorAddress={this.props.validatorsandintentions ? person.valname : undefined}
-                    valinfo={this.props.validatorsandintentions ? person.valinfo : undefined}
-                    totalinfo={this.props.valtotalinfo}
-                    nominatorinfo={this.props.nominatorinfo}
+                    validatorAddress={undefined}
+                    valinfo={undefined}
+                    totalinfo={undefined}
+                    nominatorinfo={undefined}
                     angle={180 - (index * 360) / arr.length}
                     history={this.props.history}
                     x={
@@ -110,12 +234,12 @@ class MainWrapper extends React.Component {
                 ))}
                 {/* {console.log(this.props.bottombarobject.finalblock)}
               {console.log(this.props.previousBlock)} */}
-                {this.props.previousBlock !== undefined && this.props.validators.indexOf(this.props.lastAuthor)!==-1 && (
+                {this.state.previousBlock !== undefined && this.state.validators.indexOf(this.state.lastAuthor)!==-1 && (
                   <BlockAnimation
-                    key={this.props.validators.indexOf(this.props.lastAuthor)}
+                    key={this.state.validators.indexOf(this.state.lastAuthor)}
                     angle={
                       180 -
-                      (this.props.validators.indexOf(this.props.lastAuthor) *
+                      (this.state.validators.indexOf(this.state.lastAuthor) *
                         360) /
                         arr.length
                     }
@@ -124,8 +248,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.cos(
                           (90 -
-                            (this.props.validators.indexOf(
-                              this.props.lastAuthor
+                            (this.state.validators.indexOf(
+                              this.state.lastAuthor
                             ) *
                               360) /
                               arr.length) *
@@ -137,8 +261,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.sin(
                           (90 -
-                            (this.props.validators.indexOf(
-                              this.props.lastAuthor
+                            (this.state.validators.indexOf(
+                              this.state.lastAuthor
                             ) *
                               360) /
                               arr.length) *
@@ -150,8 +274,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.cos(
                           (90 -
-                            (this.props.validators.indexOf(
-                              this.props.lastAuthor
+                            (this.state.validators.indexOf(
+                              this.state.lastAuthor
                             ) *
                               360) /
                               arr.length) *
@@ -163,8 +287,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.sin(
                           (90 -
-                            (this.props.validators.indexOf(
-                              this.props.lastAuthor
+                            (this.state.validators.indexOf(
+                              this.state.lastAuthor
                             ) *
                               360) /
                               arr.length) *
@@ -183,7 +307,7 @@ class MainWrapper extends React.Component {
 
 
         <div className="right-stage">
-        {this.props.kusamaisloading ? <p className="kusamaconnecting">Please Wait while we connect to Kusama Network</p>:
+        {this.state.kusamaisloading ? <p className="kusamaconnecting">Please Wait while we connect to Kusama Network</p>:
         <React.Fragment>
         <div className="headingmainwrapper2" id="kusamatext">
             <h2>Kusama Network</h2>
@@ -201,8 +325,8 @@ class MainWrapper extends React.Component {
                     key={index}
                     // validatorAddress={this.props.kuvaltotalinfo[index].valname}
                     // valinfo={this.props.kuvaltotalinfo[index].valinfo}
-                    totalinfo={this.props.kuvaltotalinfo}
-                    nominatorinfo={this.props.kunominatorinfo}
+                    totalinfo={undefined}
+                    nominatorinfo={undefined}
                     angle={180 - (index * 360) / arr2.length}
                     history={this.props.history}
                     x={
@@ -225,12 +349,12 @@ class MainWrapper extends React.Component {
                 ))}
                 {/* {console.log(this.props.bottombarobject.finalblock)}
               {console.log(this.props.previousBlock)} */}
-                {this.props.kusamapreviousBlock !== undefined && (
+                {this.state.kusamapreviousBlock !== undefined && (
                   <BlockAnimationNew
-                    key={this.props.kusamavalidators.indexOf(this.props.kusamalastAuthor)}
+                    key={this.state.kusamavalidators.indexOf(this.state.kusamalastAuthor)}
                     angle={
                       180 -
-                      (this.props.kusamavalidators.indexOf(this.props.kusamalastAuthor) *
+                      (this.state.kusamavalidators.indexOf(this.state.kusamalastAuthor) *
                         360) /
                         arr2.length
                     }
@@ -239,8 +363,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.cos(
                           (90 -
-                            (this.props.kusamavalidators.indexOf(
-                              this.props.kusamalastAuthor
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -252,8 +376,8 @@ class MainWrapper extends React.Component {
                       100 *
                         Math.sin(
                           (90 -
-                            (this.props.kusamavalidators.indexOf(
-                              this.props.kusamalastAuthor
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -265,8 +389,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.cos(
                           (90 -
-                            (this.props.kusamavalidators.indexOf(
-                              this.props.kusamalastAuthor
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -278,8 +402,8 @@ class MainWrapper extends React.Component {
                       160 *
                         Math.sin(
                           (90 -
-                            (this.props.kusamavalidators.indexOf(
-                              this.props.kusamalastAuthor
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor
                             ) *
                               360) /
                               arr2.length) *
@@ -296,7 +420,7 @@ class MainWrapper extends React.Component {
           </div>
         </div>
         </div>
-      // )
+      )
     );
   }
 }
