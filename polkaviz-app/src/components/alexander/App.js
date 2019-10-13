@@ -49,6 +49,15 @@ class App extends React.Component {
   async createApi() {
     const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
     const api = await ApiPromise.create({ provider });
+
+    const balance = await api.query.balances.totalIssuance()
+    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3)
+    if (this.ismounted) {
+      this.setState({
+          totalIssued:totalIssued
+      })
+    }
+    // console.log((balance.toString() / Math.pow(10, 18)).toFixed(3))
     // console.log(api.derive.chain.subscribeNewHeads())
     await api.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
@@ -221,7 +230,8 @@ class App extends React.Component {
     let bottombarobject = {
         bottombarinfo: this.state.bottombarinfo,
         finalblock: this.state.finalblock,
-        validatorcount: this.state.totalValidators
+        validatorcount: this.state.totalValidators,
+        totalIssued:this.state.totalIssued
       };
 
     // console.log(this.state.validatorsandintentions)

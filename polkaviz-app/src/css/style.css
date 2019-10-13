@@ -91,7 +91,7 @@
   top: 50%; */
 }
 
-.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue{
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue, .totalissuance{
   margin: 0 auto;
   position: relative;
   width: 225.81px;
@@ -107,16 +107,19 @@
 
   color: #ffffff;
 }
-.counter, .era, .session, .finalizedblock, .validatorcount{
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalissuance {
   bottom: 70px;
 }
-.finalizedblock{
+.totalissuance{
+    padding-right: 8%;
+}
+/* .finalizedblock{
   width: 245.81px;
 }
 
 .totalbonded, .selfbonded, .nominatorbonded{
   width: 550.81px;
-}
+} */
 
 
 .controllername, .bondvalue{
@@ -157,6 +160,9 @@ body {
   height: 64px;
   top: 36%;
   left: 45%;
+}
+.black{
+  background-color: #000000;
 }
 .lds-ripple div {
   position: absolute;

@@ -45,6 +45,14 @@ class KusamaApp extends React.Component {
     const apinew = await ApiPromise.create({ provider });
 
 
+    const balance = await apinew.query.balances.totalIssuance()
+    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3)
+    if (this.ismounted) {
+      this.setState({
+          totalIssued:totalIssued
+      })
+    }
+
     await apinew.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
@@ -206,7 +214,8 @@ class KusamaApp extends React.Component {
     let bottombarobject2 = {
         bottombarinfo: this.state.kusamabottombarinfo,
         finalblock: this.state.kusamafinalblock,
-        validatorcount: this.state.kusamatotalValidators
+        validatorcount: this.state.kusamatotalValidators,
+        totalIssued:this.state.totalIssued
       };
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]

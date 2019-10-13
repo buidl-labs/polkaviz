@@ -4,7 +4,8 @@ import FinalizedBlock from "./FinalizedBlock";
 import Session from "./Session";
 import Era from "./Era";
 import ValidatorCount from './ValidatorCount'
-// import { WsProvider, ApiPromise } from "@polkadot/api";
+import TotalIssuance from './TotalIssuance.js'
+
 
 class Bottombar extends React.Component {
   constructor(props) {
@@ -87,6 +88,9 @@ class Bottombar extends React.Component {
           eraLength={this.props.bottombarobject.bottombarinfo.eraLength}
           eraProgress={this.props.bottombarobject.bottombarinfo.eraProgress}
         />
+        <TotalIssuance
+            totalIssued={this.props.bottombarobject.totalIssued}
+            />
       </React.Fragment>
     );
   }

@@ -21,7 +21,7 @@ class HexagonBase extends React.Component {
           radius: this.props.hexagonRadius
         }}
       >
-        {props => <animated.RegularPolygon {...props} rotation={this.props.angle} sides={6} fill="#09FBD3" />}
+        {props => <animated.RegularPolygon {...props} rotation={this.props.angle} sides={6} fill="#F0753E" />}
       </Spring>
     );
   }

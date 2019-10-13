@@ -22,7 +22,7 @@ class TriangleLid extends React.Component {
           opacity: 1
         }}
       >
-        {props => <animated.RegularPolygon {...props} rotation={30 + (this.props.angle-this.props.theta)} sides={3} radius={this.props.hexagonRadius * Math.tan(30 * 0.0174533)} fill="#EBAF2E" />}
+        {props => <animated.RegularPolygon {...props} rotation={30 + (this.props.angle-this.props.theta)} sides={3} radius={this.props.hexagonRadius * Math.tan(30 * 0.0174533)} fill="#3EB9F0" />}
       </Spring>
     );
   }
