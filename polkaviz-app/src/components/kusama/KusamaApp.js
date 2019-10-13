@@ -44,13 +44,6 @@ class KusamaApp extends React.Component {
     let provider = new WsProvider("wss://kusama-rpc.polkadot.io");
     const apinew = await ApiPromise.create({ provider });
 
-    const intentions = await apinew.query.staking.validators()
-    console.log(JSON.parse(JSON.stringify(intentions)))
-    if(this.ismounted){
-    this.setState({
-      kusamaintentions: JSON.parse(JSON.stringify(intentions))[0]
-    })
-  }
 
     await apinew.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
@@ -68,6 +61,13 @@ class KusamaApp extends React.Component {
         });
       }
     });
+    let totalValidators = await apinew.query.staking.validatorCount();
+      // console.log("this", totalValidators.words["0"], totalValidators);
+      if (this.ismounted) {
+        this.setState({
+          kusamatotalValidators: totalValidators.words["0"]
+        });
+      }
 
     await apinew.query.session.validators(validators => {
       // console.log(validators)
@@ -85,11 +85,14 @@ class KusamaApp extends React.Component {
       let arr1 = [];
       let arr2 = [];
       // console.log(JSON.stringify(valinfo))
+      const intentions = await apinew.query.staking.validators()
+    console.log(JSON.parse(JSON.stringify(intentions)))
       const validatorstotalinfo = await Promise.all(
         this.state.kusamavalidators.map(val => apinew.derive.staking.info(val))
       );
+      console.log(JSON.parse(JSON.stringify(validatorstotalinfo)))
       const intentionstotalinfo = await Promise.all(
-        this.state.kusamaintentions.map(intention => apinew.derive.staking.info(intention))
+        JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
       )
       console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
 
@@ -118,18 +121,13 @@ class KusamaApp extends React.Component {
         this.setState(
           {
             kusamavaltotalinfo: arr1,
-            kusamavalidatorandintentions:arr3
+            kusamavalidatorandintentions:arr3,
+            kusamaintentions: JSON.parse(JSON.stringify(intentions))[0]
           }
           // () => this.getnominators2()
         );
       }
-      let totalValidators = await apinew.query.staking.validatorCount();
-      // console.log("this", totalValidators.words["0"], totalValidators);
-      if (this.ismounted) {
-        this.setState({
-          kusamatotalValidators: totalValidators.words["0"]
-        });
-      }
+  
     };
 
     start();
@@ -197,11 +195,12 @@ class KusamaApp extends React.Component {
 
 
   render() {
-    // console.log(this.state)
+    console.log(this.state.kusamavalidators,"vals")
     let arr = this.state.kusamavalidators
-    if(this.state.kusamavalidatorandintentions!==0){
+    if(this.state.kusamavalidatorandintentions.length!==0){
       arr = this.state.kusamavalidatorandintentions;
     }
+    console.log(arr,"arr")
     // const intentionsarr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
     const intentionsarr = this.state.kusamaintentions;
     let bottombarobject2 = {

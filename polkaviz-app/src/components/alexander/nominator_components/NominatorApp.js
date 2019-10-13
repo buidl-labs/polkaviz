@@ -111,7 +111,7 @@ class NominatorApp extends React.Component {
     if(!this.props.validatorandintentionloading){
     this.props.valtotalinfo.forEach(ele => {
       ele.valinfo.stakers.others.forEach(nom => {
-        if (nom.who === this.props.match.params.nominatorAddress) {
+        if (nom.who === this.props.history.location.pathname.split("/")[3].toString()) {
           arr1.push({validator:ele,
           staked:nom.value / Math.pow(10, 15)});
           bonded += nom.value / Math.pow(10, 15);
@@ -122,7 +122,7 @@ class NominatorApp extends React.Component {
 
     let nominatorvalue = "";
     this.props.nominatorinfo.forEach(ele => {
-      if (ele.accountId === this.props.match.params.nominatorAddress) {
+      if (ele.accountId === this.props.history.location.pathname.split("/")[3].toString()) {
         nominatorvalue = ele.controllerId;
       }
     });
@@ -137,9 +137,9 @@ class NominatorApp extends React.Component {
     // console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
       "Nominator Address: " +
-      this.props.match.params.nominatorAddress.toString().slice(0, 8) +
+      this.props.history.location.pathname.split("/")[3].toString().slice(0, 8) +
       "......" +
-      this.props.match.params.nominatorAddress.toString().slice(-8);
+      this.props.history.location.pathname.split("/")[3].toString().slice(-8);
     
     let stashname =
       controllerId.toString().slice(0, 8) +
@@ -153,9 +153,9 @@ class NominatorApp extends React.Component {
 
     
     let valtext =
-      this.props.match.params.nominatorAddress.toString().slice(0, 8) +
+      this.props.history.location.pathname.split("/")[3].toString().slice(0, 8) +
       "......" +
-      this.props.match.params.nominatorAddress.toString().slice(-8);
+      this.props.history.location.pathname.split("/")[3].toString().slice(-8);
 
     let arr = valbacked;
     const width = window.innerWidth;
@@ -178,12 +178,12 @@ class NominatorApp extends React.Component {
         >
           &#8592;
         </div>
-        <div className="home"
+        {/* <div className="home"
             onClick={this.homebtnhandleClick}
             onMouseOver={this.BackbtnhandleOnMouseOver}
             onMouseOut={this.BackbtnhandleOnMouseOut}>
               &#127963;
-        </div>
+        </div> */}
         <div className="valheading">
           <h2>{nominatorname}</h2>
           <CopyToClipboard text={this.props.match.params.nominatorAddress} onCopy={this.onCopy}>

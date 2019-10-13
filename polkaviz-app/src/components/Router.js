@@ -1,7 +1,5 @@
 import React from "react";
-import ValidatorApp from "./alexander/validator_components/ValidatorApp";
 import App from "./alexander/App";
-import NominatorApp from "./alexander/nominator_components/NominatorApp";
 import { Route, Switch, HashRouter } from "react-router-dom";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import MainWrapper from "./MainWrapper";
@@ -10,51 +8,51 @@ import {NavLink} from "react-router-dom"
 
 
 class Router extends React.Component {
-  constructor() {
-    super();
-    this.latestBlockAuthor = undefined;
-    this.state = {
-      validators: [],
-      lastAuthor: "",
-      start: null,
-      isloading: true,
-      valtotalinfo: [],
-      bottombarinfo: {
-        eraLength: 0,
-        eraProgress: 0,
-        sessionLength: 0,
-        sessionProgress: 0
-      },
-      totalValidators: 0,
-      finalblock: 0,
-      previousBlock: undefined,
-      nominatorinfo: [],
-      intentions: [],
-      validatorsandintentions: [],
-      validatorandintentionloading: true,
+  // constructor() {
+  //   super();
+  //   this.latestBlockAuthor = undefined;
+  //   this.state = {
+  //     validators: [],
+  //     lastAuthor: "",
+  //     start: null,
+  //     isloading: true,
+  //     valtotalinfo: [],
+  //     bottombarinfo: {
+  //       eraLength: 0,
+  //       eraProgress: 0,
+  //       sessionLength: 0,
+  //       sessionProgress: 0
+  //     },
+  //     totalValidators: 0,
+  //     finalblock: 0,
+  //     previousBlock: undefined,
+  //     nominatorinfo: [],
+  //     intentions: [],
+  //     validatorsandintentions: [],
+  //     validatorandintentionloading: true,
 
-      kusamavalidators: [],
-      kusamalastAuthor: "",
-      kusamastart: null,
-      kusamaisloading: true,
-      kusamavaltotalinfo: [],
-      kusamabottombarinfo: {
-        eraLength: 0,
-        eraProgress: 0,
-        sessionLength: 0,
-        sessionProgress: 0
-      },
-      kusamatotalValidators: 0,
-      kusamafinalblock: 0,
-      kusamapreviousBlock: undefined,
-      kusamaintentions: []
-    };
-    this.elapsed = 0;
-    this.kusamaelapsed = 0;
-    this.ismounted = true;
-  }
-  componentDidMount() {
-    // console.log(this.props)
+  //     kusamavalidators: [],
+  //     kusamalastAuthor: "",
+  //     kusamastart: null,
+  //     kusamaisloading: true,
+  //     kusamavaltotalinfo: [],
+  //     kusamabottombarinfo: {
+  //       eraLength: 0,
+  //       eraProgress: 0,
+  //       sessionLength: 0,
+  //       sessionProgress: 0
+  //     },
+  //     kusamatotalValidators: 0,
+  //     kusamafinalblock: 0,
+  //     kusamapreviousBlock: undefined,
+  //     kusamaintentions: []
+  //   };
+  //   this.elapsed = 0;
+  //   this.kusamaelapsed = 0;
+  //   this.ismounted = true;
+  // }
+  // componentDidMount() {
+  //   // console.log(this.props)
 
     // this.createApi();
     // this.createApi2();
@@ -66,7 +64,7 @@ class Router extends React.Component {
     //   // console.log(this.state.elapsed, this.props.counter);
     //   this.kusamatick();
     // }, 1000);
-  }
+  // }
   // tick() {
   //   // console.log("here " + this.props.start)
   //   this.elapsed = new Date() - this.state.start;
@@ -440,7 +438,7 @@ class Router extends React.Component {
           <div className="closebtn" onClick={this.closeNav}>
             &times;
           </div>
-          <h2>Polkaviz Project</h2>
+          <h2>Polkaviz</h2>
           <NavLink exact to = "/" className = "navlink" onClick={this.handleNavClick}>Home</NavLink>
           <NavLink to = "/alexander" className = "navlink" onClick={this.handleNavClick}>Alexander Network</NavLink>
           <NavLink to = "/kusama" className = "navlink" onClick={this.handleNavClickKusama}>Kusama Network</NavLink>
@@ -482,7 +480,6 @@ class Router extends React.Component {
                 )}
               />
               <Route
-                exact
                 path="/alexander"
                 render={props => (
                   <App
@@ -518,7 +515,7 @@ class Router extends React.Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 exact
                 path="/alexander/validator/:validatorAddress"
                 render={props => (
@@ -542,7 +539,7 @@ class Router extends React.Component {
                     validatorandintentionloading={this.state.validatorandintentionloading}
                   />
                 )}
-              />
+              /> */}
             </Switch>
         </div>
           </HashRouter>

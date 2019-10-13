@@ -215,7 +215,7 @@ body {
   transform: scale(1.1);
 }
 
-.home{
+/* .home{
   position:absolute;
   left:82px;
   top:28px;
@@ -228,7 +228,7 @@ body {
 }
 .home:hover{
   transform: scale(1.1);
-}
+} */
 
 
 .mainWrapper{

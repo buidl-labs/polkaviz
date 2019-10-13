@@ -6,6 +6,9 @@ import BlockAnimation from "./BlockAnimation";
 import Bottombar from "../Bottombar";
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from "@polkadot/api";
+import NominatorApp from "./nominator_components/NominatorApp";
+import ValidatorApp from "./validator_components/ValidatorApp";
+
 
 
 class App extends React.Component {
@@ -31,22 +34,6 @@ class App extends React.Component {
       intentions: [],
       validatorsandintentions: [],
       validatorandintentionloading: true,
-
-      // kusamavalidators: [],
-      // kusamalastAuthor: "",
-      // kusamastart: null,
-      // kusamaisloading: true,
-      // kusamavaltotalinfo: [],
-      // kusamabottombarinfo: {
-      //   eraLength: 0,
-      //   eraProgress: 0,
-      //   sessionLength: 0,
-      //   sessionProgress: 0
-      // },
-      // kusamatotalValidators: 0,
-      // kusamafinalblock: 0,
-      // kusamapreviousBlock: undefined,
-      // kusamaintentions: []
     };
     this.elapsed = 0;
     this.kusamaelapsed = 0;
@@ -132,6 +119,7 @@ class App extends React.Component {
           valinfo: info
         };
       });
+      console.log(arr4)
       // let arr5 = this.state.validators.push(arr4);
       let arr5 = [...arr1, ...arr4];
       // console.log(arr4, arr5);
@@ -223,6 +211,8 @@ class App extends React.Component {
 
 
   render() {
+    let pathArray = window.location.href.split('/');
+    console.log(!pathArray[5])
     let arr = this.state.validators;
     if(this.state.validatorsandintentions.length !== 0 ){
     arr = this.state.validatorsandintentions;
@@ -242,6 +232,9 @@ class App extends React.Component {
     return (
       this.state.validators.length === 0 ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div></React.Fragment>) : 
       (
+        <React.Fragment>
+        {!pathArray[5] && 
+        
       <div className="container">
 
         <div className="heading">
@@ -351,7 +344,24 @@ class App extends React.Component {
         <div className="bottombar">
           <Bottombar start={this.state.start} activevalidators={this.state.validators.length} validatorcount={this.state.validatorcount} bottombarobject ={bottombarobject}/>
         </div>
-      </div>
+      </div>}
+
+      {pathArray[5] === "validator" ? <ValidatorApp
+                    valtotalinfo={this.state.valtotalinfo}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                    validatorandintentionloading={this.state.validatorandintentionloading}
+                  />: undefined}
+
+      {pathArray[5] === "nominator" ? <NominatorApp
+                    valtotalinfo={this.state.valtotalinfo}
+                    nominatorinfo={this.state.nominatorinfo}
+                    intentions={this.state.intentions}
+                    validatorsandintentions={this.state.validatorsandintentions}
+                    validatorandintentionloading={this.state.validatorandintentionloading}
+                  /> : undefined}
+      </React.Fragment>
+
 
       )
     );

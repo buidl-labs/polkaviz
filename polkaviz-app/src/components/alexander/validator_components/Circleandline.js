@@ -56,13 +56,11 @@ class Circleandline extends React.Component {
           onMouseOver={this.handleOnMouseOver}
           onMouseOut={this.handleOnMouseOut}
           onClick={this.handleClick}
-          zIndex={0}
         />
         <Line
           points={[this.props.x, this.props.y, this.props.x2, this.props.y2]}
           stroke="white"
           opacity={0.3}
-          zIndex={0}
         />
 
         {this.state.showNominatorAddress && (
@@ -77,7 +75,6 @@ class Circleandline extends React.Component {
             shadowBlur={10}
             shadowColor="black"
             shadowOpacity={0.5}
-            zIndex={10}
           />
         )}
 
@@ -87,7 +84,6 @@ class Circleandline extends React.Component {
             x={x1 + 20}
             y={y1 + 10}
             fill="#FFFFFF"
-            zIndex={1}
           />
         )}
         {this.state.showNominatorAddress && (
@@ -96,7 +92,6 @@ class Circleandline extends React.Component {
             x={x1 + 20 }
             y={y1+ 30}
             fill="#FFFFFF"
-            zIndex = {1}
           />
         )}
       </React.Fragment>

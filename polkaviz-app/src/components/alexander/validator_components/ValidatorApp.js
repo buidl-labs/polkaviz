@@ -4,6 +4,8 @@ import WhiteCircles from "./WhiteCircles";
 import { withRouter } from "react-router-dom";
 import ValBottombar from "./ValBottombar";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+// import { WsProvider, ApiPromise } from "@polkadot/api";
+
 
 class ValidatorApp extends React.Component {
   constructor() {
@@ -26,9 +28,13 @@ class ValidatorApp extends React.Component {
 
   componentDidMount() {
     this.ismounted = true;
-    // console.log("val",this.props)
+    console.log("val",this.props)
     // this.createApi();
     // console.log("this",this.props.match.params.validatorAddress);
+    // if(!this.props.history.location.state){
+    //   console.log("HI")
+    //   // this.createApi()
+    // }
   }
   shouldComponentUpdate(nextProps,nextState){
     if(this.props.validatorandintentionloading === nextProps.validatorandintentionloading && this.props.validatorsandintentions === nextProps.validatorsandintentions){
@@ -39,76 +45,6 @@ class ValidatorApp extends React.Component {
     }
   }
 
-  // async createApi() {
-  //   let value = "";
-  //   console.log(this.props.validatorsandintentions)
-  //   this.props.validatorsandintentions.forEach(ele => {
-  //     console.log(ele)
-  //     if (
-  //       ele.valinfo.accountId.toString() ===
-  //       this.props.match.params.validatorAddress.toString()
-  //     ) {
-  //       value = ele.valinfo;
-  //     }
-  //   });
-  //   console.log("huyi",value)
-  //   let totalinfo = this.props.valtotalinfo;
-  //   console.log(this.props.intentions,this.props.match.params.validatorAddress,this.props.intentions.includes(this.props.match.params.validatorAddress.toString()));
-  //   if(this.props.intentions.length !== 0 && !this.props.intentions.includes(this.props.match.params.validatorAddress)){
-  //   this.totalvalue = value.stakers.total / Math.pow(10, 15);
-  //   this.ownvalue = value.stakers.own / Math.pow(10, 15);
-  //   this.setState({
-  //     nominators: value.stakers.others
-  //   })
-  //   }
-  //   this.setState({
-  //     validator: value.accountId,
-  //     stash: value.stashId,
-  //     controller: value.controllerId,
-  //     isloading: false,
-  //     valinfo: value,
-  //     totalinfo: totalinfo
-  //   });
-  
-//   async createApi() {
-//     let value = "";
-//     if(!this.props.validatorandintentionloading){
-//     this.props.valtotalinfo.forEach(ele => {
-//       if (
-//         ele.valinfo.accountId.toString() ===
-//         this.props.match.params.validatorAddress.toString()
-//       ) {
-//         value = ele.valinfo;
-//       }
-//     });
-//     //  console.log("huyi",value)
-//     let totalinfo = this.props.valtotalinfo;
-//     this.totalvalue = value.stakers.total / Math.pow(10, 15);
-//     this.ownvalue = value.stakers.own / Math.pow(10, 15);
-//     if (value.stashId === value.controllerId) {
-//       this.setState({
-//         showdifferent: false
-//       });
-//     }
-//     this.setState({
-//       validator: value.accountId,
-//       nominators: value.stakers.others,
-//       stash: value.stashId,
-//       controller: value.controllerId,
-//       isloading: false,
-//       valinfo: value,
-//       totalinfo: totalinfo
-//     });
-//   }
-// }
-
-
-  // if(this.props.intentions.length !== 0 && !this.props.intentions.includes(this.props.match.params.validatorAddress)){
-  // {
-  // this.setState({
-  //   isloading:false
-  // })
-  // }
 
   handleOnMouseOver = () => {
     this.setState({ showValidatorAddress: true });
@@ -152,6 +88,7 @@ class ValidatorApp extends React.Component {
     this.ismounted = false
   }
   render() {
+    console.log(this.props.history.location.pathname.split("/")[3])
     const width = window.innerWidth;
     const height = window.innerHeight;
     let radius = 120;
@@ -169,7 +106,7 @@ class ValidatorApp extends React.Component {
     this.props.validatorsandintentions.forEach(ele => {
       if (
         ele.valinfo.accountId.toString() ===
-        this.props.match.params.validatorAddress.toString()
+        this.props.history.location.pathname.split("/")[3].toString()
       ) {
         value = ele.valinfo;
       }
@@ -183,7 +120,14 @@ class ValidatorApp extends React.Component {
       // stash = value.stashId
       // controller = value.controllerId
       valinfo = value
+    if(this.props.intentions.includes(this.props.history.location.pathname.split("/")[3].toString())){
+      console.log("yo")
+      this.totalvalue = value.stakingLedger.total
+      this.ownvalue = value.stakingLedger.total
+    }
   }
+
+  
 
 
 
@@ -207,7 +151,7 @@ class ValidatorApp extends React.Component {
     }
     let opacity = 0.3
     let color = "purple"
-    if(this.props.intentions.includes(this.props.match.params.validatorAddress)){
+    if(this.props.intentions.includes(this.props.history.location.pathname.split("/")[3].toString())){
       opacity = 0
       color = "yellow"
     }
@@ -229,12 +173,12 @@ class ValidatorApp extends React.Component {
         >
           &#8592;
         </div>
-        <div className="home"
+        {/* <div className="home"
             onClick={this.homebtnhandleClick}
             onMouseOver={this.BackbtnhandleOnMouseOver}
             onMouseOut={this.BackbtnhandleOnMouseOut}>
               &#127963;
-        </div>
+        </div> */}
         <div className="valheading">
           <h2>{validatorname}</h2>
           <CopyToClipboard text={validator} onCopy={this.onCopy}>

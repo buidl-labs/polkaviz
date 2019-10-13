@@ -13,6 +13,11 @@ class Validator extends React.Component {
     let totalvalue = this.props.valinfo.stakers.total / Math.pow(10,15)
     let ownvalue = this.props.valinfo.stakers.own /Math.pow(10,15)
     let totalbonded = 0
+    if(this.props.intentions.includes(this.props.validatorAddress)){
+      totalvalue = this.props.valinfo.stakingLedger.total
+      ownvalue = this.props.valinfo.stakingLedger.total
+    }
+
     totalbonded = totalvalue.toFixed(3)-ownvalue.toFixed(3)
     bondvalue = "Bonded: " + ownvalue.toString().slice(0,5) + " (+ " + totalbonded.toString().slice(0,5) +" ) DOT"
     nomvalue = "Backed by: " + this.props.valinfo.stakers.others.length + " nominators"
@@ -34,7 +39,7 @@ class Validator extends React.Component {
       color="yellow"
       opacity=0
     }
-  } 
+  }
     return (
       <React.Fragment>
         <Tail
