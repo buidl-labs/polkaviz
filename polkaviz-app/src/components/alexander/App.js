@@ -31,7 +31,7 @@ class App extends React.Component {
       <div className="container">
 
         <div className="heading">
-          <h2>Polkadot Network</h2>
+          <h2>Alexander Network</h2>
         </div>
 
         <div className="intentions">
@@ -77,7 +77,7 @@ class App extends React.Component {
               ))}
               {/* {console.log(this.props.bottombarobject.finalblock)}
               {console.log(this.props.previousBlock)} */}
-              {this.props.previousBlock !== undefined && <BlockAnimation
+              {this.props.previousBlock !== undefined && this.props.validators.indexOf(this.props.lastAuthor)!==-1 && <BlockAnimation
                 key={this.props.validators.indexOf(this.props.lastAuthor)}
                 angle={
                   180 -

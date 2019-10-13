@@ -7,24 +7,6 @@ import BlockAnimationNew from "./kusama/BlockAnimation-new";
 import { withRouter } from "react-router-dom";
 
 class MainWrapper extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.latestBlockAuthor = undefined;
-  //   this.state = {
-  //     validators: [],
-  //     lastAuthor: "",
-  //     start: null,
-  //     isloading:true,
-  //     valtotalinfo:[]
-  //   };
-  //   this.ismounted = true
-  // }
-
-  componentDidMount() {
-    // if (!this.props.valtotalinfo) {
-    //   this.props.createApi();
-    // }
-  }
 
   handleOnMouseOverstage1 = () => {
     document.body.style.cursor = "pointer";
@@ -67,9 +49,9 @@ class MainWrapper extends React.Component {
 
   render() {
     let arr = this.props.validators;
-    if(this.props.validatorsandintentions.length !== 0 ){
-    arr = this.props.validatorsandintentions;
-        }
+    // if(this.props.validatorsandintentions.length !== 0 ){
+    // arr = this.props.validatorsandintentions;
+    //     }
     const arr2 = this.props.kusamavalidators;
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
@@ -123,7 +105,7 @@ class MainWrapper extends React.Component {
                         )
                     }
                     isMainWrapper={true}
-                    intentions={this.props.intentions}
+                    // intentions={this.props.intentions}
                   />
                 ))}
                 {/* {console.log(this.props.bottombarobject.finalblock)}

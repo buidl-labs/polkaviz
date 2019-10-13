@@ -21,18 +21,18 @@ class Validator extends React.Component {
     let y1 = this.props.y
     let x2 = this.props.x
     let y2 = this.props.y
-    let color ="#9335A3"
+    let color ="#C31169"
     let opacity =1
-    if(!this.props.isKusama){
+    if(!this.props.isKusama && !this.props.isMainWrapper){
+      color ="#9335A3"
     if(this.props.intentions.includes(this.props.validatorAddress)){
-      if(!this.props.isMainWrapper){
+      
       x1=((x1-window.innerWidth)/360*390)+window.innerWidth
       y1=((y1-window.innerHeight)/360*390)+window.innerHeight
-    }
-      if(this.props.isMainWrapper){
-        x1=((x1-window.innerWidth/2)/360*390)+window.innerWidth/2
-        y1=((y1-window.innerHeight)/360*390)+window.innerHeight  
-      }
+      // if(this.props.isMainWrapper){
+      //   x1=((x1-window.innerWidth/2)/360*390)+window.innerWidth/2
+      //   y1=((y1-window.innerHeight)/360*390)+window.innerHeight  
+      // }
       color="yellow"
       opacity=0
     }

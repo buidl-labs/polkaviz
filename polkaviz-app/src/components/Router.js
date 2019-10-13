@@ -248,7 +248,6 @@ class Router extends React.Component {
     await api.query.session.validators(validators => {
       // console.log(validators)
       const sessionValidators = validators.map(x => x.toString());
-      console.log(sessionValidators);
       if (this.ismounted) {
         this.setState({
           validators: sessionValidators,
@@ -280,18 +279,15 @@ class Router extends React.Component {
       }
 
       const intentions = await api.query.staking.validators();
-      console.log(JSON.parse(JSON.stringify(intentions)));
+      // console.log(JSON.parse(JSON.stringify(intentions)));
       const allvals = JSON.parse(JSON.stringify(intentions))[0];
-      console.log(allvals);
       // allvals.forEach(ele => {
       //   this.state.validators.forEach(val => {
 
       //   })
       // })
       const arr2 = arr1.map(ele => ele.valname);
-      console.log(this.state.validators);
       const arr3 = allvals.filter(e => !arr2.includes(e));
-      console.log(arr3);
       const intentionstotalinfo = await Promise.all(
         arr3.map(val => api.derive.staking.info(val))
       );
@@ -303,7 +299,7 @@ class Router extends React.Component {
       });
       // let arr5 = this.state.validators.push(arr4);
       let arr5 = [...arr1, ...arr4];
-      console.log(arr4, arr5);
+      // console.log(arr4, arr5);
       // this.setState({
       //   validatorsandintentions:arr5
       // })
@@ -402,6 +398,9 @@ class Router extends React.Component {
   
 
   render() {
+    // console.log(window.location.pathname,window.location.search)
+    var pathArray = window.location.href.split('/');
+    // console.log(pathArray)
     // console.count("hi")
     let loadingdone = false;
     if (!this.state.isloading || !this.state.kusamaisloading) {
@@ -432,10 +431,10 @@ class Router extends React.Component {
           <div className="closebtn" onClick={this.closeNav}>
             &times;
           </div>
-          <h2>Menu</h2>
+          {pathArray[4] !== "" ? <h2>Menu</h2> : undefined}
           <NavLink exact to = "/" className = "navlink" onClick={this.handleNavClick}>Home</NavLink>
-          <NavLink to = "/alexander" className = "navlink" onClick={this.handleNavClick}>Alexander</NavLink>
-          <NavLink to = "/kusama" className = "navlink" onClick={this.handleNavClick}>Kusama</NavLink>
+          <NavLink to = "/alexander" className = "navlink" onClick={this.handleNavClick}>Alexander Network</NavLink>
+          <NavLink to = "/kusama" className = "navlink" onClick={this.handleNavClick}>Kusama Network</NavLink>
         </div>
 
         <span onClick={this.openNav} className="opennav"> &#9776; </span>
@@ -453,21 +452,21 @@ class Router extends React.Component {
                     validators={this.state.validators}
                     start={this.state.start}
                     lastAuthor={this.state.lastAuthor}
-                    validatorcount={this.state.totalValidators}
-                    bottombarobject={bottombarobject}
-                    nominatorinfo={this.state.nominatorinfo}
+                    // validatorcount={this.state.totalValidators}
+                    // bottombarobject={bottombarobject}
+                    // nominatorinfo={this.state.nominatorinfo}
                     previousBlock={this.state.previousBlock}
                     isloading={this.state.isloading}
-                    intentions={this.state.intentions}
-                    validatorsandintentions={this.state.validatorsandintentions}
+                    // intentions={this.state.intentions}
+                    // validatorsandintentions={this.state.validatorsandintentions}
                     kusamavaltotalinfo={this.state.kusamavaltotalinfo}
-                    kusamacreateApi={this.createApi2}
+                    // kusamacreateApi={this.createApi2}
                     kusamavalidators={this.state.kusamavalidators}
                     kusamastart={this.state.kusamastart}
                     kusamalastAuthor={this.state.kusamalastAuthor}
-                    kusamavalidatorcount={this.state.kusamatotalValidators}
-                    kusamabottombarobject={bottombarobject2}
-                    kusamanominatorinfo={this.state.kusamanominatorinfo}
+                    // kusamavalidatorcount={this.state.kusamatotalValidators}
+                    // kusamabottombarobject={bottombarobject2}
+                    // kusamanominatorinfo={this.state.kusamanominatorinfo}
                     kusamapreviousBlock={this.state.kusamapreviousBlock}
                     kusamaisloading={this.state.kusamaisloading}
                   />
@@ -506,6 +505,7 @@ class Router extends React.Component {
                     bottombarobject={bottombarobject2}
                     nominatorinfo={this.state.kusamanominatorinfo}
                     previousBlock={this.state.kusamapreviousBlock}
+                    kusamaisloading={this.state.kusamaisloading}
                   />
                 )}
               />
@@ -517,9 +517,7 @@ class Router extends React.Component {
                     valtotalinfo={this.state.valtotalinfo}
                     intentions={this.state.intentions}
                     validatorsandintentions={this.state.validatorsandintentions}
-                    validatorandintentionloading={
-                      this.state.validatorandintentionloading
-                    }
+                    validatorandintentionloading={this.state.validatorandintentionloading}
                   />
                 )}
               />
@@ -532,9 +530,7 @@ class Router extends React.Component {
                     nominatorinfo={this.state.nominatorinfo}
                     intentions={this.state.intentions}
                     validatorsandintentions={this.state.validatorsandintentions}
-                    validatorandintentionloading={
-                      this.state.validatorandintentionloading
-                    }
+                    validatorandintentionloading={this.state.validatorandintentionloading}
                   />
                 )}
               />
