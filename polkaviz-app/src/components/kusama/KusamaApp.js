@@ -28,7 +28,8 @@ class KusamaApp extends React.Component {
       kusamafinalblock: 0,
       kusamapreviousBlock: undefined,
       kusamaintentions: [],
-      kusamavalidatorandintentions:[]
+      kusamavalidatorandintentions:[],
+      kusamatotalIssued: ""
     };
     this.elapsed = 0;
     this.kusamaelapsed = 0;
@@ -46,10 +47,11 @@ class KusamaApp extends React.Component {
 
 
     const balance = await apinew.query.balances.totalIssuance()
+    console.log(balance.toString())
     const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3)
     if (this.ismounted) {
       this.setState({
-          totalIssued:totalIssued
+          kusamatotalIssued:totalIssued
       })
     }
 
@@ -215,7 +217,7 @@ class KusamaApp extends React.Component {
         bottombarinfo: this.state.kusamabottombarinfo,
         finalblock: this.state.kusamafinalblock,
         validatorcount: this.state.kusamatotalValidators,
-        totalIssued:this.state.totalIssued
+        totalIssued:this.state.kusamatotalIssued.toString() + " M"
       };
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]

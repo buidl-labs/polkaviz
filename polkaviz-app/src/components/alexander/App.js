@@ -34,6 +34,7 @@ class App extends React.Component {
       intentions: [],
       validatorsandintentions: [],
       validatorandintentionloading: true,
+      totalIssued:""
     };
     this.elapsed = 0;
     this.kusamaelapsed = 0;
@@ -231,7 +232,7 @@ class App extends React.Component {
         bottombarinfo: this.state.bottombarinfo,
         finalblock: this.state.finalblock,
         validatorcount: this.state.totalValidators,
-        totalIssued:this.state.totalIssued
+        totalIssued:this.state.totalIssued.toString() + " K"
       };
 
     // console.log(this.state.validatorsandintentions)
