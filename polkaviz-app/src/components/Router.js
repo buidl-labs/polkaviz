@@ -404,6 +404,8 @@ class Router extends React.Component {
   
 
   render() {
+    let pathArray = window.location.href.split('/');
+    console.log(pathArray)
     // console.log(window.location.pathname,window.location.search)
     // var pathArray = window.location.href.split('/');
     // console.log(pathArray)
@@ -434,6 +436,8 @@ class Router extends React.Component {
     // ) : 
       <React.Fragment>
         <HashRouter>
+        {/* {pathArray[4]!=="" ? */}
+          <React.Fragment>
         <div id="mySidenav" className="sidenav">
           <div className="closebtn" onClick={this.closeNav}>
             &times;
@@ -446,6 +450,8 @@ class Router extends React.Component {
 
         <span onClick={this.openNav} className="opennav"> &#9776; </span>
 
+          </React.Fragment>
+{/* : undefined} */}
         <div id="main">
           
             <Switch>

@@ -17,7 +17,7 @@
   margin: 0 auto;
   position: absolute;
   display: inline-block;
-  width: 225.81px;
+  width: 1000px;
   height: 21.13px;
   left: 58px;
   top: 51px;
@@ -94,9 +94,9 @@
 .counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue, .totalissuance{
   margin: 0 auto;
   position: relative;
-  width: 225.81px;
+  /* width: 225.81px; */
   height: 21.13px;
-  left: 58px;
+  /* left: 58px; */
   bottom: 45px;
 
   font-family: "Roboto Mono";
@@ -104,21 +104,23 @@
   font-weight: normal;
   font-size: 15px;
   line-height: 18px;
-
+  padding-left: 5%;
   color: #ffffff;
 }
 .counter, .era, .session, .finalizedblock, .validatorcount, .totalissuance {
   bottom: 70px;
 }
 .totalissuance{
-    padding-right: 7%;
+    padding-right: 6%;
 }
 /* .finalizedblock{
-  width: 245.81px;
+   width: 245.81px; 
+   padding-right: 2%; 
 }
 
 .totalbonded, .selfbonded, .nominatorbonded{
-  width: 550.81px;
+   width: 550.81px; 
+   padding-left: 5%; 
 } */
 
 
@@ -416,7 +418,7 @@ body {
   padding: 8px 8px 8px 0px;
   text-decoration: none;
   font-size: 20px;
-  color: white;
+  color: black;
   display: block;
   transition: 0.3s;
   border-bottom: 2px solid rgba(255,255,255,0.2);
@@ -426,7 +428,7 @@ body {
 
 /* When you mouse over the navigation links, change their color */
 .navlink:hover {
-  color: #f1f1f1;
+  /* color: #f1f1f1; */
   border-bottom-color: rgba(255,255,255,1)
 }
 
@@ -437,14 +439,14 @@ body {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-  color: white;
+  color: black;
 }
 .sidenav .closebtn:hover{
   cursor: pointer;
-  color: #000000;
+  color: white;
 }
 .sidenav h2{
-  color: white;
+  color: black;
   margin-left: 10%;
   margin-top: 8%;
   font-weight: 900;

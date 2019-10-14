@@ -33,6 +33,8 @@ class MainWrapper extends React.Component {
   componentDidMount(){
     this.createApi2()
     this.createApi()
+    document.getElementById("mySidenav").style.display="none";
+    document.getElementsByClassName("opennav")[0].style.display="none"
   }
 
   async createApi2() {
@@ -112,6 +114,8 @@ class MainWrapper extends React.Component {
 
   componentWillUnmount() {
     this.ismounted = false;
+    document.getElementById("mySidenav").style.display="block";
+    document.getElementsByClassName("opennav")[0].style.display="block"
   }
 
 
@@ -173,7 +177,7 @@ setInterval(() => {
     //     }
     const arr2 = this.state.kusamavalidators;
     let loadingdone = false;
-    if (!this.state.isloading || !this.state.kusamaisloading) {
+    if (!this.state.isloading && !this.state.kusamaisloading) {
       loadingdone = true;
     }
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
