@@ -9,7 +9,7 @@ class Session extends React.Component {
     return (
       <div className="session">
         <p>
-          {session} : {this.props.sessionProgress}/{this.props.sessionLength}
+          {session}: {this.props.sessionProgress}/{this.props.sessionLength}
         </p>
       </div>
     );

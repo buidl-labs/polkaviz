@@ -113,6 +113,12 @@
 .totalissuance{
     padding-right: 6%;
 }
+.finalizedblock{
+  
+}
+p {
+  display: inline-grid;
+}
 /* .finalizedblock{
    width: 245.81px; 
    padding-right: 2%; 

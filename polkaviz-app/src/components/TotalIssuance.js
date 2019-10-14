@@ -5,7 +5,7 @@ class TotalIssuance extends React.Component {
       return (
         <div className="totalissuance">
           <p>
-            Total Issuance: {this.props.totalIssued}
+            totalIssuance: {this.props.totalIssued}
           </p>
         </div>
       );

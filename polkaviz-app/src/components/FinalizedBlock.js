@@ -5,7 +5,7 @@ class FinalizedBlock extends React.Component {
   render() {
     return (
       <div className="finalizedblock">
-        <p>block number: <NumberFormat value={this.props.finalblock} displayType={'text'} thousandSeparator={true} /></p>
+        <p>block:&nbsp;</p><NumberFormat value={this.props.finalblock} displayType={'text'} thousandSeparator={true} />
       </div>
     );
   }

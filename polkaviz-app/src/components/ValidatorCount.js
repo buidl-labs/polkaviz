@@ -5,7 +5,7 @@ class ValidatorCount extends React.Component {
       return (
         <div className="validatorcount">
           <p>
-            Validators: {this.props.activeValidators}/{this.props.totalValidators}
+            validators: {this.props.activeValidators}/{this.props.totalValidators}
           </p>
         </div>
       );
