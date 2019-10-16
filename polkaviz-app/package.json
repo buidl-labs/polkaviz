@@ -36,5 +36,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "git-scripts": "^0.2.1",
+    "surge": "^0.21.3"
+  },
+  "git": { 
+    "scripts": {
+       "pre-push": "surge --project ./build --domain dev-polkavizproject.surge.sh" 
+       } 
+      } 
 }

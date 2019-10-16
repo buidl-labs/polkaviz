@@ -108,7 +108,7 @@ class Rectangle extends React.Component {
         fontFamily="Roboto Mono" 
         fill="#FFFFFF" />   }
           {this.state.showValidatorAddress && !this.props.isMainWrapper &&
-          <Text text={this.props.nominators} 
+          <Text text={this.props.isKusama && this.props.intentions.includes(this.props.validatorAddress) ? this.props.commission : this.props.nominators} 
           x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
           y={y1-20*Math.cos(this.props.angle *  0.0174533)+30 } 
           fill="#FFFFFF" />}
@@ -117,7 +117,7 @@ class Rectangle extends React.Component {
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
             y={y1-20*Math.cos(this.props.angle *  0.0174533)+50} 
             fill="#FFFFFF" /> }
-          {this.state.showValidatorAddress && !this.props.isMainWrapper &&
+          {this.state.showValidatorAddress && !this.props.isMainWrapper && !this.props.isKusama &&
           <Text text="Click to show Validator Analytics" 
             x={x1+20*Math.sin(this.props.angle *  0.0174533)} 
             y={y1-20*Math.cos(this.props.angle *  0.0174533)+80} 

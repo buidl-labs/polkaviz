@@ -380,12 +380,14 @@ class Router extends React.Component {
 
   /* Set the width of the side navigation to 250px */
   openNav = () => {
+    document.getElementsByClassName("nav-grid")[0].style.display = "grid";
     document.getElementById("mySidenav").style.width = "25%";
     document.getElementById("main").style.opacity="0.5";
   };
 
   /* Set the width of the side navigation to 0 */
   closeNav = () => {
+    document.getElementsByClassName("nav-grid")[0].style.display = "none";
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.opacity="1";
   };
@@ -438,6 +440,8 @@ class Router extends React.Component {
         <HashRouter>
         {/* {pathArray[4]!=="" ? */}
           <React.Fragment>
+            <div className="nav-grid">
+              <div className="nav-empty-space" onClick={this.closeNav}></div>
         <div id="mySidenav" className="sidenav">
           <div className="closebtn" onClick={this.closeNav}>
             &times;
@@ -448,8 +452,8 @@ class Router extends React.Component {
           <NavLink to = "/kusama" className = "navlink" onClick={this.handleNavClickKusama}>Kusama Network</NavLink>
         </div>
 
+        </div>
         <span onClick={this.openNav} className="opennav"> &#9776; </span>
-
           </React.Fragment>
 {/* : undefined} */}
         <div id="main">

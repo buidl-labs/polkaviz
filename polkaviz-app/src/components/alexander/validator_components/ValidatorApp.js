@@ -37,7 +37,7 @@ class ValidatorApp extends React.Component {
     // }
   }
   shouldComponentUpdate(nextProps,nextState){
-    if(this.props.validatorandintentionloading === nextProps.validatorandintentionloading && this.props.validatorsandintentions === nextProps.validatorsandintentions){
+    if(this.props.validatorandintentionloading === nextProps.validatorandintentionloading && this.props.validatorsandintentions === nextProps.validatorsandintentions && this.state.copied === nextState.copied){
       return false
     }
     else {
@@ -75,13 +75,17 @@ class ValidatorApp extends React.Component {
     });
   };
   onCopy = () => {
+    console.log("youp",this.ismounted)
     if(this.ismounted){
     this.setState({ copied: true }, () =>
-      setInterval(() => {
+{    console.log("copied state set")
+    setInterval(() => {
         this.setState({ copied: false });
       }, 3000)
-    );
-  };
+    ;
+  
+    }
+    )};
 }
 
   componentWillUnmount(){
