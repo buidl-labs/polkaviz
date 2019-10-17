@@ -4,7 +4,7 @@ import { Route, Switch, HashRouter } from "react-router-dom";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import MainWrapper from "./MainWrapper";
 import KusamaApp from "./kusama/KusamaApp";
-import {NavLink} from "react-router-dom"
+// import {NavLink} from "react-router-dom"
 
 
 class Router extends React.Component {
@@ -379,30 +379,30 @@ class Router extends React.Component {
   }
 
   /* Set the width of the side navigation to 250px */
-  openNav = () => {
-    document.getElementsByClassName("nav-grid")[0].style.display = "grid";
-    document.getElementById("mySidenav").style.width = "25%";
-    document.getElementById("main").style.opacity="0.5";
-  };
+  // openNav = () => {
+  //   document.getElementsByClassName("nav-grid")[0].style.display = "grid";
+  //   document.getElementById("mySidenav").style.width = "25%";
+  //   document.getElementById("main").style.opacity="0.5";
+  // };
 
-  /* Set the width of the side navigation to 0 */
-  closeNav = () => {
-    document.getElementsByClassName("nav-grid")[0].style.display = "none";
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.opacity="1";
-  };
-  handleNavClick = () => {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.opacity="1";
-  }
-  handleNavClickKusama = () => {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.opacity="1";
-    setInterval(() => {
-      window.location.reload()      
-    }, 1000);
+  // /* Set the width of the side navigation to 0 */
+  // closeNav = () => {
+  //   document.getElementsByClassName("nav-grid")[0].style.display = "none";
+  //   document.getElementById("mySidenav").style.width = "0";
+  //   document.getElementById("main").style.opacity="1";
+  // };
+  // handleNavClick = () => {
+  //   document.getElementById("mySidenav").style.width = "0";
+  //   document.getElementById("main").style.opacity="1";
+  // }
+  // handleNavClickKusama = () => {
+  //   document.getElementById("mySidenav").style.width = "0";
+  //   document.getElementById("main").style.opacity="1";
+  //   setInterval(() => {
+  //     window.location.reload()      
+  //   }, 1000);
 
-  }
+  // }
   
 
   render() {
@@ -439,7 +439,7 @@ class Router extends React.Component {
       <React.Fragment>
         <HashRouter>
         {/* {pathArray[4]!=="" ? */}
-          <React.Fragment>
+          {/* <React.Fragment>
             <div className="nav-grid">
               <div className="nav-empty-space" onClick={this.closeNav}></div>
         <div id="mySidenav" className="sidenav">
@@ -454,7 +454,7 @@ class Router extends React.Component {
 
         </div>
         <span onClick={this.openNav} className="opennav"> &#9776; </span>
-          </React.Fragment>
+          </React.Fragment> */}
 {/* : undefined} */}
         <div id="main">
           

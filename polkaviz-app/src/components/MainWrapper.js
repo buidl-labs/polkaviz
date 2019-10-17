@@ -33,8 +33,8 @@ class MainWrapper extends React.Component {
   componentDidMount(){
     this.createApi2()
     this.createApi()
-    document.getElementById("mySidenav").style.display="none";
-    document.getElementsByClassName("opennav")[0].style.display="none"
+    // document.getElementById("mySidenav").style.display="none";
+    // document.getElementsByClassName("opennav")[0].style.display="none"
   }
 
   async createApi2() {
@@ -114,8 +114,8 @@ class MainWrapper extends React.Component {
 
   componentWillUnmount() {
     this.ismounted = false;
-    document.getElementById("mySidenav").style.display="block";
-    document.getElementsByClassName("opennav")[0].style.display="block"
+    // document.getElementById("mySidenav").style.display="block";
+    // document.getElementsByClassName("opennav")[0].style.display="block"
   }
 
 

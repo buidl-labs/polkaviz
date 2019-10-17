@@ -32,7 +32,7 @@
 }
 
 
-.valheading h2,.valheading span{
+/* .valheading h2,.valheading span{
   margin: 0 auto;
   position: absolute;
   display: inline-block;
@@ -48,15 +48,8 @@
   line-height: 28px;
 
   color: #ffffff;
-}
-.valheading span{
-    left: 650px;
-    z-index: 10;
-}
-.valheading span:hover{
-  cursor: pointer;
-  color: red;
-}
+} */
+
 .valheading span img{
   color: #ffffff;
 }
@@ -113,9 +106,9 @@
 .totalissuance{
     padding-right: 6%;
 }
-.finalizedblock{
+/* .finalizedblock{
   
-}
+} */
 p {
   display: inline-grid;
 }
@@ -479,3 +472,40 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
+.nav-path{
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  z-index: 10;
+  display: flex;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 23px;
+  width: 50%;
+  color: #FFFFFF;
+}
+
+.nav-path-link, .na-path-current{
+  display: inline;
+}
+.nav-path div{
+  padding: 1%;
+  padding-bottom: 0%;
+}
+
+.nav-path-link:hover{
+  cursor: pointer;
+  background-color: rgb(65, 65, 66);
+}
+
+.nav-path span{
+  margin-left: 20px;
+  z-index: 10;
+  padding: 1%;
+}
+.nav-path span:hover{
+  cursor: pointer;
+  color: red;
+}

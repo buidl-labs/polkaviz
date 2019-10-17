@@ -212,12 +212,13 @@ class App extends React.Component {
     this.ismounted = false;
     clearInterval(this.interval);
   }
-
-
-
-
-
-
+ 
+  handlePolkavizClick = () => {
+    document.body.style.cursor = "default";
+    this.props.history.push({
+      pathname:"/",
+  })
+  }
 
 
   render() {
@@ -248,9 +249,16 @@ class App extends React.Component {
         
       <div className="container">
 
-        <div className="heading">
+        {/* <div className="heading">
           <h2>Alexander Network</h2>
-        </div>
+        </div> */}
+
+        <div className="nav-path">
+  <div className="nav-path-link" onClick={this.handlePolkavizClick}>Polkaviz</div>
+  <div>/</div>
+  <div className="nav-path-current" >Alexander</div>
+  </div>
+
 
         <div className="intentions">
           <div>Next Up:</div>
