@@ -483,21 +483,24 @@ body {
   font-weight: normal;
   font-size: 20px;
   line-height: 23px;
-  width: 50%;
+  width: 80%;
+  /* height: 43px; */
   color: #FFFFFF;
 }
 
 .nav-path-link, .na-path-current{
-  display: inline;
+  /* display: inline; */
 }
 .nav-path div{
-  padding: 1%;
-  padding-bottom: 0%;
+  padding: 1% .5%;
+  /* padding-bottom: 0%; */
+  border-radius: 10%;
 }
 
 .nav-path-link:hover{
   cursor: pointer;
   background-color: rgb(65, 65, 66);
+  color: aqua;
 }
 
 .nav-path span{

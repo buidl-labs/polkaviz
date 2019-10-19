@@ -206,7 +206,7 @@ handleAlexanderClick = () => {
                 x="0px"
                 y="0px"
                 width="24"
-                height="24"
+                height="19"
                 viewBox="0 0 226 226"
               >
                 <g
