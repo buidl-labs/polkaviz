@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@polkadot/api": "^0.93.1",
+    "@polkadot/api": "^0.95.2",
     "bs58": "^4.0.1",
     "konva": "^3.4.1",
     "react": "^16.8.6",
@@ -41,9 +41,9 @@
     "git-scripts": "^0.2.1",
     "surge": "^0.21.3"
   },
-  "git": { 
+  "git": {
     "scripts": {
-       "pre-push": "surge --project ./build --domain dev-polkavizproject.surge.sh" 
-       } 
-      } 
+      "pre-push": "surge --project ./build --domain dev-polkavizproject.surge.sh"
+    }
+  }
 }
