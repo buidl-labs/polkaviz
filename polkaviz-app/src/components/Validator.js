@@ -18,8 +18,10 @@ class Validator extends React.Component {
           totalvalue = this.props.valinfo.stakingLedger.total;
           ownvalue = this.props.valinfo.stakingLedger.total;
         }
+        // console.log('totalbonded: '+ totalbonded + ' totalvalue: '+ totalvalue + ' ownvalue: ' + ownvalue);
 
-        totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
+        totalbonded =
+          parseInt(totalvalue).toFixed(3) - parseInt(ownvalue).toFixed(3);
         bondvalue =
           "Bonded: " +
           ownvalue.toString().slice(0, 5) +
