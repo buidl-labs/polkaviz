@@ -1,16 +1,23 @@
-.container {
+*{
+  margin: 0;
+}
+.container , .kusamacontainer{
   background: #262733;
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
 }
+.kusamacontainer{
+  background:#000000;
+}
+
 .heading h2 {
   margin: 0 auto;
   position: absolute;
   display: inline-block;
-  width: 225.81px;
+  width: 1000px;
   height: 21.13px;
   left: 58px;
   top: 51px;
@@ -23,6 +30,30 @@
 
   color: #ffffff;
 }
+
+
+/* .valheading h2,.valheading span{
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  width: 1087.81px;
+  height: 21.13px;
+  left: 58px;
+  top: 71px;
+
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 23.4729px;
+  line-height: 28px;
+
+  color: #ffffff;
+} */
+
+.valheading span img{
+  color: #ffffff;
+}
+
 .relay-circle {
   margin: 0 auto;
   display: inline-block;
@@ -36,23 +67,66 @@
   width: 100%;
   height: 100%;
 }
+.nombottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
+.valbottombar{
+  margin:0 0 0 0;
+  display: flex;
+  width: 70%;
+  height: 100%;
+  /* position: absolute;
+  top: 50%; */
+}
 
-.counter, .era, .session, .finalizedblock, .validatorcount{
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue, .totalissuance{
   margin: 0 auto;
   position: relative;
-  width: 225.81px;
+  /* width: 225.81px; */
   height: 21.13px;
-  left: 58px;
-  bottom: 60px;
+  /* left: 58px; */
+  bottom: 45px;
 
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
   line-height: 18px;
-
+  padding-left: 5%;
   color: #ffffff;
 }
+.counter, .era, .session, .finalizedblock, .validatorcount, .totalissuance {
+  bottom: 70px;
+}
+.totalissuance{
+    padding-right: 6%;
+}
+/* .finalizedblock{
+  
+} */
+p {
+  display: inline-grid;
+}
+/* .finalizedblock{
+   width: 245.81px; 
+   padding-right: 2%; 
+}
+
+.totalbonded, .selfbonded, .nominatorbonded{
+   width: 550.81px; 
+   padding-left: 5%; 
+} */
+
+
+.controllername, .bondvalue{
+  width: 700.81px;
+}
+
 
 .validator {
   margin: 0 auto;
@@ -71,23 +145,35 @@ html {
 }
 body {
   margin: 0;
+  background: #262733;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
 
 
 .lds-ripple {
   display: inline-block;
-  position: relative;
+  position: absolute;
   width: 64px;
   height: 64px;
   top: 36%;
   left: 45%;
 }
+.black{
+  background-color: #000000;
+}
 .lds-ripple div {
   position: absolute;
+  top: 40%;
   border: 4px solid #dfc;
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  width: 100%;
+  height: 100vh;
 }
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
@@ -118,4 +204,311 @@ body {
   top: 60%;
   left: 39%;
   color: white;
+}
+
+
+.back-arrow{
+  position:absolute;
+  left:32px;
+  top:25px;
+  color:#ffffff;
+  font-family:"Arial";
+  font-size:35px;
+  width:34px;
+  height: 30px;
+  z-index: 1;
+}
+.back-arrow:hover{
+  transform: scale(1.1);
+}
+
+/* .home{
+  position:absolute;
+  left:82px;
+  top:28px;
+  color:#ffffff;
+  font-family:"Arial";
+  font-size:25px;
+  width:34px;
+  height: 30px;
+  z-index: 1;
+}
+.home:hover{
+  transform: scale(1.1);
+} */
+
+
+.mainWrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+
+.right-stage{
+  background-color: black;
+}
+
+
+.intentions{
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  overflow: auto;
+  /* scroll-behavior: smooth; */
+  z-index: 1;
+  top:100px;
+  right: 100px;
+  color: white;
+  font-size: 14px;
+  line-height: 26px;
+  scrollbar-color: blue red;
+  scrollbar-width: thin;
+}
+
+.intentions::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.intentions::-webkit-scrollbar-track-piece  {
+  background-color: #C2D2E4;
+}
+
+.intentions::-webkit-scrollbar-thumb:vertical {
+  height: 30px;
+  background-color: #0A4C95;
+}
+
+.valsign{
+  width: 15px;
+  height: 8px;
+  background-color: yellow;
+  border-radius: 4.69px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.mainwrapper-text{
+  background-color:#c1cfda;
+  padding-left: 58px;
+  padding-top:51px;
+  height: 120px;
+}
+.mainwrapper-text h2{
+  padding-top: 10px;
+  font-size: 16px;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+}
+.mainwrapper-text h1{
+  font-size: 24px;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+}
+/* .inten ::before {
+  content:"   ";
+  height: 20px;
+  width: 30px;
+  border-radius:20%;
+  background-color: yellow;
+} */
+
+.headingmainwrapper1 h2, .headingmainwrapper2 h2 {
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 21.13px;
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: #ffffff;
+  text-align: center;
+}
+.headingmainwrapper1{
+  opacity:0;
+}
+.headingmainwrapper2{
+  opacity:0;
+}
+ .headingmainwrapper1 h2 {
+  bottom: 30%;
+}
+.headingmainwrapper2 h2 {
+  bottom: 11%;
+} 
+.kusamaconnecting{
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: #ffffff; 
+  margin-top:45%;
+  margin-left:10%;
+}
+
+.animate{
+  position: relative;
+  animation-name: fadeinup;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeinup{
+  from{
+      top: 90%;
+      opacity: 0;
+  }
+  to{
+      top: 70%;
+      opacity: 1;
+  }
+}
+.animatereverse{
+  position: relative;
+  animation-name: fadeoutdown;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeoutdown{
+  from{
+      top: 70%;
+      opacity: 1;
+  }
+  to{
+      top: 90%;
+      opacity: 0;
+  }
+}
+
+.nav-grid{
+  display: none;
+  grid-template-columns: 2.5fr 1fr;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  gap: 0;
+}
+
+.nav-empty-space{
+  opacity: 0.25;
+  z-index: 10;
+  margin-right: -5%;
+}
+
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: #c1cfda;
+  
+}
+.opennav{
+  z-index: 1;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: white;
+  font-size: 2em;
+}
+.opennav:hover{
+  cursor: pointer;
+  color: #006989;
+}
+
+/* The navigation menu links */
+.navlink {
+  padding: 8px 8px 8px 0px;
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  margin: 5% 10%;
+  transition: border 0.3s ease-in-out 0s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.navlink:hover {
+  /* color: #f1f1f1; */
+  border-bottom-color: rgba(255,255,255,1)
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: black;
+}
+.sidenav .closebtn:hover{
+  cursor: pointer;
+  color: white;
+}
+.sidenav h2{
+  color: black;
+  margin-left: 10%;
+  margin-top: 8%;
+  font-weight: 900;
+  font-size: 2em;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.nav-path{
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  z-index: 10;
+  display: flex;
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 23px;
+  width: 80%;
+  /* height: 43px; */
+  color: #FFFFFF;
+}
+
+.nav-path-link, .na-path-current{
+  /* display: inline; */
+}
+.nav-path div{
+  padding: 1% .5%;
+  /* padding-bottom: 0%; */
+  border-radius: 10%;
+}
+
+.nav-path-link:hover{
+  cursor: pointer;
+  background-color: rgb(65, 65, 66);
+  color: aqua;
+}
+
+.nav-path span{
+  margin-left: 20px;
+  z-index: 10;
+  padding: 1%;
+}
+.nav-path span:hover{
+  cursor: pointer;
+  color: red;
 }

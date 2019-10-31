@@ -1,8 +1,11 @@
 import React from "react";
-import HexagonBase from "./HexagonBase";
-import TriangleLid from "./TriangleLid"
+import HexagonBase from "./HexagonBase-new";
+import TriangleLid from "./TriangleLid-new"
 
-class BlockAnimation extends React.Component {
+class BlockAnimationNew extends React.Component {
+  shouldComponentUpdate(nextProps, nextState){
+    return this.props.angle !== nextProps.angle
+}
   handleClick = () => this.setState(state => ({ flag: !state.flag }));
   render() {
     const hexagonRadius=6
@@ -42,4 +45,4 @@ class BlockAnimation extends React.Component {
     );
   }
 }
-export default BlockAnimation;
+export default BlockAnimationNew;

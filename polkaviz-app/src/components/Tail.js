@@ -13,6 +13,7 @@ class Tail extends React.Component {
           tension={0}
           stroke={"#717171"}
           rotation={this.props.angle}
+          opacity={this.props.opacity}
         />
       </React.Fragment>
     );

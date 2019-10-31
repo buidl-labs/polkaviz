@@ -6,7 +6,7 @@ class Era extends React.Component {
     return (
       <div className="era">
         <p>
-          era : {this.props.eraProgress}/{this.props.eraLength}
+          era: {this.props.eraProgress}/{this.props.eraLength}
         </p>
       </div>
     );
