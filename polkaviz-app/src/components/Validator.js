@@ -11,17 +11,26 @@ class Validator extends React.Component {
       bondvalue = "Bonded: No Data found";
       nomvalue = "Backed by: No Data found";
       if (!this.props.isKusama) {
-        let totalvalue = this.props.valinfo.stakers.total / Math.pow(10, 15);
-        let ownvalue = this.props.valinfo.stakers.own / Math.pow(10, 15);
+        let totalvalue =
+          parseInt(this.props.valinfo.stakers.total) / Math.pow(10, 15);
+        let ownvalue =
+          parseInt(this.props.valinfo.stakers.own) / Math.pow(10, 15);
         let totalbonded = 0;
         if (this.props.intentions.includes(this.props.validatorAddress)) {
-          totalvalue = this.props.valinfo.stakingLedger.total;
-          ownvalue = this.props.valinfo.stakingLedger.total;
+          totalvalue = parseInt(this.props.valinfo.stakingLedger.total);
+          ownvalue = parseInt(this.props.valinfo.stakingLedger.total);
         }
-        // console.log('totalbonded: '+ totalbonded + ' totalvalue: '+ totalvalue + ' ownvalue: ' + ownvalue);
+        console.log(
+          "totalbonded: " +
+            totalbonded +
+            " totalvalue: " +
+            totalvalue +
+            " ownvalue: " +
+            ownvalue
+        );
+        // console.log('totalbonded: '+ parseInt(totalbonded) + ' totalvalue: '+ parseInt(totalvalue) + ' ownvalue: ' + parseInt(ownvalue));
 
-        totalbonded =
-          parseInt(totalvalue).toFixed(3) - parseInt(ownvalue).toFixed(3);
+        totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
         bondvalue =
           "Bonded: " +
           ownvalue.toString().slice(0, 5) +
