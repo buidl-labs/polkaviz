@@ -12,12 +12,20 @@ import RewardChart from "./RewardChart";
 import CalculatorForm from "./CalculatorForm";
 
 class RewardCalculatorApp extends React.Component {
-	handleClick = value => {
-		console.log(value);
-	};
-
 	render() {
-		const { validators, colorMode } = this.props;
+		const {
+			validators,
+			stakeAmount,
+			chartStake,
+			validatorPoolReward,
+			dailyEarning,
+			validatorAddress,
+			validatorPayment,
+			colorMode,
+			handleStateChange,
+			handleStakeChange,
+			handleChartClick
+		} = this.props;
 		return (
 			<Stack p={8} pt={2}>
 				<Box>
@@ -30,12 +38,18 @@ class RewardCalculatorApp extends React.Component {
 							Below graph displays possible daily rewards for nominators if
 							equal value staked to each validator in current system (in DOTs).
 						</Text>
-						<RewardChart colorMode={colorMode} validators={validators} />
+						<RewardChart
+							colorMode={colorMode}
+							chartStake={chartStake}
+							validatorPoolReward={validatorPoolReward}
+							validators={validators}
+							handleChartClick={handleChartClick}
+						/>
 						<ButtonGroup spacing={4} textAlign="center" w="100%">
 							<Text display="inline">Stake:</Text>
-							<Button onClick={() => this.handleClick(1)}>1</Button>
-							<Button onClick={() => this.handleClick(10)}>10</Button>
-							<Button onClick={() => this.handleClick(100)}>100</Button>
+							<Button variantColor="teal" variant={chartStake === 1 ? "solid" : "outline"} onClick={() => handleStakeChange(1)}>1</Button>
+							<Button variantColor="teal" variant={chartStake === 10 ? "solid" : "outline"} onClick={() => handleStakeChange(10)}>10</Button>
+							<Button variantColor="teal" variant={chartStake === 100 ? "solid" : "outline"} onClick={() => handleStakeChange(100)}>100</Button>
 						</ButtonGroup>
 					</Box>
 					<Box
@@ -46,7 +60,13 @@ class RewardCalculatorApp extends React.Component {
 						<Heading as="h4" size="md" pb={4}>
 							Rewards Calculator
 						</Heading>
-						<CalculatorForm />
+						<CalculatorForm
+							stakeAmount={stakeAmount}
+							dailyEarning={dailyEarning}
+							validatorAddress={validatorAddress}
+							validatorPayment={validatorPayment}
+							handleStateChange={handleStateChange}
+						/>
 					</Box>
 				</Flex>
 			</Stack>
