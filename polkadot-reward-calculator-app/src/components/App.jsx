@@ -7,17 +7,17 @@ function App() {
 	const { colorMode, toggleColorMode } = useColorMode();
 	const [state, setState] = React.useState({
 		validators: [],
-		numDots: 1,
-		validatorAddress: "5CFce5AiAk1j1FL1VKq1fK4oBEuo2uo5reMgtCVWVP4c5Nxq",
+		stakeAmount: "",
+		chartStake: 1,
+		validatorAddress: "",
 		validatorPayment: "",
-		validatorPoolStake: "",
-		userStakeFraction: "",
+		validatorPoolReward: "",
 		dailyEarning: "",
 		mounted: false
 	});
 
 	const createApi = React.useCallback(async () => {
-		const EXPECTED_NUM_OF_ERA_PER_DAY = 24;
+		console.clear();
 		const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
 		const api = await ApiPromise.create({ provider: provider });
 
@@ -29,36 +29,65 @@ function App() {
 		const validatorPoolReward = (currentSessionReward * 6) / 10 ** 12;
 		const validatorAddressList = validators.map(async validator => {
 			const currentStakeInfo = await api.derive.staking.info(validator);
-			const currentTotalStake = currentStakeInfo.stakers.total.toString() / 10 ** 15;
-			const currentValidatorPayment = await currentStakeInfo.validatorPrefs.validatorPayment.toString();
-			const currentUserStakeFraction =
-				state.numDots / (state.numDots + currentTotalStake);
-			const currentExpectedReward =
-				(validatorPoolReward - currentValidatorPayment) *
-				currentUserStakeFraction;
+			const currentTotalStake =
+				currentStakeInfo.stakers.total.toString() / 10 ** 12;
+			const currentValidatorPayment = await currentStakeInfo.validatorPrefs.validatorPayment.toString() / 10 ** 12;
 
-			const currentDailyEarning =
-				currentExpectedReward <= 0 || isNaN(currentExpectedReward)
-					? 0
-					: currentExpectedReward * EXPECTED_NUM_OF_ERA_PER_DAY;
 			return {
 				address: validator,
-				reward: currentDailyEarning,
 				payment: currentValidatorPayment,
-				userStake: currentUserStakeFraction,
 				totalStake: currentTotalStake,
-				stakers: currentTotalStake
+				stakeInfo: currentStakeInfo
 			};
 		});
 		const validatorList = await Promise.all(validatorAddressList);
 		if (state.mounted) {
 			setState(state => ({
 				...state,
-				validators: validatorList
+				validators: validatorList,
+				validatorPoolReward: validatorPoolReward
 			}));
 		}
-		console.log(validatorList);
-	}, [state.numDots, state.mounted]);
+	}, [state.mounted]);
+
+	const calculateReward = React.useCallback(() => {
+		const EXPECTED_NUM_OF_ERA_PER_DAY = 24;
+
+		const selectedValidator = state.validators.find(validator => {
+			return validator.address.toString() === state.validatorAddress.toString();
+		});
+		if (selectedValidator !== undefined) {
+			const currentUserStakeFraction =
+				parseFloat(state.stakeAmount) /
+				(parseFloat(state.stakeAmount) + selectedValidator.totalStake);
+			const currentExpectedReward =
+				(state.validatorPoolReward -
+					(state.validatorPayment === ""
+						? selectedValidator.payment
+						: state.validatorPayment)) *
+				currentUserStakeFraction;
+
+			const currentDailyEarning =
+				currentExpectedReward <= 0 || isNaN(currentExpectedReward)
+					? 0
+					: currentExpectedReward * EXPECTED_NUM_OF_ERA_PER_DAY;
+			if (state.mounted) {
+				setState(state => ({
+					...state,
+					selectedValidator: selectedValidator,
+					dailyEarning: currentDailyEarning,
+					validatorPayment: selectedValidator.payment
+				}));
+			}
+		}
+	}, [
+		state.stakeAmount,
+		state.validatorPoolReward,
+		state.mounted,
+		state.validatorAddress,
+		state.validators,
+		state.validatorPayment
+	]);
 
 	React.useEffect(() => {
 		setState(state => ({
@@ -66,7 +95,30 @@ function App() {
 			mounted: true
 		}));
 		createApi();
-	}, [createApi]);
+		calculateReward();
+	}, [createApi, calculateReward]);
+
+	const handleStateChange = e => {
+		const { name, value } = e.target;
+		setState(state => ({
+			...state,
+			[name]: value
+		}));
+	};
+
+	const handleStakeChange = chartStake => {
+		setState(state => ({
+			...state,
+			chartStake: chartStake
+		}));
+	};
+
+	const handleChartClick = address => {
+		setState(state => ({
+			...state,
+			validatorAddress: address
+		}));
+	};
 
 	return (
 		<Flex
@@ -90,6 +142,15 @@ function App() {
 			<RewardCalculatorApp
 				colorMode={colorMode}
 				validators={state.validators}
+				validatorAddress={state.validatorAddress}
+				validatorPayment={state.validatorPayment}
+				validatorPoolReward={state.validatorPoolReward}
+				stakeAmount={state.stakeAmount}
+				chartStake={state.chartStake}
+				dailyEarning={state.dailyEarning}
+				handleStateChange={handleStateChange}
+				handleStakeChange={handleStakeChange}
+				handleChartClick={handleChartClick}
 			/>
 		</Flex>
 	);
