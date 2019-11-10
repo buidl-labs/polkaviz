@@ -1,62 +1,82 @@
 import React from "react";
-import { Chart, Tooltip, Geom, Coord } from "bizcharts";
+import {
+    VictoryChart,
+    VictoryBar,
+    VictoryTooltip,
+    VictoryTheme
+} from "victory";
 
 class RewardChart extends React.Component {
-	render() {
-		const {
-			validators,
-			chartStake,
-			validatorPoolReward,
-			handleChartClick
-		} = this.props;
-		const EXPECTED_NUM_OF_ERA_PER_DAY = 24;
-		const validatorData = validators.map(validator => {
-			const currentUserStakeFraction =
-				chartStake /
-				(chartStake + validator.totalStake);
-			const currentExpectedReward =
-				(validatorPoolReward - validator.payment) * currentUserStakeFraction;
-			const currentDailyEarning =
-				currentExpectedReward <= 0 || isNaN(currentExpectedReward)
-					? 0
-					: currentExpectedReward * EXPECTED_NUM_OF_ERA_PER_DAY;
-			return {
-				address:
-					validator.address.toString().slice(0, 4) +
-					"...." +
-					validator.address.toString().slice(-5),
-				reward: currentDailyEarning,
-				completeAddress: validator.address.toString()
-			};
-		});
+    render() {
+        const {
+            colorMode,
+            validatorData,
+            handleChartClick
+        } = this.props;
 
-		return (
-			<Chart
-				height={450}
-				data={validatorData}
-				onPlotClick={ev =>
-					ev.data === undefined
-						? console.error(
-								"Validator's address couldn't be found: This could happen on clicking a validator with 0 expected reward or on clicking outside the visible plot"
-						  )
-						: handleChartClick(ev.data._origin.completeAddress)
-				}
-				forceFit
-			>
-				<Coord type="polar" innerRadius={0.2} />
-				<Tooltip />
-				<Geom
-					type="intervalStack"
-					color="address"
-					position="address*reward"
-					style={{
-						lineWidth: 2,
-						stroke: this.props.colorMode === "light" ? "#1A202C" : "#fff"
-					}}
-				/>
-			</Chart>
-		);
-	}
+        if (validatorData !== []) {
+            return (
+                <VictoryChart
+                    horizontal
+                    theme={VictoryTheme.material}
+                    height={700}
+                    width={1000}
+                    padding={{ top: 80, bottom: 80, left: 100, right: 40 }}
+                    domainPadding={{ x: 8, y: 8 }}
+                    style={{
+                        labels: {
+                            fontSize: 24,
+                            fill:
+                                colorMode === "light"
+                                    ? "#1A202C"
+                                    : "rgb(236, 239, 241)",
+                            padding: 15
+                        }
+                    }}
+                    events={[
+                        {
+                            childName: "all",
+                            target: "data",
+                            eventHandlers: {
+                                onClick: () => [
+                                    {
+                                        childName: "all",
+                                        target: "data",
+                                        mutation: props =>
+                                            props.datum !== undefined
+                                                ? handleChartClick(
+                                                      props.datum
+                                                          .completeAddress
+                                                  )
+                                                : ""
+                                    }
+                                ]
+                            }
+                        }
+                    ]}
+                >
+                    <VictoryBar
+                        style={{
+                            data: {
+                                fill:
+                                    colorMode === "light"
+                                        ? "#1A202C"
+                                        : "rgb(236, 239, 241)"
+                            },
+                            labels: { fontSize: 12 }
+                        }}
+                        data={validatorData}
+                        labels={({ datum }) =>
+                            `Validator Address: ${datum.address}\nReward: ${datum.reward}`
+                        }
+                        labelComponent={<VictoryTooltip horizontal />}
+                        x="address"
+                        y="reward"
+                    />
+                </VictoryChart>
+            );
+        }
+    }
 }
 
 export default RewardChart;
