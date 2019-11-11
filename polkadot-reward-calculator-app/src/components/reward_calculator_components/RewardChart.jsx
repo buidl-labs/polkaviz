@@ -46,7 +46,7 @@ class RewardChart extends React.Component {
                                             props.datum !== undefined
                                                 ? handleChartClick(
                                                       props.datum
-                                                          .completeAddress
+                                                          .stashId
                                                   )
                                                 : ""
                                     }
