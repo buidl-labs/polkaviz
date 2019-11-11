@@ -6,23 +6,11 @@ import {
     Box,
     Alert,
     AlertIcon,
-    CloseButton
 } from "@chakra-ui/core";
 import RewardChart from "./RewardChart";
 import CalculatorForm from "./CalculatorForm";
 
 class RewardCalculatorApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            displayWarning: true
-        };
-    }
-    handleCloseWarning = () => {
-        this.setState({
-            displayWarning: false
-        });
-    }
     render() {
         const {
             validatorData,
@@ -59,12 +47,11 @@ class RewardCalculatorApp extends React.Component {
                             handleStateChange={handleStateChange}
                         />
                     </Box>
-                    <Alert status="warning" display={this.state.displayWarning ? "" : "none"}>
+                    <Alert status="warning">
                         <AlertIcon />
                         The graph displays expected daily rewards for
                         nominators if equal value is staked to each validator in
                         current system (in DOTs). Actual rewards may vary.
-                        <CloseButton onClick={this.handleCloseWarning} />
                     </Alert>
                     <RewardChart
                         colorMode={colorMode}
