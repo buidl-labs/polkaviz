@@ -35,7 +35,7 @@ function App() {
                 currentStakeInfo.stakers.total.toString() / 10 ** 15;
             const currentValidatorPayment =
                 (await currentStakeInfo.validatorPrefs.validatorPayment.toString()) /
-                10 ** 12;
+                10 ** 15;
             return {
                 address: validator,
                 payment: currentValidatorPayment,
