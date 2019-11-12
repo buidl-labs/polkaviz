@@ -59,8 +59,8 @@ function App() {
 		const EXPECTED_NUM_OF_ERA_PER_DAY = 24;
 		const selectedValidator = state.validators.find(validator => {
 			return (
-				(validator.address.toString() === state.validatorAddress.toString()) ||
-				(validator.stashId.toString() === state.validatorAddress.toString())
+				validator.address.toString() === state.validatorAddress.toString() ||
+				validator.stashId.toString() === state.validatorAddress.toString()
 			);
 		});
 		if (selectedValidator !== undefined) {
