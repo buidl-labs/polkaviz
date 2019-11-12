@@ -82,40 +82,43 @@ const data = [
 	{
 		id: 7,
 		question: "What does Polkadot Reward Calculator do?",
-		answer: "Polkadot Reward Calculator presents the Daily Earning Potential for each validator in a graphical format which makes it easy to visualize which validator would yield the highest return if the same amount is staked."
+		answer:
+			"Polkadot Reward Calculator presents the Daily Earning Potential for each validator in a graphical format which makes it easy to visualize which validator would yield the highest return if the same amount is staked."
 	}
 ];
 
 class FAQs extends React.Component {
 	render() {
-		return data.map(data => (
+		return (
 			<Accordion key={data.id} defaultIndex={[0]} allowMultiple>
-				<AccordionItem>
-					<AccordionHeader>
-						<Box flex="1" textAlign="left">
-							<Heading as="h5" size="sm" textAlign="left">
-								Q. {data.question}
-							</Heading>
-						</Box>
-						<AccordionIcon />
-					</AccordionHeader>
-					<AccordionPanel pb={4}>
-						A. {data.answer}{" "}
-						{data.link !== undefined ? (
-							<Link
-                                href={data.link.url}
-                                color="teal.500"
-								isExternal={data.link.isExternal ? true : false}
-							>
-								{data.link.content}
-							</Link>
-						) : (
-							""
-						)}
-					</AccordionPanel>
-				</AccordionItem>
+				{data.map(data => (
+					<AccordionItem>
+						<AccordionHeader>
+							<Box flex="1" textAlign="left">
+								<Heading as="h5" size="sm" textAlign="left">
+									Q. {data.question}
+								</Heading>
+							</Box>
+							<AccordionIcon />
+						</AccordionHeader>
+						<AccordionPanel pb={4}>
+							A. {data.answer}{" "}
+							{data.link !== undefined ? (
+								<Link
+									href={data.link.url}
+									color="teal.500"
+									isExternal={data.link.isExternal ? true : false}
+								>
+									{data.link.content}
+								</Link>
+							) : (
+								""
+							)}
+						</AccordionPanel>
+					</AccordionItem>
+				))}
 			</Accordion>
-		));
+		);
 	}
 }
 

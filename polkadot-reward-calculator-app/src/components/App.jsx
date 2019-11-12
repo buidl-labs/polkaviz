@@ -205,7 +205,7 @@ function App() {
 			pb={8}
 		>
 			<Flex justify="flex-end" p={4} pb={2}>
-				<a href="mailto:contact@saumyakaran.com">
+				<a href="mailto:sahil@thevantageproject.com">
 					<IconButton
 						icon="email"
 						size="lg"
