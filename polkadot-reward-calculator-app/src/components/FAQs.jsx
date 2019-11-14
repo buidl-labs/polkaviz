@@ -90,35 +90,37 @@ const data = [
 class FAQs extends React.Component {
 	render() {
 		return (
-			<Accordion key={data.id} defaultIndex={[0]} allowMultiple>
-				{data.map(data => (
-					<AccordionItem>
-						<AccordionHeader>
-							<Box flex="1" textAlign="left">
-								<Heading as="h5" size="sm" textAlign="left">
-									Q. {data.question}
-								</Heading>
-							</Box>
-							<AccordionIcon />
-						</AccordionHeader>
-						<AccordionPanel pb={4}>
-							A. {data.answer}{" "}
-							{data.link !== undefined ? (
-								<Link
-									href={data.link.url}
-									color="teal.500"
-									isExternal={data.link.isExternal ? true : false}
-								>
-									{data.link.content}
-								</Link>
-							) : (
-								""
-							)}
-						</AccordionPanel>
-					</AccordionItem>
-				))}
-			</Accordion>
-		);
+            <Accordion defaultIndex={[0]} allowMultiple>
+                {data.map(data => (
+                    <AccordionItem key={data.id}>
+                        <AccordionHeader>
+                            <Box flex="1" textAlign="left">
+                                <Heading as="h5" size="sm" textAlign="left">
+                                    Q. {data.question}
+                                </Heading>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionHeader>
+                        <AccordionPanel pb={4}>
+                            A. {data.answer}{" "}
+                            {data.link !== undefined ? (
+                                <Link
+                                    href={data.link.url}
+                                    color="teal.500"
+                                    isExternal={
+                                        data.link.isExternal ? true : false
+                                    }
+                                >
+                                    {data.link.content}
+                                </Link>
+                            ) : (
+                                ""
+                            )}
+                        </AccordionPanel>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+        );
 	}
 }
 
