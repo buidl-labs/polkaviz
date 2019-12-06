@@ -3,7 +3,7 @@ import Rectangleandlines from "./Rectangleandlines";
 
 class Validators extends React.Component {
   render() {
-    let arr1 = [];
+    const arr1 = [];
     let initial_Y = window.innerHeight / 3;
     let windowlength = window.innerHeight / 3;
     if (this.props.allvals.length > 10) {
@@ -12,9 +12,9 @@ class Validators extends React.Component {
     }
 
     let y_cord = initial_Y;
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let rad = height / 2 - 24;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const rad = height / 2 - 24;
     this.props.allvals.forEach((element, index) => {
       // console.log(element)
       y_cord += windowlength / (this.props.allvals.length + 1);

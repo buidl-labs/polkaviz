@@ -4,7 +4,7 @@ import { Line, Rect } from "react-konva";
 class Rectandline extends React.Component {
   render() {
     return (
-      <React.Fragment>
+      <>
         <Line
           points={[
             this.props.xstart,
@@ -27,7 +27,7 @@ class Rectandline extends React.Component {
           offsetY={8}
           rotation={(this.props.angle * 180) / Math.PI}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

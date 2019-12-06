@@ -5,7 +5,7 @@ import Rectandline from "./Rectandline";
 class Parachains extends React.Component {
   render() {
     let angle = 0;
-    let arr = [];
+    const arr = [];
     this.props.parachains.forEach(ele => {
       arr.push(
         <Rectandline

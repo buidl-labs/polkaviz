@@ -6,7 +6,7 @@ class WhiteCircles extends React.Component {
     console.log("whitecircle");
     let angle = (2 / 3) * Math.PI;
     let maxAngle = (2 / 3) * Math.PI;
-    var arr = [];
+    const arr = [];
 
     if (this.props.n > 5) {
       angle = Math.PI / 4;

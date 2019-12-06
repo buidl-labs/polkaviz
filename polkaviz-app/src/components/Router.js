@@ -1,6 +1,6 @@
 import React from "react";
-import App from "./alexander/App";
 import { Route, Switch, HashRouter } from "react-router-dom";
+import App from "./alexander/App";
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import MainWrapper from "./MainWrapper";
 import KusamaApp from "./kusama/KusamaApp";
@@ -404,7 +404,7 @@ class Router extends React.Component {
   // }
 
   render() {
-    let pathArray = window.location.href.split("/");
+    const pathArray = window.location.href.split("/");
     console.log(pathArray);
     // console.log(window.location.pathname,window.location.search)
     // var pathArray = window.location.href.split('/');
@@ -434,7 +434,7 @@ class Router extends React.Component {
       //     </div>
       //   </React.Fragment>
       // ) :
-      <React.Fragment>
+      <>
         <HashRouter>
           {/* {pathArray[4]!=="" ? */}
           {/* <React.Fragment>
@@ -456,72 +456,9 @@ class Router extends React.Component {
           {/* : undefined} */}
           <div id="main">
             <Switch>
-              <Route
-                exact
-                path="/"
-                render={props => (
-                  <MainWrapper
-                  // valtotalinfo={this.state.valtotalinfo}
-                  // createApi={this.createApi}
-                  // validators={this.state.validators}
-                  // start={this.state.start}
-                  // lastAuthor={this.state.lastAuthor}
-                  // validatorcount={this.state.totalValidators}
-                  // bottombarobject={bottombarobject}
-                  // nominatorinfo={this.state.nominatorinfo}
-                  // previousBlock={this.state.previousBlock}
-                  // isloading={this.state.isloading}
-                  // intentions={this.state.intentions}
-                  // validatorsandintentions={this.state.validatorsandintentions}
-                  // kusamavaltotalinfo={this.state.kusamavaltotalinfo}
-                  // kusamacreateApi={this.createApi2}
-                  // kusamavalidators={this.state.kusamavalidators}
-                  // kusamastart={this.state.kusamastart}
-                  // kusamalastAuthor={this.state.kusamalastAuthor}
-                  // kusamavalidatorcount={this.state.kusamatotalValidators}
-                  // kusamabottombarobject={bottombarobject2}
-                  // kusamanominatorinfo={this.state.kusamanominatorinfo}
-                  // kusamapreviousBlock={this.state.kusamapreviousBlock}
-                  // kusamaisloading={this.state.kusamaisloading}
-                  />
-                )}
-              />
-              <Route
-                path="/alexander"
-                render={props => (
-                  <App
-                  // valtotalinfo={this.state.valtotalinfo}
-                  // createApi={this.createApi}
-                  // validators={this.state.validators}
-                  // start={this.state.start}
-                  // lastAuthor={this.state.lastAuthor}
-                  // validatorcount={this.state.totalValidators}
-                  // // bottombarobject={bottombarobject}
-                  // nominatorinfo={this.state.nominatorinfo}
-                  // previousBlock={this.state.previousBlock}
-                  // intentions={this.state.intentions}
-                  // validatorsandintentions={this.state.validatorsandintentions}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/kusama"
-                render={props => (
-                  <KusamaApp
-                  // valtotalinfo={this.state.kusamavaltotalinfo}
-                  // createApi={this.createApi2}
-                  // validators={this.state.kusamavalidators}
-                  // start={this.state.kusamastart}
-                  // lastAuthor={this.state.kusamalastAuthor}
-                  // validatorcount={this.state.kusamatotalValidators}
-                  // bottombarobject={bottombarobject2}
-                  // nominatorinfo={this.state.kusamanominatorinfo}
-                  // previousBlock={this.state.kusamapreviousBlock}
-                  // kusamaisloading={this.state.kusamaisloading}
-                  />
-                )}
-              />
+              <Route exact path="/" render={props => <MainWrapper />} />
+              <Route path="/alexander" render={props => <App />} />
+              <Route exact path="/kusama" render={props => <KusamaApp />} />
               {/* <Route
                 exact
                 path="/alexander/validator/:validatorAddress"
@@ -550,7 +487,7 @@ class Router extends React.Component {
             </Switch>
           </div>
         </HashRouter>
-      </React.Fragment>
+      </>
     );
   }
 }

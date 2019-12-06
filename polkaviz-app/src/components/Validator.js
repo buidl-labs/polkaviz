@@ -21,52 +21,41 @@ class Validator extends React.Component {
           ownvalue = parseInt(this.props.valinfo.stakingLedger.total);
         }
         console.log(
-          "totalbonded: " +
-            totalbonded +
-            " totalvalue: " +
-            totalvalue +
-            " ownvalue: " +
-            ownvalue
+          `totalbonded: ${totalbonded} totalvalue: ${totalvalue} ownvalue: ${ownvalue}`
         );
         // console.log('totalbonded: '+ parseInt(totalbonded) + ' totalvalue: '+ parseInt(totalvalue) + ' ownvalue: ' + parseInt(ownvalue));
 
         totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
-        bondvalue =
-          "Bonded: " +
-          ownvalue.toString().slice(0, 5) +
-          " (+ " +
-          totalbonded.toString().slice(0, 5) +
-          " ) DOT";
-        nomvalue =
-          "Backed by: " +
-          this.props.valinfo.stakers.others.length +
-          " nominators";
+        bondvalue = `Bonded: ${ownvalue
+          .toString()
+          .slice(0, 5)} (+ ${totalbonded.toString().slice(0, 5)} ) DOT`;
+        nomvalue = `Backed by: ${this.props.valinfo.stakers.others.length} nominators`;
       }
       if (this.props.intentions.includes(this.props.validatorAddress)) {
         if (this.props.isKusama) {
           let value =
             this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
           if (value > 1000) {
-            value = value / Math.pow(10, 3);
+            value /= Math.pow(10, 3);
             value = value.toFixed(3);
             // value = value.split(".")[0]
-            value = value + "k";
+            value += "k";
           } else value = value.toFixed(3);
           // console.log(value)
-          bondvalue = "Bonded: " + value.toString() + " KSM";
+          bondvalue = `Bonded: ${value.toString()} KSM`;
 
           let commissionvalue = this.props.valinfo.validatorPrefs
             .validatorPayment;
-          commissionvalue = commissionvalue / Math.pow(10, 12);
+          commissionvalue /= Math.pow(10, 12);
           commissionvalue = commissionvalue.toFixed(3);
-          commission = "commission: " + commissionvalue + " KSM";
+          commission = `commission: ${commissionvalue} KSM`;
         }
       }
     }
     let x1 = this.props.x;
     let y1 = this.props.y;
-    let x2 = this.props.x;
-    let y2 = this.props.y;
+    const x2 = this.props.x;
+    const y2 = this.props.y;
     let color = "#C31169";
     let opacity = 1;
     if (!this.props.isKusama) {
@@ -81,7 +70,7 @@ class Validator extends React.Component {
       }
     }
     return (
-      <React.Fragment>
+      <>
         <Tail
           x={x2 / 2}
           y={y2 / 2}
@@ -105,7 +94,7 @@ class Validator extends React.Component {
           intentions={this.props.intentions}
           color={color}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -21,6 +21,7 @@ class Bottombar extends React.Component {
     };
     this.mounted = true;
   }
+
   componentDidMount() {
     // this.createApi2();
     // this.createApi3();
@@ -69,10 +70,11 @@ class Bottombar extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
+
   render() {
     // console.log(this.props.validatorcount)
     return (
-      <React.Fragment>
+      <>
         <ValidatorCount
           totalValidators={this.props.bottombarobject.validatorcount}
           activeValidators={this.props.activevalidators}
@@ -91,7 +93,7 @@ class Bottombar extends React.Component {
           eraProgress={this.props.bottombarobject.bottombarinfo.eraProgress}
         />
         <TotalIssuance totalIssued={this.props.bottombarobject.totalIssued} />
-      </React.Fragment>
+      </>
     );
   }
 }

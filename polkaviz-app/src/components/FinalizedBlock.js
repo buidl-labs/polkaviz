@@ -8,8 +8,8 @@ class FinalizedBlock extends React.Component {
         <p>block:&nbsp;</p>
         <NumberFormat
           value={this.props.finalblock}
-          displayType={"text"}
-          thousandSeparator={true}
+          displayType="text"
+          thousandSeparator
         />
       </div>
     );
