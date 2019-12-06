@@ -3,11 +3,11 @@ import { Circle } from "react-konva";
 
 class Relay extends React.Component {
   render() {
-    let fillcolor = "#262733"
-    let strokecolor = "#97A1BF"
-    if(this.props.isKusama) {
-      fillcolor = "black"
-      strokecolor = "white"
+    let fillcolor = "#262733";
+    let strokecolor = "#97A1BF";
+    if (this.props.isKusama) {
+      fillcolor = "black";
+      strokecolor = "white";
     }
     return (
       <Circle

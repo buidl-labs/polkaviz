@@ -2,9 +2,9 @@ import React from "react";
 
 class Session extends React.Component {
   render() {
-    let session = "session"
-    if(this.props.isKusama){
-      session = "epoch"
+    let session = "session";
+    if (this.props.isKusama) {
+      session = "epoch";
     }
     return (
       <div className="session">
