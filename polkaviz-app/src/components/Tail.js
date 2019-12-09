@@ -9,7 +9,7 @@ class Tail extends React.Component {
         <Line
           x={this.props.x}
           y={this.props.y}
-          points={[3, 60, 3, 6]}
+          points={[3, 200, 3, 6]}
           tension={0}
           stroke={"#717171"}
           rotation={this.props.angle}
