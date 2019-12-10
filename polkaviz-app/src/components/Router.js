@@ -406,8 +406,6 @@ class Router extends React.Component {
   
 
   render() {
-    let pathArray = window.location.href.split('/');
-    console.log(pathArray)
     // console.log(window.location.pathname,window.location.search)
     // var pathArray = window.location.href.split('/');
     // console.log(pathArray)
@@ -508,10 +506,9 @@ class Router extends React.Component {
                 )}
               />
               <Route
-                exact
                 path="/kusama"
-                render={props => (
-                  <KusamaApp
+                render={() =>
+                  <KusamaApp />
                     // valtotalinfo={this.state.kusamavaltotalinfo}
                     // createApi={this.createApi2}
                     // validators={this.state.kusamavalidators}
@@ -522,8 +519,8 @@ class Router extends React.Component {
                     // nominatorinfo={this.state.kusamanominatorinfo}
                     // previousBlock={this.state.kusamapreviousBlock}
                     // kusamaisloading={this.state.kusamaisloading}
-                  />
-                )}
+                  
+                }
               />
               {/* <Route
                 exact

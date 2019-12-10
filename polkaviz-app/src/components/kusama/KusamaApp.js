@@ -6,6 +6,8 @@ import BlockAnimationNew from "./BlockAnimation-new";
 import Bottombar from "../Bottombar";
 import { withRouter } from "react-router-dom";
 import { WsProvider, ApiPromise } from "@polkadot/api";
+import NominatorApp from "../alexander/nominator_components/NominatorApp";
+import ValidatorApp from "../alexander/validator_components/ValidatorApp";
 
 class KusamaApp extends React.Component {
 	constructor() {
@@ -27,7 +29,9 @@ class KusamaApp extends React.Component {
 			kusamafinalblock: 0,
 			kusamaintentions: [],
 			kusamavalidatorandintentions: [],
-			kusamatotalIssued: ""
+			kusamatotalIssued: "",
+			kusamanominatorinfo: [],
+			kusamavalidatorandintentionloading: true
 		};
 		this.radius = 360;
 		this.relayRadius = this.radius - 242;
@@ -106,12 +110,10 @@ class KusamaApp extends React.Component {
 			// console.log(JSON.stringify(valinfo))
 			const intentions = await apinew.query.staking.validators();
 			const allvals = JSON.parse(JSON.stringify(intentions))[0];
-			console.log(JSON.parse(JSON.stringify(intentions)));
 			const validatorstotalinfo = await Promise.all(
 				this.state.kusamavalidators.map(val => apinew.derive.staking.info(val))
 			);
 
-			console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
 			// const intentionstotalinfo = await Promise.all(
 			//   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
 			// )
@@ -146,8 +148,10 @@ class KusamaApp extends React.Component {
 					{
 						kusamavaltotalinfo: arr1,
 						kusamavalidatorandintentions: arr5,
-						kusamaintentions: arr3
-					}
+						kusamaintentions: arr3,
+						kusamavalidatorandintentionloading: false
+					},
+					() => getnominators()
 					// () => this.getnominators2()
 				);
 			}
@@ -181,6 +185,36 @@ class KusamaApp extends React.Component {
 				);
 			}
 		});
+		const getnominators = async () => {
+			let arr = [];
+			// console.log("valtotal", this.state.valtotalinfo);
+			this.state.kusamavaltotalinfo.forEach(ele => {
+				// console.log(ele);
+				ele.valinfo.stakers.others.forEach(nom => {
+					arr.push(nom.who);
+				});
+			});
+
+			// console.log("here are unfiltered", arr);
+			function onlyUnique(value, index, self) {
+				return self.indexOf(value) === index;
+			}
+
+			let nominators = arr.filter(onlyUnique);
+			// console.log("total", nominators);
+
+			const nominatorstotalinfo = await Promise.all(
+				nominators.map(val => apinew.derive.staking.info(val))
+			);
+
+			let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
+			if (this.ismounted) {
+				this.setState({
+					kusamanominatorinfo: arr2
+				});
+			}
+			// console.log(arr2)
+		};
 	}
 
 	// getnominators2 = async () => {
@@ -207,7 +241,7 @@ class KusamaApp extends React.Component {
 
 	//   let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
 	//   this.setState({
-	//     kusamanominatorinfo: arr2
+	// kusamanominatorinfo: arr2
 	//   });
 	// };
 	componentWillUnmount() {
@@ -241,8 +275,8 @@ class KusamaApp extends React.Component {
 				this.relayRadius = 450;
 			} else if (this.relayRadius <= 90) {
 				this.relayRadius = 90;
-      }
-      console.log(this.relayRadius)
+			}
+			console.log(this.relayRadius);
 			console.log(this.radius);
 		});
 	};
@@ -250,7 +284,8 @@ class KusamaApp extends React.Component {
 	render() {
 		// console.table(this.state)
 		// console.log(this.state.kusamavalidators,"vals")
-		console.count("kusama rendered");
+		// console.count("kusama rendered");
+		let pathArray = window.location.href.split("/");
 		let arr = this.state.kusamavalidators;
 		if (this.state.kusamavalidatorandintentions.length !== 0) {
 			arr = this.state.kusamavalidatorandintentions;
@@ -274,156 +309,187 @@ class KusamaApp extends React.Component {
 				</div>
 			</React.Fragment>
 		) : (
-			<div className="kusamacontainer">
-				{/* <div className="heading">
+			<React.Fragment>
+				{!pathArray[5] && (
+					<div className="kusamacontainer">
+						{/* <div className="heading">
           <h2>Kusama Network</h2>
         </div> */}
 
-				<div className="nav-path">
-					<div className="nav-path-link" onClick={this.handlePolkavizClick}>
-						Polkaviz
-					</div>
-					<div>/</div>
-					<div className="nav-path-current">Kusama</div>
-				</div>
-
-				<div className="intentions">
-					<div>Next Up:</div>
-					{intentionsarr.map((ele, index) => {
-						return (
-							<div className="inten" key={index}>
-								<span className="valsign"></span>
-								{ele.toString().slice(0, 8) +
-									"......" +
-									ele.toString().slice(-8)}
+						<div className="nav-path">
+							<div className="nav-path-link" onClick={this.handlePolkavizClick}>
+								Polkaviz
 							</div>
-						);
-					})}
-				</div>
+							<div>/</div>
+							<div className="nav-path-current">Kusama</div>
+						</div>
 
-				<div className="relay-circle">
-					<Stage
-						width={window.innerWidth}
-						height={window.innerHeight}
-						onMouseOver={this.handleZoom}
-						draggable={true}
-					>
-						<Layer>
-							{/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-							{/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-							{arr.map((person, index) => (
-								<Validator
-									key={index}
-									validatorAddress={person.valname}
-									valinfo={person.valinfo}
-									totalinfo={this.state.kusamavaltotalinfo}
-									nominatorinfo={this.state.kusamanominatorinfo}
-									angle={180 - (index * 360) / arr.length}
-									history={this.props.history}
-									intentions={intentionsarr}
-									x={
-										window.innerWidth +
-										this.radius *
-											Math.cos(
-												(90 - 1 - (index * 360) / arr.length) * 0.0174533
-											)
-									}
-									y={
-										window.innerHeight +
-										this.radius *
-											Math.sin(
-												(90 - 1 - (index * 360) / arr.length) * 0.0174533
-											)
-									}
-									isKusama={true}
-								/>
-							))}
-							{/* {console.log(this.state.bottombarobject.finalblock)}
+						<div className="intentions">
+							<div>Next Up:</div>
+							{intentionsarr.map((ele, index) => {
+								return (
+									<div className="inten" key={index}>
+										<span className="valsign"></span>
+										{ele.toString().slice(0, 8) +
+											"......" +
+											ele.toString().slice(-8)}
+									</div>
+								);
+							})}
+						</div>
+
+						<div className="relay-circle">
+							<Stage
+								width={window.innerWidth}
+								height={window.innerHeight}
+								onMouseOver={this.handleZoom}
+								draggable={true}
+							>
+								<Layer>
+									{/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
+									{/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
+									{arr.map((person, index) => (
+										<Validator
+											key={index}
+											validatorAddress={person.valname}
+											valinfo={person.valinfo}
+											totalinfo={this.state.kusamavaltotalinfo}
+											nominatorinfo={this.state.kusamanominatorinfo}
+											angle={180 - (index * 360) / arr.length}
+											history={this.props.history}
+											intentions={intentionsarr}
+											x={
+												window.innerWidth +
+												this.radius *
+													Math.cos(
+														(90 - 1 - (index * 360) / arr.length) * 0.0174533
+													)
+											}
+											y={
+												window.innerHeight +
+												this.radius *
+													Math.sin(
+														(90 - 1 - (index * 360) / arr.length) * 0.0174533
+													)
+											}
+											isKusama={true}
+										/>
+									))}
+									{/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
-							<BlockAnimationNew
-								key={this.state.kusamavalidators.indexOf(
-									this.state.kusamalastAuthor
-								)}
-								angle={
-									180 -
-									(this.state.kusamavalidators.indexOf(
-										this.state.kusamalastAuthor
-									) *
-										360) /
-										arr.length
-								}
-								x1={
-									window.innerWidth / 2 +
-									(this.radius - 260) *
-										Math.cos(
-											(90 -
-												(this.state.kusamavalidators.indexOf(
-													this.state.kusamalastAuthor
-												) *
-													360) /
-													arr.length) *
-												0.0174533
-										)
-								}
-								y1={
-									window.innerHeight / 2 +
-									(this.radius - 260) *
-										Math.sin(
-											(90 -
-												(this.state.kusamavalidators.indexOf(
-													this.state.kusamalastAuthor
-												) *
-													360) /
-													arr.length) *
-												0.0174533
-										)
-								}
-								x2={
-									window.innerWidth / 2 +
-									(this.radius - 200) *
-										Math.cos(
-											(90 -
-												(this.state.kusamavalidators.indexOf(
-													this.state.kusamalastAuthor
-												) *
-													360) /
-													arr.length) *
-												0.0174533
-										)
-								}
-								y2={
-									window.innerHeight / 2 +
-									(this.radius - 200) *
-										Math.sin(
-											(90 -
-												(this.state.kusamavalidators.indexOf(
-													this.state.kusamalastAuthor
-												) *
-													360) /
-													arr.length) *
-												0.0174533
-										)
-								}
-							/>
-							<Relay
-								x={window.innerWidth}
-								y={window.innerHeight}
-								radius={this.relayRadius}
+									<BlockAnimationNew
+										key={this.state.kusamavalidators.indexOf(
+											this.state.kusamalastAuthor
+										)}
+										angle={
+											180 -
+											(this.state.kusamavalidators.indexOf(
+												this.state.kusamalastAuthor
+											) *
+												360) /
+												arr.length
+										}
+										x1={
+											window.innerWidth / 2 +
+											(this.radius - 260) *
+												Math.cos(
+													(90 -
+														(this.state.kusamavalidators.indexOf(
+															this.state.kusamalastAuthor
+														) *
+															360) /
+															arr.length) *
+														0.0174533
+												)
+										}
+										y1={
+											window.innerHeight / 2 +
+											(this.radius - 260) *
+												Math.sin(
+													(90 -
+														(this.state.kusamavalidators.indexOf(
+															this.state.kusamalastAuthor
+														) *
+															360) /
+															arr.length) *
+														0.0174533
+												)
+										}
+										x2={
+											window.innerWidth / 2 +
+											(this.radius - 200) *
+												Math.cos(
+													(90 -
+														(this.state.kusamavalidators.indexOf(
+															this.state.kusamalastAuthor
+														) *
+															360) /
+															arr.length) *
+														0.0174533
+												)
+										}
+										y2={
+											window.innerHeight / 2 +
+											(this.radius - 200) *
+												Math.sin(
+													(90 -
+														(this.state.kusamavalidators.indexOf(
+															this.state.kusamalastAuthor
+														) *
+															360) /
+															arr.length) *
+														0.0174533
+												)
+										}
+									/>
+									<Relay
+										x={window.innerWidth}
+										y={window.innerHeight}
+										radius={this.relayRadius}
+										isKusama={true}
+									/>
+								</Layer>
+							</Stage>
+						</div>
+						<div className="bottombar">
+							<Bottombar
+								start={this.state.kusamastart}
+								activevalidators={this.state.kusamavalidators.length}
+								validatorcount={this.state.kusamavalidatorcount}
+								bottombarobject={bottombarobject2}
 								isKusama={true}
 							/>
-						</Layer>
-					</Stage>
-				</div>
-				<div className="bottombar">
-					<Bottombar
-						start={this.state.kusamastart}
-						activevalidators={this.state.kusamavalidators.length}
-						validatorcount={this.state.kusamavalidatorcount}
-						bottombarobject={bottombarobject2}
+						</div>
+					</div>
+				)}
+				{pathArray[5] === "validator" ? (
+					<ValidatorApp
+						valtotalinfo={this.state.kusamavaltotalinfo}
+						intentions={this.state.kusamaintentions}
+						validatorsandintentions={this.state.kusamavalidatorandintentions}
+						validatorandintentionloading={
+							this.state.kusamavalidatorandintentionloading
+						}
 						isKusama={true}
 					/>
-				</div>
-			</div>
+				) : (
+					undefined
+				)}
+
+				{pathArray[5] === "nominator" ? (
+					<NominatorApp
+						valtotalinfo={this.state.kusamavaltotalinfo}
+						nominatorinfo={this.state.kusamanominatorinfo}
+						intentions={this.state.kusamaintentions}
+						validatorsandintentions={this.state.kusamavalidatorandintentions}
+						validatorandintentionloading={
+							this.state.kusamavalidatorandintentionloading
+						}
+					/>
+				) : (
+					undefined
+				)}
+			</React.Fragment>
 		);
 	}
 }
