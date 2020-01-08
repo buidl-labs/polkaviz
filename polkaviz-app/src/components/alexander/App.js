@@ -92,7 +92,7 @@ class App extends React.Component {
       let arr1 = [];
       // console.log(JSON.stringify(valinfo))
       const validatorstotalinfo = await Promise.all(
-        this.state.validators.map(val => api.derive.staking.info(val))
+        this.state.validators.map(val => api.derive.staking.account(val))
       );
       arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
         // console.log(info)
@@ -121,7 +121,7 @@ class App extends React.Component {
       const arr2 = arr1.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
-        arr3.map(val => api.derive.staking.info(val))
+        arr3.map(val => api.derive.staking.account(val))
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
         return {
@@ -195,7 +195,7 @@ class App extends React.Component {
       // console.log("total", nominators);
 
       const nominatorstotalinfo = await Promise.all(
-        nominators.map(val => api.derive.staking.info(val))
+        nominators.map(val => api.derive.staking.account(val))
       );
 
       let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
