@@ -106,7 +106,7 @@ class KusamaApp extends React.Component {
       const allvals = JSON.parse(JSON.stringify(intentions))[0];
       console.log(JSON.parse(JSON.stringify(intentions)));
       const validatorstotalinfo = await Promise.all(
-        this.state.kusamavalidators.map(val => apinew.derive.staking.info(val))
+        this.state.kusamavalidators.map(val => apinew.derive.staking.account(val))
       );
 
       console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
@@ -126,7 +126,7 @@ class KusamaApp extends React.Component {
       const arr2 = arr1.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
-        arr3.map(val => apinew.derive.staking.info(val))
+        arr3.map(val => apinew.derive.staking.account(val))
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
         return {
