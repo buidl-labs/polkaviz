@@ -1,5 +1,5 @@
-import React from "react";
-import { Line } from "react-konva";
+import React from 'react';
+import { Line } from 'react-konva';
 
 class Tail extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class Tail extends React.Component {
           y={this.props.y}
           points={[3, 60, 3, 6]}
           tension={0}
-          stroke={"#717171"}
+          stroke={'#717171'}
           rotation={this.props.angle}
           opacity={this.props.opacity}
         />

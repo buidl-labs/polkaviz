@@ -1,25 +1,24 @@
-import React from "react";
-import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
-import WhiteCircles from "./WhiteCircles";
-import { withRouter } from "react-router-dom";
-import ValBottombar from "./ValBottombar";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import React from 'react';
+import { Stage, Layer, Arc, Line, Rect, Text } from 'react-konva';
+import WhiteCircles from './WhiteCircles';
+import { withRouter } from 'react-router-dom';
+import ValBottombar from './ValBottombar';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 // import { WsProvider, ApiPromise } from "@polkadot/api";
-
 
 class ValidatorApp extends React.Component {
   constructor() {
     super();
     this.state = {
-      validator: "",
+      validator: '',
       nominators: [],
       showValidatorAddress: false,
-      stash: "",
-      controller: "",
+      stash: '',
+      controller: '',
       isloading: true,
       totalinfo: [],
       valinfo: {},
-      copied: false
+      copied: false,
     };
     this.ismounted = false;
     this.totalvalue = 0;
@@ -28,7 +27,7 @@ class ValidatorApp extends React.Component {
 
   componentDidMount() {
     this.ismounted = true;
-    console.log("val",this.props)
+    console.log('val', this.props);
     // this.createApi();
     // console.log("this",this.props.match.params.validatorAddress);
     // if(!this.props.history.location.state){
@@ -36,15 +35,19 @@ class ValidatorApp extends React.Component {
     //   // this.createApi()
     // }
   }
-  shouldComponentUpdate(nextProps,nextState){
-    if(this.props.validatorandintentionloading === nextProps.validatorandintentionloading && this.props.validatorsandintentions === nextProps.validatorsandintentions && this.state.copied === nextState.copied){
-      return false
-    }
-    else {
-      return true
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.validatorandintentionloading ===
+        nextProps.validatorandintentionloading &&
+      this.props.validatorsandintentions ===
+        nextProps.validatorsandintentions &&
+      this.state.copied === nextState.copied
+    ) {
+      return false;
+    } else {
+      return true;
     }
   }
-
 
   handleOnMouseOver = () => {
     this.setState({ showValidatorAddress: true });
@@ -54,125 +57,125 @@ class ValidatorApp extends React.Component {
   };
 
   BackbtnhandleOnMouseOver = () => {
-    document.body.style.cursor = "pointer";
+    document.body.style.cursor = 'pointer';
   };
   BackbtnhandleOnMouseOut = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
   };
 
   BackbtnhandleClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: "/alexander",
-      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo }
+      pathname: '/alexander',
+      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
   homebtnhandleClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: "/",
-      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo }
+      pathname: '/',
+      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
   onCopy = () => {
-    console.log("youp",this.ismounted)
-    if(this.ismounted){
-    this.setState({ copied: true }, () =>
-{    console.log("copied state set")
-    setInterval(() => {
-        this.setState({ copied: false });
-      }, 3000)
-    ;
-  
+    console.log('youp', this.ismounted);
+    if (this.ismounted) {
+      this.setState({ copied: true }, () => {
+        console.log('copied state set');
+        setInterval(() => {
+          this.setState({ copied: false });
+        }, 3000);
+      });
     }
-    )};
-}
+  };
 
-handlePolkavizClick = () => {
-  document.body.style.cursor = "default";
-  this.props.history.push({
-    pathname:"/",
-})
-}
+  handlePolkavizClick = () => {
+    document.body.style.cursor = 'default';
+    this.props.history.push({
+      pathname: '/',
+    });
+  };
 
-handleAlexanderClick = () => {
-  document.body.style.cursor = "default";
-  this.props.history.push({
-    pathname:"/alexander",
-})
-}
+  handleAlexanderClick = () => {
+    document.body.style.cursor = 'default';
+    this.props.history.push({
+      pathname: '/alexander',
+    });
+  };
 
-
-  componentWillUnmount(){
-    this.ismounted = false
+  componentWillUnmount() {
+    this.ismounted = false;
   }
   render() {
-    console.log(this.props.history.location.pathname.split("/")[3])
+    console.log(this.props.history.location.pathname.split('/')[3]);
     const width = window.innerWidth;
     const height = window.innerHeight;
     let radius = 120;
 
-
-    let value = "";
-    let validator = "";
-    let nominators = "";
+    let value = '';
+    let validator = '';
+    let nominators = '';
     // let stash = "";
     // let controller = "";
-    let valinfo ="";
-    let totalinfo = "";
-    if(!this.props.validatorandintentionloading){
-      console.log(this.props.validatorsandintentions)
-    this.props.validatorsandintentions.forEach(ele => {
-      if (
-        ele.valinfo.accountId.toString() ===
-        this.props.history.location.pathname.split("/")[3].toString()
-      ) {
-        value = ele.valinfo;
-      }
-    });
-    console.log("huyi",value)
-    totalinfo = this.props.valtotalinfo;
-    this.totalvalue = value.stakers.total / Math.pow(10, 15);
-    this.ownvalue = value.stakers.own / Math.pow(10, 15);
-      validator= value.accountId
-      nominators = value.stakers.others
+    let valinfo = '';
+    let totalinfo = '';
+    if (!this.props.validatorandintentionloading) {
+      console.log(this.props.validatorsandintentions);
+      this.props.validatorsandintentions.forEach(ele => {
+        if (
+          ele.valinfo.accountId.toString() ===
+          this.props.history.location.pathname.split('/')[3].toString()
+        ) {
+          value = ele.valinfo;
+        }
+      });
+      console.log('huyi', value);
+      totalinfo = this.props.valtotalinfo;
+      this.totalvalue = value.stakers.total / Math.pow(10, 15);
+      this.ownvalue = value.stakers.own / Math.pow(10, 15);
+      validator = value.accountId;
+      nominators = value.stakers.others;
       // stash = value.stashId
       // controller = value.controllerId
-      valinfo = value
-    if(this.props.intentions.includes(this.props.history.location.pathname.split("/")[3].toString())){
-      console.log("yo")
-      this.totalvalue = value.stakingLedger.total
-      this.ownvalue = value.stakingLedger.total
+      valinfo = value;
+      if (
+        this.props.intentions.includes(
+          this.props.history.location.pathname.split('/')[3].toString(),
+        )
+      ) {
+        console.log('yo');
+        this.totalvalue = value.stakingLedger.total;
+        this.ownvalue = value.stakingLedger.total;
+      }
     }
-  }
-
-  
-
-
 
     let validatorname =
-      "Validator Address: " +
+      'Validator Address: ' +
       validator.toString().slice(0, 8) +
-      "......" +
+      '......' +
       validator.toString().slice(-8);
 
     let totalbondedtext =
-      "total staked: " + this.totalvalue.toFixed(3) + " DOT";
+      'total staked: ' + this.totalvalue.toFixed(3) + ' DOT';
     let selfbondedtext =
-      "validator self stake: " + this.ownvalue.toString().slice(0, 5) + " DOT";
+      'validator self stake: ' + this.ownvalue.toString().slice(0, 5) + ' DOT';
 
     let totalbonded = 0;
     totalbonded = this.totalvalue.toFixed(3) - this.ownvalue.toFixed(3);
     let nominatorbondedtext =
-      "nominator stake: " + totalbonded.toString().slice(0, 5) + " DOT";
+      'nominator stake: ' + totalbonded.toString().slice(0, 5) + ' DOT';
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
-    let opacity = 0.3
-    let color = "purple"
-    if(this.props.intentions.includes(this.props.history.location.pathname.split("/")[3].toString())){
-      opacity = 0
-      color = "yellow"
+    let opacity = 0.3;
+    let color = 'purple';
+    if (
+      this.props.intentions.includes(
+        this.props.history.location.pathname.split('/')[3].toString(),
+      )
+    ) {
+      opacity = 0;
+      color = 'yellow';
     }
 
     return this.props.validatorandintentionloading ? (
@@ -194,12 +197,16 @@ handleAlexanderClick = () => {
         </div> */}
 
         <div className="nav-path">
-  <div className="nav-path-link" onClick={this.handlePolkavizClick}>Polkaviz</div>
-  <div>/</div>
-  <div className="nav-path-link" onClick={this.handleAlexanderClick}>Alexander</div>
-  <div>/</div>
-  <div className="nav-path-current">{validatorname}</div>
-  <CopyToClipboard text={validator} onCopy={this.onCopy}>
+          <div className="nav-path-link" onClick={this.handlePolkavizClick}>
+            Polkaviz
+          </div>
+          <div>/</div>
+          <div className="nav-path-link" onClick={this.handleAlexanderClick}>
+            Alexander
+          </div>
+          <div>/</div>
+          <div className="nav-path-current">{validatorname}</div>
+          <CopyToClipboard text={validator} onCopy={this.onCopy}>
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +230,7 @@ handleAlexanderClick = () => {
                   fontWeight="none"
                   fontSize="none"
                   textAnchor="none"
-                  >
+                >
                   <path d="M0,226v-226h226v226z" fill="none"></path>
                   <g fill="#ffffff">
                     <path d="M37.66667,18.83333c-10.40542,0 -18.83333,8.42792 -18.83333,18.83333v131.83333h18.83333v-131.83333h131.83333v-18.83333zM75.33333,56.5c-10.40542,0 -18.83333,8.42792 -18.83333,18.83333v113c0,10.40542 8.42792,18.83333 18.83333,18.83333h113c10.40542,0 18.83333,-8.42792 18.83333,-18.83333v-113c0,-10.40542 -8.42792,-18.83333 -18.83333,-18.83333zM75.33333,75.33333h113v113h-113z"></path>
@@ -232,11 +239,7 @@ handleAlexanderClick = () => {
               </svg>
             </span>
           </CopyToClipboard>
-  </div>
-
-
-
-
+        </div>
 
         {/* <div className="home"
             onClick={this.homebtnhandleClick}
@@ -283,7 +286,7 @@ handleAlexanderClick = () => {
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             {this.state.copied && (
-              <Text text="copied" x={1000} y={45} fill="green" fontSize={18}/>
+              <Text text="copied" x={1000} y={45} fill="green" fontSize={18} />
             )}
             {/* Here n is number of white circles to draw
                         r is radius of the imaginary circle on which we have to draw white circles
@@ -323,7 +326,7 @@ handleAlexanderClick = () => {
                 width / 2,
                 height / 2 + 6,
                 width - height / 2 + 23,
-                height / 2 + 6
+                height / 2 + 6,
               ]}
               fill="white"
               stroke="white"

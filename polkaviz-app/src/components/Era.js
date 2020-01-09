@@ -1,5 +1,4 @@
-import React from "react";
-
+import React from 'react';
 
 class Era extends React.Component {
   render() {
