@@ -1,11 +1,11 @@
-import React from "react";
-import Relay from "../Relay";
-import { Stage, Layer } from "react-konva";
-import Validator from "../Validator";
-import BlockAnimationNew from "./BlockAnimation-new";
-import Bottombar from "../Bottombar";
-import { withRouter } from "react-router-dom";
-import { WsProvider, ApiPromise } from "@polkadot/api";
+import React from 'react';
+import { Stage, Layer } from 'react-konva';
+import { withRouter } from 'react-router-dom';
+import { WsProvider, ApiPromise } from '@polkadot/api';
+import Relay from '../Relay';
+import Validator from '../Validator';
+import BlockAnimationNew from './BlockAnimation-new';
+import Bottombar from '../Bottombar';
 
 class KusamaApp extends React.Component {
   constructor() {
@@ -13,7 +13,7 @@ class KusamaApp extends React.Component {
     this.latestBlockAuthor = undefined;
     this.state = {
       kusamavalidators: [],
-      kusamalastAuthor: "",
+      kusamalastAuthor: '',
       kusamastart: null,
       kusamaisloading: true,
       kusamavaltotalinfo: [],
@@ -21,13 +21,13 @@ class KusamaApp extends React.Component {
         eraLength: 0,
         eraProgress: 0,
         sessionLength: 0,
-        sessionProgress: 0
+        sessionProgress: 0,
       },
       kusamatotalValidators: 0,
       kusamafinalblock: 0,
       kusamaintentions: [],
       kusamavalidatorandintentions: [],
-      kusamatotalIssued: ""
+      kusamatotalIssued: '',
     };
     this.ismounted = true;
   }
@@ -36,6 +36,7 @@ class KusamaApp extends React.Component {
     // window.location.reload()
     this.createApi2();
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.kusamavalidators !== nextState.kusamavalidators ||
@@ -47,11 +48,11 @@ class KusamaApp extends React.Component {
       this.state.kusamaisloading !== nextState.kusamaisloading
     )
       return true;
-    else return false;
+    return false;
   }
 
   async createApi2() {
-    let provider = new WsProvider("wss://kusama-rpc.polkadot.io");
+    const provider = new WsProvider('wss://kusama-rpc.polkadot.io');
     const apinew = await ApiPromise.create({ provider });
 
     const balance = await apinew.query.balances.totalIssuance();
@@ -59,7 +60,7 @@ class KusamaApp extends React.Component {
     const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3);
     if (this.ismounted) {
       this.setState({
-        kusamatotalIssued: totalIssued
+        kusamatotalIssued: totalIssued,
       });
     }
 
@@ -74,15 +75,15 @@ class KusamaApp extends React.Component {
       if (this.ismounted) {
         this.setState({
           kusamastart: start,
-          kusamafinalblock: blockNumber
+          kusamafinalblock: blockNumber,
         });
       }
     });
-    let totalValidators = await apinew.query.staking.validatorCount();
+    const totalValidators = await apinew.query.staking.validatorCount();
     // console.log("this", totalValidators.words["0"], totalValidators);
     if (this.ismounted) {
       this.setState({
-        kusamatotalValidators: totalValidators.words["0"]
+        kusamatotalValidators: totalValidators.words['0'],
       });
     }
 
@@ -93,7 +94,7 @@ class KusamaApp extends React.Component {
       if (this.ismounted) {
         this.setState({
           kusamavalidators: sessionValidators,
-          kusamaisloading: false
+          kusamaisloading: false,
         });
       }
     });
@@ -106,7 +107,9 @@ class KusamaApp extends React.Component {
       const allvals = JSON.parse(JSON.stringify(intentions))[0];
       console.log(JSON.parse(JSON.stringify(intentions)));
       const validatorstotalinfo = await Promise.all(
-        this.state.kusamavalidators.map(val => apinew.derive.staking.account(val))
+        this.state.kusamavalidators.map(val =>
+          apinew.derive.staking.account(val),
+        ),
       );
 
       console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
@@ -119,24 +122,24 @@ class KusamaApp extends React.Component {
         // console.log(info);
         return {
           valname: info.accountId,
-          valinfo: info
+          valinfo: info,
         };
       });
       console.log(arr1);
       const arr2 = arr1.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
-        arr3.map(val => apinew.derive.staking.account(val))
+        arr3.map(val => apinew.derive.staking.account(val)),
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
         return {
           valname: info.accountId,
-          valinfo: info
+          valinfo: info,
         };
       });
       console.log(arr4);
       // let arr5 = this.state.validators.push(arr4);
-      let arr5 = [...arr1, ...arr4];
+      const arr5 = [...arr1, ...arr4];
 
       if (this.ismounted) {
         // console.log("arr1",arr1)
@@ -144,8 +147,8 @@ class KusamaApp extends React.Component {
           {
             kusamavaltotalinfo: arr1,
             kusamavalidatorandintentions: arr5,
-            kusamaintentions: arr3
-          }
+            kusamaintentions: arr3,
+          },
           // () => this.getnominators2()
         );
       }
@@ -168,13 +171,13 @@ class KusamaApp extends React.Component {
         this.setState(
           {
             kusamabottombarinfo: {
-              eraLength: eraLength,
-              eraProgress: eraProgress,
-              sessionLength: sessionLength,
-              sessionProgress: sessionProgress
+              eraLength,
+              eraProgress,
+              sessionLength,
+              sessionProgress,
             },
-            kusamaisloading: false
-          }
+            kusamaisloading: false,
+          },
           // () => this.createApi()
         );
       }
@@ -213,16 +216,16 @@ class KusamaApp extends React.Component {
   }
 
   handlePolkavizClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: "/"
+      pathname: '/',
     });
   };
 
   render() {
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
-    console.count("kusama rendered");
+    console.count('kusama rendered');
     let arr = this.state.kusamavalidators;
     if (this.state.kusamavalidatorandintentions.length !== 0) {
       arr = this.state.kusamavalidatorandintentions;
@@ -230,21 +233,21 @@ class KusamaApp extends React.Component {
     // console.log(arr,"arr")
     // const intentionsarr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
     const intentionsarr = this.state.kusamaintentions;
-    let bottombarobject2 = {
+    const bottombarobject2 = {
       bottombarinfo: this.state.kusamabottombarinfo,
       finalblock: this.state.kusamafinalblock,
       validatorcount: this.state.kusamatotalValidators,
-      totalIssued: this.state.kusamatotalIssued.toString() + " M"
+      totalIssued: `${this.state.kusamatotalIssued.toString()} M`,
     };
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
     return this.state.kusamavalidators.length === 0 ? (
-      <React.Fragment>
+      <>
         <div className="lds-ripple">
-          <div></div>
-          <div></div>
+          <div />
+          <div />
         </div>
-      </React.Fragment>
+      </>
     ) : (
       <div className="kusamacontainer">
         {/* <div className="heading">
@@ -264,10 +267,10 @@ class KusamaApp extends React.Component {
           {intentionsarr.map((ele, index) => {
             return (
               <div className="inten" key={index}>
-                <span className="valsign"></span>
-                {ele.toString().slice(0, 8) +
-                  "......" +
-                  ele.toString().slice(-8)}
+                <span className="valsign" />
+                {`${ele.toString().slice(0, 8)}......${ele
+                  .toString()
+                  .slice(-8)}`}
               </div>
             );
           })}
@@ -277,7 +280,7 @@ class KusamaApp extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
               {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-              {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
+              {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
                 <Validator
                   key={index}
@@ -292,29 +295,29 @@ class KusamaApp extends React.Component {
                     window.innerWidth +
                     360 *
                       Math.cos(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
                       )
                   }
                   y={
                     window.innerHeight +
                     360 *
                       Math.sin(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
                       )
                   }
-                  isKusama={true}
+                  isKusama
                 />
               ))}
               {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
               <BlockAnimationNew
                 key={this.state.kusamavalidators.indexOf(
-                  this.state.kusamalastAuthor
+                  this.state.kusamalastAuthor,
                 )}
                 angle={
                   180 -
                   (this.state.kusamavalidators.indexOf(
-                    this.state.kusamalastAuthor
+                    this.state.kusamalastAuthor,
                   ) *
                     360) /
                     arr.length
@@ -325,11 +328,11 @@ class KusamaApp extends React.Component {
                     Math.cos(
                       (90 -
                         (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor
+                          this.state.kusamalastAuthor,
                         ) *
                           360) /
                           arr.length) *
-                        0.0174533
+                        0.0174533,
                     )
                 }
                 y1={
@@ -338,11 +341,11 @@ class KusamaApp extends React.Component {
                     Math.sin(
                       (90 -
                         (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor
+                          this.state.kusamalastAuthor,
                         ) *
                           360) /
                           arr.length) *
-                        0.0174533
+                        0.0174533,
                     )
                 }
                 x2={
@@ -351,11 +354,11 @@ class KusamaApp extends React.Component {
                     Math.cos(
                       (90 -
                         (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor
+                          this.state.kusamalastAuthor,
                         ) *
                           360) /
                           arr.length) *
-                        0.0174533
+                        0.0174533,
                     )
                 }
                 y2={
@@ -364,19 +367,15 @@ class KusamaApp extends React.Component {
                     Math.sin(
                       (90 -
                         (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor
+                          this.state.kusamalastAuthor,
                         ) *
                           360) /
                           arr.length) *
-                        0.0174533
+                        0.0174533,
                     )
                 }
               />
-              <Relay
-                x={window.innerWidth}
-                y={window.innerHeight}
-                isKusama={true}
-              />
+              <Relay x={window.innerWidth} y={window.innerHeight} isKusama />
             </Layer>
           </Stage>
         </div>
@@ -386,7 +385,7 @@ class KusamaApp extends React.Component {
             activevalidators={this.state.kusamavalidators.length}
             validatorcount={this.state.kusamavalidatorcount}
             bottombarobject={bottombarobject2}
-            isKusama={true}
+            isKusama
           />
         </div>
       </div>

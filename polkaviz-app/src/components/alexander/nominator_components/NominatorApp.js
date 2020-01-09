@@ -1,10 +1,9 @@
-import React from "react";
-import { Stage, Layer, Arc, Circle, Text } from "react-konva";
-import Validators from "./Validators";
-import { withRouter } from "react-router-dom";
-import NomBottombar from "./NomBottombar";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-
+import React from 'react';
+import { Stage, Layer, Arc, Circle, Text } from 'react-konva';
+import Validators from './Validators';
+import { withRouter } from 'react-router-dom';
+import NomBottombar from './NomBottombar';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class NominatorApp extends React.Component {
   constructor() {
@@ -12,7 +11,7 @@ class NominatorApp extends React.Component {
     this.latestBlockAuthor = undefined;
     this.state = {
       showValidatorAddress: false,
-      copied:false
+      copied: false,
     };
     this.ismounted = true;
   }
@@ -35,7 +34,6 @@ class NominatorApp extends React.Component {
   //       }
   //     });
   //   });
-
 
   //   let nominatorvalue = "";
   //   this.props.nominatorinfo.forEach(ele => {
@@ -72,24 +70,24 @@ class NominatorApp extends React.Component {
   };
 
   BackbtnhandleOnMouseOver = () => {
-    document.body.style.cursor = "pointer";
+    document.body.style.cursor = 'pointer';
   };
   BackbtnhandleOnMouseOut = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
   };
 
   BackbtnhandleClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: "/alexander",
-      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo }
+      pathname: '/alexander',
+      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
   homebtnhandleClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: "/",
-      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo }
+      pathname: '/',
+      state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
 
@@ -97,80 +95,91 @@ class NominatorApp extends React.Component {
     this.setState({ copied: true }, () =>
       setInterval(() => {
         this.setState({ copied: false });
-      }, 3000)
+      }, 3000),
     );
   };
 
   handlePolkavizClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname:"/",
-  })
-  }
+      pathname: '/',
+    });
+  };
 
   handleAlexanderClick = () => {
-    document.body.style.cursor = "default";
+    document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname:"/alexander",
-  })
-  }
-
+      pathname: '/alexander',
+    });
+  };
 
   render() {
-
     let arr1 = [];
     let bonded = 0;
     let valbacked = [];
     let totalbonded = 0;
-    let controllerId = "";
-    if(!this.props.validatorandintentionloading){
-    this.props.valtotalinfo.forEach(ele => {
-      ele.valinfo.stakers.others.forEach(nom => {
-        if (nom.who === this.props.history.location.pathname.split("/")[3].toString()) {
-          arr1.push({validator:ele,
-          staked:nom.value / Math.pow(10, 15)});
-          bonded += nom.value / Math.pow(10, 15);
+    let controllerId = '';
+    if (!this.props.validatorandintentionloading) {
+      this.props.valtotalinfo.forEach(ele => {
+        ele.valinfo.stakers.others.forEach(nom => {
+          if (
+            nom.who ===
+            this.props.history.location.pathname.split('/')[3].toString()
+          ) {
+            arr1.push({ validator: ele, staked: nom.value / Math.pow(10, 15) });
+            bonded += nom.value / Math.pow(10, 15);
+          }
+        });
+      });
+
+      let nominatorvalue = '';
+      this.props.nominatorinfo.forEach(ele => {
+        if (
+          ele.accountId ===
+          this.props.history.location.pathname.split('/')[3].toString()
+        ) {
+          nominatorvalue = ele.controllerId;
         }
       });
-    });
 
-
-    let nominatorvalue = "";
-    this.props.nominatorinfo.forEach(ele => {
-      if (ele.accountId === this.props.history.location.pathname.split("/")[3].toString()) {
-        nominatorvalue = ele.controllerId;
-      }
-    });
-
-    // console.log("Done",nominatorvalue);
-    // console.log(arr1);
-          valbacked= arr1
-          totalbonded= bonded
-          controllerId= nominatorvalue
-
-  }
+      // console.log("Done",nominatorvalue);
+      // console.log(arr1);
+      valbacked = arr1;
+      totalbonded = bonded;
+      controllerId = nominatorvalue;
+    }
     // console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
-      "Nominator Address: " +
-      this.props.history.location.pathname.split("/")[3].toString().slice(0, 8) +
-      "......" +
-      this.props.history.location.pathname.split("/")[3].toString().slice(-8);
-    
+      'Nominator Address: ' +
+      this.props.history.location.pathname
+        .split('/')[3]
+        .toString()
+        .slice(0, 8) +
+      '......' +
+      this.props.history.location.pathname
+        .split('/')[3]
+        .toString()
+        .slice(-8);
+
     let stashname =
       controllerId.toString().slice(0, 8) +
-      "......" +
+      '......' +
       controllerId.toString().slice(-8);
-    
-      let controllername = "controller: " + stashname;
-    
-    let bondvalue =
-      "bonded: " + totalbonded.toString().slice(0, 5) + " DOT";
 
-    
+    let controllername = 'controller: ' + stashname;
+
+    let bondvalue = 'bonded: ' + totalbonded.toString().slice(0, 5) + ' DOT';
+
     let valtext =
-      this.props.history.location.pathname.split("/")[3].toString().slice(0, 8) +
-      "......" +
-      this.props.history.location.pathname.split("/")[3].toString().slice(-8);
+      this.props.history.location.pathname
+        .split('/')[3]
+        .toString()
+        .slice(0, 8) +
+      '......' +
+      this.props.history.location.pathname
+        .split('/')[3]
+        .toString()
+        .slice(-8);
 
     let arr = valbacked;
     const width = window.innerWidth;
@@ -195,12 +204,19 @@ class NominatorApp extends React.Component {
         </div> */}
 
         <div className="nav-path">
-  <div className="nav-path-link" onClick={this.handlePolkavizClick}>Polkaviz</div>
-  <div>/</div>
-  <div className="nav-path-link" onClick={this.handleAlexanderClick}>Alexander</div>
-  <div>/</div>
-  <div className="nav-path-current">{nominatorname}</div>
-  <CopyToClipboard text={this.props.match.params.nominatorAddress} onCopy={this.onCopy}>
+          <div className="nav-path-link" onClick={this.handlePolkavizClick}>
+            Polkaviz
+          </div>
+          <div>/</div>
+          <div className="nav-path-link" onClick={this.handleAlexanderClick}>
+            Alexander
+          </div>
+          <div>/</div>
+          <div className="nav-path-current">{nominatorname}</div>
+          <CopyToClipboard
+            text={this.props.match.params.nominatorAddress}
+            onCopy={this.onCopy}
+          >
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +240,7 @@ class NominatorApp extends React.Component {
                   fontWeight="none"
                   fontSize="none"
                   textAnchor="none"
-                  >
+                >
                   <path d="M0,226v-226h226v226z" fill="none"></path>
                   <g fill="#ffffff">
                     <path d="M37.66667,18.83333c-10.40542,0 -18.83333,8.42792 -18.83333,18.83333v131.83333h18.83333v-131.83333h131.83333v-18.83333zM75.33333,56.5c-10.40542,0 -18.83333,8.42792 -18.83333,18.83333v113c0,10.40542 8.42792,18.83333 18.83333,18.83333h113c10.40542,0 18.83333,-8.42792 18.83333,-18.83333v-113c0,-10.40542 -8.42792,-18.83333 -18.83333,-18.83333zM75.33333,75.33333h113v113h-113z"></path>
@@ -233,10 +249,7 @@ class NominatorApp extends React.Component {
               </svg>
             </span>
           </CopyToClipboard>
-  </div>
-
-
-
+        </div>
 
         {/* <div className="home"
             onClick={this.homebtnhandleClick}
@@ -282,8 +295,8 @@ class NominatorApp extends React.Component {
         </div> */}
         <Stage width={width} height={height}>
           <Layer>
-          {this.state.copied && (
-              <Text text="copied" x={1000} y={45} fill="green" fontSize={18}/>
+            {this.state.copied && (
+              <Text text="copied" x={1000} y={45} fill="green" fontSize={18} />
             )}
             <Validators
               allvals={arr}

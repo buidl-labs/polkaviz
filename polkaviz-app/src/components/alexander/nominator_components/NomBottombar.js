@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class NomBottombar extends React.Component {
   render() {

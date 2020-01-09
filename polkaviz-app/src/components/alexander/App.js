@@ -1,15 +1,14 @@
-import React from "react";
-import Relay from "../Relay";
-import { Stage, Layer } from "react-konva";
-import Validator from "../Validator";
-import BlockAnimation from "./BlockAnimation";
-import Bottombar from "../Bottombar";
+/* eslint-disable react/sort-comp */
+import React from 'react';
+import { Stage, Layer } from 'react-konva';
 import { withRouter } from 'react-router-dom';
-import { WsProvider, ApiPromise } from "@polkadot/api";
-import NominatorApp from "./nominator_components/NominatorApp";
-import ValidatorApp from "./validator_components/ValidatorApp";
-
-
+import { WsProvider, ApiPromise } from '@polkadot/api';
+import Relay from '../Relay';
+import Validator from '../Validator';
+import BlockAnimation from './BlockAnimation';
+import Bottombar from '../Bottombar';
+import NominatorApp from './nominator_components/NominatorApp';
+import ValidatorApp from './validator_components/ValidatorApp';
 
 class App extends React.Component {
   constructor() {
@@ -17,7 +16,7 @@ class App extends React.Component {
     this.latestBlockAuthor = undefined;
     this.state = {
       validators: [],
-      lastAuthor: "",
+      lastAuthor: '',
       start: null,
       isloading: true,
       valtotalinfo: [],
@@ -25,7 +24,7 @@ class App extends React.Component {
         eraLength: 0,
         eraProgress: 0,
         sessionLength: 0,
-        sessionProgress: 0
+        sessionProgress: 0,
       },
       totalValidators: 0,
       finalblock: 0,
@@ -34,29 +33,30 @@ class App extends React.Component {
       intentions: [],
       validatorsandintentions: [],
       validatorandintentionloading: true,
-      totalIssued:""
+      totalIssued: '',
     };
     this.elapsed = 0;
     this.kusamaelapsed = 0;
     this.ismounted = true;
   }
-//   shouldComponentUpdate(nextProps, nextState){
-//     return this.props.lastAuthor !== nextProps.lastAuthor || this.props.bottombarobject !== nextProps.bottombarobject
-// }
-  componentDidMount(){
-    this.createApi()
+
+  //   shouldComponentUpdate(nextProps, nextState){
+  //     return this.props.lastAuthor !== nextProps.lastAuthor || this.props.bottombarobject !== nextProps.bottombarobject
+  // }
+  componentDidMount() {
+    this.createApi();
   }
 
   async createApi() {
-    const provider = new WsProvider("wss://poc3-rpc.polkadot.io");
+    const provider = new WsProvider('wss://poc3-rpc.polkadot.io');
     const api = await ApiPromise.create({ provider });
 
-    const balance = await api.query.balances.totalIssuance()
-    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3)
+    const balance = await api.query.balances.totalIssuance();
+    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3);
     if (this.ismounted) {
       this.setState({
-          totalIssued:totalIssued
-      })
+        totalIssued,
+      });
     }
     // console.log((balance.toString() / Math.pow(10, 18)).toFixed(3))
     // console.log(api.derive.chain.subscribeNewHeads())
@@ -64,15 +64,15 @@ class App extends React.Component {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       if (this.ismounted) {
-        this.setState({ lastAuthor: lastAuthor });
+        this.setState({ lastAuthor });
       }
       const start = new Date();
       const blockNumber = block.number.toString();
       if (this.ismounted) {
         this.setState({
-          start: start,
+          start,
           finalblock: blockNumber,
-          previousBlock: blockNumber
+          previousBlock: blockNumber,
         });
       }
     });
@@ -83,7 +83,7 @@ class App extends React.Component {
       if (this.ismounted) {
         this.setState({
           validators: sessionValidators,
-          isloading: false
+          isloading: false,
         });
       }
     });
@@ -92,21 +92,21 @@ class App extends React.Component {
       let arr1 = [];
       // console.log(JSON.stringify(valinfo))
       const validatorstotalinfo = await Promise.all(
-        this.state.validators.map(val => api.derive.staking.account(val))
+        this.state.validators.map(val => api.derive.staking.account(val)),
       );
       arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
         // console.log(info)
         return {
           valname: info.accountId,
-          valinfo: info
+          valinfo: info,
         };
       });
 
-      let totalValidators = await api.query.staking.validatorCount();
+      const totalValidators = await api.query.staking.validatorCount();
       // console.log("this", totalValidators.words["0"], totalValidators);
       if (this.ismounted) {
         this.setState({
-          totalValidators: totalValidators.words["0"]
+          totalValidators: totalValidators.words['0'],
         });
       }
 
@@ -121,17 +121,17 @@ class App extends React.Component {
       const arr2 = arr1.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
-        arr3.map(val => api.derive.staking.account(val))
+        arr3.map(val => api.derive.staking.account(val)),
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
         return {
           valname: info.accountId,
-          valinfo: info
+          valinfo: info,
         };
       });
-      console.log(arr4)
+      console.log(arr4);
       // let arr5 = this.state.validators.push(arr4);
-      let arr5 = [...arr1, ...arr4];
+      const arr5 = [...arr1, ...arr4];
       // console.log(arr4, arr5);
       // this.setState({
       //   validatorsandintentions:arr5
@@ -146,9 +146,9 @@ class App extends React.Component {
             validatorsandintentions: arr5,
             valtotalinfo: arr1,
             intentions: arr3,
-            validatorandintentionloading: false
+            validatorandintentionloading: false,
           },
-          () => getnominators()
+          () => getnominators(),
         );
       }
     };
@@ -167,17 +167,17 @@ class App extends React.Component {
       if (this.ismounted) {
         this.setState({
           bottombarinfo: {
-            eraLength: eraLength,
-            eraProgress: eraProgress,
-            sessionLength: sessionLength,
-            sessionProgress: sessionProgress
-          }
+            eraLength,
+            eraProgress,
+            sessionLength,
+            sessionProgress,
+          },
         });
       }
     });
 
     const getnominators = async () => {
-      let arr = [];
+      const arr = [];
       // console.log("valtotal", this.state.valtotalinfo);
       this.state.valtotalinfo.forEach(ele => {
         // console.log(ele);
@@ -191,17 +191,17 @@ class App extends React.Component {
         return self.indexOf(value) === index;
       }
 
-      let nominators = arr.filter(onlyUnique);
+      const nominators = arr.filter(onlyUnique);
       // console.log("total", nominators);
 
       const nominatorstotalinfo = await Promise.all(
-        nominators.map(val => api.derive.staking.account(val))
+        nominators.map(val => api.derive.staking.account(val)),
       );
 
-      let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
+      const arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
       if (this.ismounted) {
         this.setState({
-          nominatorinfo: arr2
+          nominatorinfo: arr2,
         });
       }
       // console.log(arr2)
@@ -212,177 +212,236 @@ class App extends React.Component {
     this.ismounted = false;
     clearInterval(this.interval);
   }
- 
-  handlePolkavizClick = () => {
-    document.body.style.cursor = "default";
-    this.props.history.push({
-      pathname:"/",
-  })
-  }
 
+  handlePolkavizClick = () => {
+    document.body.style.cursor = 'default';
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.history.push({
+      pathname: '/',
+    });
+  };
 
   render() {
-    let pathArray = window.location.href.split('/');
-    console.log(!pathArray[5])
+    const pathArray = window.location.href.split('/');
+    console.log(!pathArray[5]);
     let arr = this.state.validators;
-    if(this.state.validatorsandintentions.length !== 0 ){
-    arr = this.state.validatorsandintentions;
-        }    // console.log(arr)
-    const intentionsarr = this.state.intentions
-    let bottombarobject = {
-        bottombarinfo: this.state.bottombarinfo,
-        finalblock: this.state.finalblock,
-        validatorcount: this.state.totalValidators,
-        totalIssued:this.state.totalIssued.toString() + " K"
-      };
+    if (this.state.validatorsandintentions.length !== 0) {
+      arr = this.state.validatorsandintentions;
+    } // console.log(arr)
+    const intentionsarr = this.state.intentions;
+    const bottombarobject = {
+      bottombarinfo: this.state.bottombarinfo,
+      finalblock: this.state.finalblock,
+      validatorcount: this.state.totalValidators,
+      totalIssued: `${this.state.totalIssued.toString()} K`,
+    };
 
     // console.log(this.state.validatorsandintentions)
     // console.log(this.state.lastAuthor,this.state.validators,this.state.valtotalinfo)
     // console.log(this.state.validators.indexOf(this.state.lastAuthor))
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
-    return (
-      this.state.validators.length === 0 ? (<React.Fragment><div className="lds-ripple"><div></div><div></div></div></React.Fragment>) : 
-      (
-        <React.Fragment>
-        {!pathArray[5] && 
-        
-      <div className="container">
-
-        {/* <div className="heading">
+    return this.state.validators.length === 0 ? (
+      <>
+        <div className="lds-ripple">
+          <div />
+          <div />
+        </div>
+      </>
+    ) : (
+      <>
+        {!pathArray[5] && (
+          <div className="container">
+            {/* <div className="heading">
           <h2>Alexander Network</h2>
         </div> */}
 
-        <div className="nav-path">
-  <div className="nav-path-link" onClick={this.handlePolkavizClick}>Polkaviz</div>
-  <div>/</div>
-  <div className="nav-path-current" >Alexander</div>
-  </div>
-
-
-        <div className="intentions">
-          <div>Next Up:</div>
-          {intentionsarr.length === 0 ? <div className="inten">no addresses found</div> :
-          intentionsarr.map((ele,index) => {
-            return (
-            <div className="inten" key={index}>
-              <span className="valsign"></span>
-              {ele.toString().slice(0,8) + "......" + ele.toString().slice(-8)}
+            <div className="nav-path">
+              <div className="nav-path-link" onClick={this.handlePolkavizClick}>
+                Polkaviz
+              </div>
+              <div>/</div>
+              <div className="nav-path-current">Alexander</div>
             </div>
-            )
-          })
-          }
-        </div>
 
-        <div className="relay-circle">
-          <Stage width={window.innerWidth} height={window.innerHeight}>
-            <Layer>
-            {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-              {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-              {arr.map((person, index) => (
-                <Validator
-                  key={index}
-                  validatorAddress={this.state.validatorsandintentions ? person.valname : undefined}
-                  valinfo={this.state.validatorsandintentions ? person.valinfo : undefined}
-                  totalinfo={this.state.validatorsandintentions ? this.state.valtotalinfo : undefined}
-                  nominatorinfo={this.state.validatorsandintentions ? this.state.nominatorinfo : undefined}
-                  angle={180 - (index * 360) / arr.length}
-                  history={this.props.history}
-                  intentions={this.state.intentions}
-                  x={
-                    window.innerWidth +
-                    360 *
-                      Math.cos((90 - 1 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                  y={
-                    window.innerHeight +
-                    360 *
-                      Math.sin((90 - 1 - (index * 360) / arr.length) * 0.0174533)
-                  }
-                />
-              ))}
-              {/* {console.log(this.state.bottombarobject.finalblock)}
+            <div className="intentions">
+              <div>Next Up:</div>
+              {intentionsarr.length === 0 ? (
+                <div className="inten">no addresses found</div>
+              ) : (
+                intentionsarr.map((ele, index) => {
+                  return (
+                    <div className="inten" key={index}>
+                      <span className="valsign" />
+                      {`${ele
+                        .toString()
+                        .slice(0, 8)}......${ele.toString().slice(-8)}`}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            <div className="relay-circle">
+              <Stage width={window.innerWidth} height={window.innerHeight}>
+                <Layer>
+                  {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
+                  {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
+                  {arr.map((person, index) => (
+                    <Validator
+                      key={index}
+                      validatorAddress={
+                        this.state.validatorsandintentions
+                          ? person.valname
+                          : undefined
+                      }
+                      valinfo={
+                        this.state.validatorsandintentions
+                          ? person.valinfo
+                          : undefined
+                      }
+                      totalinfo={
+                        this.state.validatorsandintentions
+                          ? this.state.valtotalinfo
+                          : undefined
+                      }
+                      nominatorinfo={
+                        this.state.validatorsandintentions
+                          ? this.state.nominatorinfo
+                          : undefined
+                      }
+                      angle={180 - (index * 360) / arr.length}
+                      history={this.props.history}
+                      intentions={this.state.intentions}
+                      x={
+                        window.innerWidth +
+                        360 *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                          )
+                      }
+                      y={
+                        window.innerHeight +
+                        360 *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                          )
+                      }
+                    />
+                  ))}
+                  {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
-              {this.state.previousBlock !== undefined && this.state.validators.indexOf(this.state.lastAuthor)!==-1 && <BlockAnimation
-                key={this.state.validators.indexOf(this.state.lastAuthor)}
-                angle={
-                  180 -
-                  (this.state.validators.indexOf(this.state.lastAuthor) * 360) /
-                    arr.length
-                }
-                x1={
-                  window.innerWidth / 2 +
-                  100 *
-                    Math.cos(
-                      (90 -
-                        (this.state.validators.indexOf(this.state.lastAuthor) *
-                          360) /
-                          arr.length) *
-                        0.0174533
-                    )
-                }
-                y1={
-                  window.innerHeight / 2 +
-                  100 *
-                    Math.sin(
-                      (90 -
-                        (this.state.validators.indexOf(this.state.lastAuthor) *
-                          360) /
-                          arr.length) *
-                        0.0174533
-                    )
-                }
-                x2={
-                  window.innerWidth / 2 +
-                  160 *
-                    Math.cos(
-                      (90 -
-                        (this.state.validators.indexOf(this.state.lastAuthor) *
-                          360) /
-                          arr.length) *
-                        0.0174533
-                    )
-                }
-                y2={
-                  window.innerHeight / 2 +
-                  160 *
-                    Math.sin(
-                      (90 -
-                        (this.state.validators.indexOf(this.state.lastAuthor) *
-                          360) /
-                          arr.length) *
-                        0.0174533
-                    )
-                }
-              />}
-              <Relay x={window.innerWidth} y={window.innerHeight} />
-              
-            </Layer>
-          </Stage>
-        </div>
-        <div className="bottombar">
-          <Bottombar start={this.state.start} activevalidators={this.state.validators.length} validatorcount={this.state.validatorcount} bottombarobject ={bottombarobject}/>
-        </div>
-      </div>}
+                  {this.state.previousBlock !== undefined &&
+                    this.state.validators.indexOf(this.state.lastAuthor) !==
+                      -1 && (
+                      <BlockAnimation
+                        key={this.state.validators.indexOf(
+                          this.state.lastAuthor,
+                        )}
+                        angle={
+                          180 -
+                          (this.state.validators.indexOf(
+                            this.state.lastAuthor,
+                          ) *
+                            360) /
+                            arr.length
+                        }
+                        x1={
+                          window.innerWidth / 2 +
+                          100 *
+                            Math.cos(
+                              (90 -
+                                (this.state.validators.indexOf(
+                                  this.state.lastAuthor,
+                                ) *
+                                  360) /
+                                  arr.length) *
+                                0.0174533,
+                            )
+                        }
+                        y1={
+                          window.innerHeight / 2 +
+                          100 *
+                            Math.sin(
+                              (90 -
+                                (this.state.validators.indexOf(
+                                  this.state.lastAuthor,
+                                ) *
+                                  360) /
+                                  arr.length) *
+                                0.0174533,
+                            )
+                        }
+                        x2={
+                          window.innerWidth / 2 +
+                          160 *
+                            Math.cos(
+                              (90 -
+                                (this.state.validators.indexOf(
+                                  this.state.lastAuthor,
+                                ) *
+                                  360) /
+                                  arr.length) *
+                                0.0174533,
+                            )
+                        }
+                        y2={
+                          window.innerHeight / 2 +
+                          160 *
+                            Math.sin(
+                              (90 -
+                                (this.state.validators.indexOf(
+                                  this.state.lastAuthor,
+                                ) *
+                                  360) /
+                                  arr.length) *
+                                0.0174533,
+                            )
+                        }
+                      />
+                    )}
+                  <Relay x={window.innerWidth} y={window.innerHeight} />
+                </Layer>
+              </Stage>
+            </div>
+            <div className="bottombar">
+              <Bottombar
+                start={this.state.start}
+                activevalidators={this.state.validators.length}
+                validatorcount={this.state.validatorcount}
+                bottombarobject={bottombarobject}
+              />
+            </div>
+          </div>
+        )}
 
-      {pathArray[5] === "validator" ? <ValidatorApp
-                    valtotalinfo={this.state.valtotalinfo}
-                    intentions={this.state.intentions}
-                    validatorsandintentions={this.state.validatorsandintentions}
-                    validatorandintentionloading={this.state.validatorandintentionloading}
-                  />: undefined}
+        {pathArray[5] === 'validator' ? (
+          <ValidatorApp
+            valtotalinfo={this.state.valtotalinfo}
+            intentions={this.state.intentions}
+            validatorsandintentions={this.state.validatorsandintentions}
+            validatorandintentionloading={
+              this.state.validatorandintentionloading
+            }
+          />
+        ) : (
+          undefined
+        )}
 
-      {pathArray[5] === "nominator" ? <NominatorApp
-                    valtotalinfo={this.state.valtotalinfo}
-                    nominatorinfo={this.state.nominatorinfo}
-                    intentions={this.state.intentions}
-                    validatorsandintentions={this.state.validatorsandintentions}
-                    validatorandintentionloading={this.state.validatorandintentionloading}
-                  /> : undefined}
-      </React.Fragment>
-
-
-      )
+        {pathArray[5] === 'nominator' ? (
+          <NominatorApp
+            valtotalinfo={this.state.valtotalinfo}
+            nominatorinfo={this.state.nominatorinfo}
+            intentions={this.state.intentions}
+            validatorsandintentions={this.state.validatorsandintentions}
+            validatorandintentionloading={
+              this.state.validatorandintentionloading
+            }
+          />
+        ) : (
+          undefined
+        )}
+      </>
     );
   }
 }
