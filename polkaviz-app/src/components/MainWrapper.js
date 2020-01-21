@@ -298,6 +298,7 @@ class MainWrapper extends React.Component {
                     <Relay
                       x={window.innerWidth / 2}
                       y={window.innerHeight - 200}
+                      radius={120}
                       id="alexanderRelay"
                     />
                   </Layer>
@@ -430,6 +431,7 @@ class MainWrapper extends React.Component {
                     <Relay
                       x={window.innerWidth / 2}
                       y={window.innerHeight - 200}
+                      radius={120}
                       isKusama={true}
                     />
                   </Layer>
