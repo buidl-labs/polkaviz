@@ -432,6 +432,7 @@ class MainWrapper extends React.Component {
                       x={window.innerWidth / 2}
                       y={window.innerHeight - 200}
                       radius={120}
+                      isMainWrapper={true}
                       isKusama={true}
                     />
                   </Layer>

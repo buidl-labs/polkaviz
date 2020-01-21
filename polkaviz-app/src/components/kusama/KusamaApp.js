@@ -33,8 +33,9 @@ class KusamaApp extends React.Component {
       kusamanominatorinfo: [],
       kusamavalidatorandintentionloading: true,
     };
+    this.relayRadius = 118;
     this.radius = 360;
-    this.relayRadius = this.radius - 242;
+    this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
     this.ismounted = true;
   }
 
@@ -272,6 +273,30 @@ class KusamaApp extends React.Component {
     });
   };
 
+  handleScale = scale => {
+    switch (scale) {
+      case 1:
+        this.relayRadius = 118;
+        this.radius = 360;
+        this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
+        break;
+      case 2:
+        this.relayRadius = 236;
+        this.radius = 720;
+        this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
+        break;
+      case 4:
+        this.relayRadius = 472;
+        this.radius = 1240;
+        this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
+        break;
+      default:
+        this.relayRadius = 118;
+        this.radius = 360;
+        this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
+    }
+  };
+
   handleZoom = e => {
     let scaleBy = 1.004;
     let stage = e.target;
@@ -354,15 +379,37 @@ class KusamaApp extends React.Component {
                 );
               })}
             </div>
+            <div className="zoom-controls">
+              <button
+                onClick={() => {
+                  this.handleScale(1);
+                }}
+              >
+                1x
+              </button>
+              <button
+                onClick={() => {
+                  this.handleScale(2);
+                }}
+              >
+                2x
+              </button>
+              <button
+                onClick={() => {
+                  this.handleScale(4);
+                }}
+              >
+                4x
+              </button>
+            </div>
 
             <div className="relay-circle">
               <Stage
                 width={window.innerWidth}
                 height={window.innerHeight}
                 onWheel={this.handleZoom}
-                draggable={true}
               >
-                <Layer>
+                <Layer draggable={true}>
                   {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
                   {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
                   {arr.map((person, index) => (
@@ -408,7 +455,7 @@ class KusamaApp extends React.Component {
                     }
                     x1={
                       window.innerWidth / 2 +
-                      (this.radius - 260) *
+                      this.blockAnimationCoord.x1 *
                         Math.cos(
                           (90 -
                             (this.state.kusamavalidators.indexOf(
@@ -421,7 +468,7 @@ class KusamaApp extends React.Component {
                     }
                     y1={
                       window.innerHeight / 2 +
-                      (this.radius - 260) *
+                      this.blockAnimationCoord.y1 *
                         Math.sin(
                           90 -
                             ((this.state.kusamavalidators.indexOf(
@@ -434,7 +481,7 @@ class KusamaApp extends React.Component {
                     }
                     x2={
                       window.innerWidth / 2 +
-                      (this.radius - 200) *
+                      this.blockAnimationCoord.x2 *
                         Math.cos(
                           (90 -
                             (this.state.kusamavalidators.indexOf(
@@ -447,7 +494,7 @@ class KusamaApp extends React.Component {
                     }
                     y2={
                       window.innerHeight / 2 +
-                      (this.radius - 200) *
+                      this.blockAnimationCoord.y2 *
                         Math.sin(
                           90 -
                             ((this.state.kusamavalidators.indexOf(

@@ -2,6 +2,12 @@ import React from 'react';
 import { Circle } from 'react-konva';
 
 class Relay extends React.Component {
+  handleOnMouseOver = () => {
+    document.body.style.cursor = 'grab';
+  };
+  handleOnMouseOut = () => {
+    document.body.style.cursor = 'default';
+  };
   render() {
     let fillcolor = '#262733';
     let strokecolor = '#97A1BF';
@@ -13,6 +19,12 @@ class Relay extends React.Component {
       <Circle
         x={this.props.x / 2}
         y={this.props.y / 2}
+        onMouseOver={
+          !this.props.isMainWrapper ? this.handleOnMouseOver : undefined
+        }
+        onMouseOut={
+          !this.props.isMainWrapper ? this.handleOnMouseOut : undefined
+        }
         radius={this.props.radius}
         fill={fillcolor}
         stroke={strokecolor}
