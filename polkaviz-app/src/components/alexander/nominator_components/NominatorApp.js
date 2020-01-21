@@ -13,6 +13,7 @@ class NominatorApp extends React.Component {
       showValidatorAddress: false,
       copied: false,
     };
+    this.pathArray = window.location.href.split('/');
     this.ismounted = true;
   }
   componentDidMount() {
@@ -42,32 +43,39 @@ class NominatorApp extends React.Component {
   //     }
   //   });
 
-	//   let nominatorvalue = "";
-	//   this.props.nominatorinfo.forEach(ele => {
-	//     if (ele.accountId === this.props.match.params.nominatorAddress) {
-	//       nominatorvalue = ele.controllerId;
-	//     }
-	//   });
+  //   let nominatorvalue = "";
+  //   this.props.nominatorinfo.forEach(ele => {
+  //     if (ele.accountId === this.props.match.params.nominatorAddress) {
+  //       nominatorvalue = ele.controllerId;
+  //     }
+  //   });
 
-	//   // console.log("Done",nominatorvalue);
-	//   // console.log(arr1);
-	//   if (this.ismounted) {
-	//     this.setState(
-	//       {
-	//         valbacked: arr1,
-	//         totalbonded: bonded,
-	//         controllerId: nominatorvalue
-	//       },
-	//       () => {
-	//         this.setState({ isloading: false });
-	//       }
-	//     );
-	//   }
-	// }
+  //   // console.log("Done",nominatorvalue);
+  //   // console.log(arr1);
+  //   if (this.ismounted) {
+  //     this.setState(
+  //       {
+  //         valbacked: arr1,
+  //         totalbonded: bonded,
+  //         controllerId: nominatorvalue
+  //       },
+  //       () => {
+  //         this.setState({ isloading: false });
+  //       }
+  //     );
+  //   }
+  // }
 
-	componentWillUnmount() {
-		this.ismounted = false;
-	}
+  componentWillUnmount() {
+    this.ismounted = false;
+  }
+
+  handleOnMouseOver = () => {
+    this.setState({ showValidatorAddress: true });
+  };
+  handleOnMouseOut = () => {
+    this.setState({ showValidatorAddress: false });
+  };
 
   BackbtnhandleOnMouseOver = () => {
     document.body.style.cursor = 'pointer';
@@ -79,7 +87,7 @@ class NominatorApp extends React.Component {
   BackbtnhandleClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: this.pathArray[4] === 'kusama' ? '/kusama' : '/alexander',
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
@@ -106,10 +114,10 @@ class NominatorApp extends React.Component {
     });
   };
 
-  handleAlexanderClick = () => {
+  handleNetworkClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: this.pathArray[4] === 'kusama' ? '/kusama' : '/alexander',
     });
   };
 
@@ -119,16 +127,30 @@ class NominatorApp extends React.Component {
     let valbacked = [];
     let totalbonded = 0;
     let controllerId = '';
-    if (!this.props.validatorandintentionloading) {
+    if (
+      !this.props.validatorandintentionloading &&
+      this.props.history.location.pathname.split('/')[3] !== undefined
+    ) {
       this.props.valtotalinfo.forEach(ele => {
         ele.valinfo.stakers.others.forEach(nom => {
           if (
             nom.who ===
             this.props.history.location.pathname.split('/')[3].toString()
           ) {
-            arr1.push({ validator: ele, staked: nom.value / Math.pow(10, 15) });
-            bonded += nom.value / Math.pow(10, 15);
-          }
+              arr1.push({
+                validator: ele,
+                staked:
+                  nom.value /
+                  (this.pathArray[4] === 'kusama'
+                    ? Math.pow(10, 12)
+                    : Math.pow(10, 15)),
+              });
+              bonded +=
+                nom.value /
+                (this.pathArray[4] === 'kusama'
+                  ? Math.pow(10, 12)
+                  : Math.pow(10, 15));
+            }
         });
       });
 
@@ -150,16 +172,18 @@ class NominatorApp extends React.Component {
     }
     // console.log("nomvalue",this.state.nominatorvalue)
     let nominatorname =
-      'Nominator Address: ' +
-      this.props.history.location.pathname
-        .split('/')[3]
-        .toString()
-        .slice(0, 8) +
-      '......' +
-      this.props.history.location.pathname
-        .split('/')[3]
-        .toString()
-        .slice(-8);
+      this.props.history.location.pathname.split('/')[3] !== undefined
+        ? 'Nominator Address: ' +
+          this.props.history.location.pathname
+            .split('/')[3]
+            .toString()
+            .slice(0, 8) +
+          '......' +
+          this.props.history.location.pathname
+            .split('/')[3]
+            .toString()
+            .slice(-8)
+        : '';
 
     let stashname =
       controllerId.toString().slice(0, 8) +
@@ -168,33 +192,38 @@ class NominatorApp extends React.Component {
 
     let controllername = 'controller: ' + stashname;
 
-    let bondvalue = 'bonded: ' + totalbonded.toString().slice(0, 5) + ' DOT';
+    let bondvalue =
+      'bonded: ' +
+      totalbonded.toString().slice(0, 5) +
+      (this.pathArray[4] === 'kusama' ? 'KSM' : ' DOT');
 
     let valtext =
-      this.props.history.location.pathname
-        .split('/')[3]
-        .toString()
-        .slice(0, 8) +
-      '......' +
-      this.props.history.location.pathname
-        .split('/')[3]
-        .toString()
-        .slice(-8);
+      this.props.history.location.pathname.split('/')[3] !== undefined
+        ? this.props.history.location.pathname
+            .split('/')[3]
+            .toString()
+            .slice(0, 8) +
+          '......' +
+          this.props.history.location.pathname
+            .split('/')[3]
+            .toString()
+            .slice(-8)
+        : '';
 
-		let arr = valbacked;
-		const width = window.innerWidth;
-		const height = window.innerHeight;
-		// console.log("valstate",this.state.showValidatorAddress)
-		return this.props.validatorandintentionloading ? (
-			<React.Fragment>
-				<div className="lds-ripple">
-					<div></div>
-					<div></div>
-				</div>
-			</React.Fragment>
-		) : (
-			<React.Fragment>
-				{/* <div
+    let arr = valbacked;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    // console.log("valstate",this.state.showValidatorAddress)
+    return this.props.validatorandintentionloading ? (
+      <React.Fragment>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        {/* <div
           className="back-arrow"
           onClick={this.BackbtnhandleClick}
           onMouseOver={this.BackbtnhandleOnMouseOver}
@@ -208,8 +237,8 @@ class NominatorApp extends React.Component {
             Polkaviz
           </div>
           <div>/</div>
-          <div className="nav-path-link" onClick={this.handleAlexanderClick}>
-            Alexander
+          <div className="nav-path-link" onClick={this.handleNetworkClick}>
+            {this.pathArray[4] === 'kusama' ? 'Kusama' : 'Alexander'}
           </div>
           <div>/</div>
           <div className="nav-path-current">{nominatorname}</div>
@@ -251,13 +280,13 @@ class NominatorApp extends React.Component {
           </CopyToClipboard>
         </div>
 
-				{/* <div className="home"
+        {/* <div className="home"
             onClick={this.homebtnhandleClick}
             onMouseOver={this.BackbtnhandleOnMouseOver}
             onMouseOut={this.BackbtnhandleOnMouseOut}>
               &#127963;
         </div> */}
-				{/* <div className="valheading">
+        {/* <div className="valheading">
           <h2>{nominatorname}</h2>
           <CopyToClipboard text={this.props.match.params.nominatorAddress} onCopy={this.onCopy}>
             <span>
@@ -318,31 +347,31 @@ class NominatorApp extends React.Component {
               strokeWidth={4}
             />
 
-						<Circle
-							x={width / 2 - 200}
-							y={height / 2}
-							radius={7}
-							fill="white"
-							onMouseOver={this.handleOnMouseOver}
-							onMouseOut={this.handleOnMouseOut}
-						/>
+            <Circle
+              x={width / 2 - 200}
+              y={height / 2}
+              radius={7}
+              fill="white"
+              onMouseOver={this.handleOnMouseOver}
+              onMouseOut={this.handleOnMouseOut}
+            />
 
-						{this.state.showValidatorAddress && (
-							<Text
-								text={valtext}
-								x={width / 2 - 200}
-								y={height / 2 - 18}
-								fill="#FFFFFF"
-							/>
-						)}
-					</Layer>
-				</Stage>
-				<div className="nombottombar">
-					<NomBottombar controllername={controllername} bondvalue={bondvalue} />
-				</div>
-			</React.Fragment>
-		);
-	}
+            {this.state.showValidatorAddress && (
+              <Text
+                text={valtext}
+                x={width / 2 - 200}
+                y={height / 2 - 18}
+                fill="#FFFFFF"
+              />
+            )}
+          </Layer>
+        </Stage>
+        <div className="nombottombar">
+          <NomBottombar controllername={controllername} bondvalue={bondvalue} />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 export default withRouter(NominatorApp);

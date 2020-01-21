@@ -6,6 +6,8 @@ import Relay from '../Relay';
 import Validator from '../Validator';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
+import NominatorApp from '../alexander/nominator_components/NominatorApp';
+import ValidatorApp from '../alexander/validator_components/ValidatorApp';
 
 class KusamaApp extends React.Component {
   constructor() {
@@ -28,7 +30,11 @@ class KusamaApp extends React.Component {
       kusamaintentions: [],
       kusamavalidatorandintentions: [],
       kusamatotalIssued: '',
+      kusamanominatorinfo: [],
+      kusamavalidatorandintentionloading: true,
     };
+    this.radius = 360;
+    this.relayRadius = this.radius - 242;
     this.ismounted = true;
   }
 
@@ -112,10 +118,10 @@ class KusamaApp extends React.Component {
         ),
       );
 
-			// const intentionstotalinfo = await Promise.all(
-			//   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
-			// )
-			// console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
+      // const intentionstotalinfo = await Promise.all(
+      //   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
+      // )
+      // console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
 
       arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
         // console.log(info);
@@ -147,13 +153,15 @@ class KusamaApp extends React.Component {
             kusamavaltotalinfo: arr1,
             kusamavalidatorandintentions: arr5,
             kusamaintentions: arr3,
+            kusamavalidatorandintentionloading: false,
           },
+          () => getnominators(),
           // () => this.getnominators2()
         );
       }
     };
 
-		start();
+    start();
 
     // console.log(intentions.toJSON())
     await apinew.derive.session.info(header => {
@@ -181,39 +189,81 @@ class KusamaApp extends React.Component {
         );
       }
     });
+    const getnominators = async () => {
+      let arr = [];
+      // console.log("valtotal", this.state.valtotalinfo);
+      this.state.kusamavaltotalinfo.forEach(ele => {
+        // console.log(ele);
+        ele.valinfo.stakers.others.forEach(nom => {
+          arr.push(nom.who);
+        });
+      });
+
+      // console.log("here are unfiltered", arr);
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+
+      let nominators = arr.filter(onlyUnique);
+      // console.log("total", nominators);
+
+      const nominatorstotalinfo = await Promise.all(
+        nominators.map(val => apinew.derive.staking.account(val)),
+      );
+
+      let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
+      if (this.ismounted) {
+        this.setState({
+          kusamanominatorinfo: arr2,
+        });
+      }
+      // console.log(arr2)
+    };
   }
+  //   const getnominators = async () => {
+  // 			let arr = [];
+  // 			// console.log("valtotal", this.state.valtotalinfo);
+  // 			this.state.kusamavaltotalinfo.forEach(ele => {
+  // 				// console.log(ele);
+  // 				ele.valinfo.stakers.others.forEach(nom => {
+  // 					arr.push(nom.who);
+  // 				});
+  // 			});
 
-			// console.log("here are unfiltered", arr);
-			function onlyUnique(value, index, self) {
-				return self.indexOf(value) === index;
-			}
+  // 			// console.log("here are unfiltered", arr);
+  // 			function onlyUnique(value, index, self) {
+  // 				return self.indexOf(value) === index;
+  // 			}
 
-			let nominators = arr.filter(onlyUnique);
-			// console.log("total", nominators);
+  // 			let nominators = arr.filter(onlyUnique);
+  // 			// console.log("total", nominators);
 
-			const nominatorstotalinfo = await Promise.all(
-				nominators.map(val => apinew.derive.staking.info(val))
-			);
+  // 			const nominatorstotalinfo = await Promise.all(
+  // 				nominators.map(val => apinew.derive.staking.info(val))
+  // 			);
 
-			let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
-			if (this.ismounted) {
-				this.setState({
-					kusamanominatorinfo: arr2
-				});
-			}
-			// console.log(arr2)
-		};
-	}
+  // 			let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
+  // 			if (this.ismounted) {
+  // 				this.setState({
+  // 					kusamanominatorinfo: arr2
+  // 				});
+  // 			}
+  // 			// console.log(arr2)
+  // 		};
+  // 	}
 
-	// getnominators2 = async () => {
-	//   let arr = [];
-	//   // console.log("valtotal", this.state.valtotalinfo);
-	//   this.state.kusamavaltotalinfo.forEach(ele => {
-	//     console.log(ele);
-	//     ele.valinfo.stakers.others.forEach(nom => {
-	//       arr.push(nom.who);
-	//     });
-	//   });
+  // getnominators2 = async () => {
+  //   let arr = [];
+  //   // console.log("valtotal", this.state.valtotalinfo);
+  //   this.state.kusamavaltotalinfo.forEach(ele => {
+  //     console.log(ele);
+  //     ele.valinfo.stakers.others.forEach(nom => {
+  //       arr.push(nom.who);
+  //     });
+  //   });
+  componentWillUnmount() {
+    this.ismounted = false;
+  }
 
   handlePolkavizClick = () => {
     document.body.style.cursor = 'default';
@@ -222,10 +272,37 @@ class KusamaApp extends React.Component {
     });
   };
 
+  handleZoom = e => {
+    let scaleBy = 1.004;
+    let stage = e.target;
+    stage.on('wheel', e => {
+      e.evt.preventDefault();
+      let oldScale = stage.scaleX();
+      // console.log(stage)
+
+      let newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+      this.radius *= newScale;
+      if (this.radius >= 1000) {
+        this.radius = 1000;
+      } else if (this.radius <= 300) {
+        this.radius = 300;
+      }
+      this.relayRadius = this.radius * Math.sqrt(2) * 0.292;
+      if (this.relayRadius >= 450) {
+        this.relayRadius = 450;
+      } else if (this.relayRadius <= 90) {
+        this.relayRadius = 90;
+      }
+      console.log(this.relayRadius);
+      console.log(this.radius);
+    });
+  };
+
   render() {
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
+    let pathArray = window.location.href.split('/');
     let arr = this.state.kusamavalidators;
     if (this.state.kusamavalidatorandintentions.length !== 0) {
       arr = this.state.kusamavalidatorandintentions;
@@ -249,146 +326,239 @@ class KusamaApp extends React.Component {
         </div>
       </>
     ) : (
-      <div className="kusamacontainer">
-        {/* <div className="heading">
+      <React.Fragment>
+        {!pathArray[5] && (
+          <div className="kusamacontainer">
+            {/* <div className="heading">
           <h2>Kusama Network</h2>
         </div> */}
 
-						<div className="nav-path">
-							<div className="nav-path-link" onClick={this.handlePolkavizClick}>
-								Polkaviz
-							</div>
-							<div>/</div>
-							<div className="nav-path-current">Kusama</div>
-						</div>
-
-        <div className="intentions">
-          <div>Next Up:</div>
-          {intentionsarr.map((ele, index) => {
-            return (
-              <div className="inten" key={index}>
-                <span className="valsign" />
-                {`${ele.toString().slice(0, 8)}......${ele
-                  .toString()
-                  .slice(-8)}`}
+            <div className="nav-path">
+              <div className="nav-path-link" onClick={this.handlePolkavizClick}>
+                Polkaviz
               </div>
-            );
-          })}
-        </div>
+              <div>/</div>
+              <div className="nav-path-current">Kusama</div>
+            </div>
 
-        <div className="relay-circle">
-          <Stage width={window.innerWidth} height={window.innerHeight}>
-            <Layer>
-              {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-              {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-              {arr.map((person, index) => (
-                <Validator
-                  key={index}
-                  validatorAddress={person.valname}
-                  valinfo={person.valinfo}
-                  totalinfo={this.state.kusamavaltotalinfo}
-                  nominatorinfo={this.state.kusamanominatorinfo}
-                  angle={180 - (index * 360) / arr.length}
-                  history={this.props.history}
-                  intentions={intentionsarr}
-                  x={
-                    window.innerWidth +
-                    360 *
-                      Math.cos(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                      )
-                  }
-                  y={
-                    window.innerHeight +
-                    360 *
-                      Math.sin(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                      )
-                  }
-                  isKusama
-                />
-              ))}
-              {/* {console.log(this.state.bottombarobject.finalblock)}
+            <div className="intentions">
+              <div>Next Up:</div>
+              {intentionsarr.map((ele, index) => {
+                return (
+                  <div className="inten" key={index}>
+                    <span className="valsign" />
+                    {`${ele.toString().slice(0, 8)}......${ele
+                      .toString()
+                      .slice(-8)}`}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="relay-circle">
+              <Stage
+                width={window.innerWidth}
+                height={window.innerHeight}
+                onWheel={this.handleZoom}
+                draggable={true}
+              >
+                <Layer>
+                  {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
+                  {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
+                  {arr.map((person, index) => (
+                    <Validator
+                      key={index}
+                      validatorAddress={person.valname}
+                      valinfo={person.valinfo}
+                      totalinfo={this.state.kusamavaltotalinfo}
+                      nominatorinfo={this.state.kusamanominatorinfo}
+                      angle={180 - (index * 360) / arr.length}
+                      history={this.props.history}
+                      intentions={intentionsarr}
+                      x={
+                        window.innerWidth +
+                        this.radius *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                          )
+                      }
+                      y={
+                        window.innerHeight +
+                        this.radius *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                          )
+                      }
+                      isKusama={true}
+                    />
+                  ))}
+                  {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
-              <BlockAnimationNew
-                key={this.state.kusamavalidators.indexOf(
-                  this.state.kusamalastAuthor,
-                )}
-                angle={
-                  180 -
-                  (this.state.kusamavalidators.indexOf(
-                    this.state.kusamalastAuthor,
-                  ) *
-                    360) /
-                    arr.length
-                }
-                x1={
-                  window.innerWidth / 2 +
-                  100 *
-                    Math.cos(
-                      (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
-                          360) /
-                          arr.length) *
-                        0.0174533,
-                    )
-                }
-                y1={
-                  window.innerHeight / 2 +
-                  100 *
-                    Math.sin(
-                      (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
-                          360) /
-                          arr.length) *
-                        0.0174533,
-                    )
-                }
-                x2={
-                  window.innerWidth / 2 +
-                  160 *
-                    Math.cos(
-                      (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
-                          360) /
-                          arr.length) *
-                        0.0174533,
-                    )
-                }
-                y2={
-                  window.innerHeight / 2 +
-                  160 *
-                    Math.sin(
-                      (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
-                          360) /
-                          arr.length) *
-                        0.0174533,
-                    )
-                }
+                  <BlockAnimationNew
+                    key={this.state.kusamavalidators.indexOf(
+                      this.state.kusamalastAuthor,
+                    )}
+                    angle={
+                      180 -
+                      (this.state.kusamavalidators.indexOf(
+                        this.state.kusamalastAuthor,
+                      ) *
+                        360) /
+                        arr.length
+                    }
+                    x1={
+                      window.innerWidth / 2 +
+                      (this.radius - 260) *
+                        Math.cos(
+                          (90 -
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor,
+                            ) *
+                              360) /
+                              arr.length) *
+                            0.0174533,
+                        )
+                    }
+                    y1={
+                      window.innerHeight / 2 +
+                      (this.radius - 260) *
+                        Math.sin(
+                          90 -
+                            ((this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor,
+                            ) *
+                              360) /
+                              arr.length) *
+                              0.0174533,
+                        )
+                    }
+                    x2={
+                      window.innerWidth / 2 +
+                      (this.radius - 200) *
+                        Math.cos(
+                          (90 -
+                            (this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor,
+                            ) *
+                              360) /
+                              arr.length) *
+                            0.0174533,
+                        )
+                    }
+                    y2={
+                      window.innerHeight / 2 +
+                      (this.radius - 200) *
+                        Math.sin(
+                          90 -
+                            ((this.state.kusamavalidators.indexOf(
+                              this.state.kusamalastAuthor,
+                            ) *
+                              360) /
+                              arr.length) *
+                              0.0174533,
+                        )
+                    }
+                    // x1={
+                    //   window.innerWidth / 2 +
+                    //   100 *
+                    //     Math.cos(
+                    //       (90 -
+                    //         (this.state.kusamavalidators.indexOf(
+                    //           this.state.kusamalastAuthor,
+                    //         ) *
+                    //           360) /
+                    //           arr.length) *
+                    //         0.0174533,
+                    //     )
+                    // }
+                    // y1={
+                    //   window.innerHeight / 2 +
+                    //   100 *
+                    //     Math.sin(
+                    //       (90 -
+                    //         (this.state.kusamavalidators.indexOf(
+                    //           this.state.kusamalastAuthor,
+                    //         ) *
+                    //           360) /
+                    //           arr.length) *
+                    //         0.0174533,
+                    //     )
+                    // }
+                    // x2={
+                    //   window.innerWidth / 2 +
+                    //   160 *
+                    //     Math.cos(
+                    //       (90 -
+                    //         (this.state.kusamavalidators.indexOf(
+                    //           this.state.kusamalastAuthor,
+                    //         ) *
+                    //           360) /
+                    //           arr.length) *
+                    //         0.0174533,
+                    //     )
+                    // }
+                    // y2={
+                    //   window.innerHeight / 2 +
+                    //   160 *
+                    //     Math.sin(
+                    //       (90 -
+                    //         (this.state.kusamavalidators.indexOf(
+                    //           this.state.kusamalastAuthor,
+                    //         ) *
+                    //           360) /
+                    //           arr.length) *
+                    //         0.0174533,
+                    //     )
+                    // }
+                  />
+                  <Relay
+                    x={window.innerWidth}
+                    y={window.innerHeight}
+                    radius={this.relayRadius}
+                    isKusama={true}
+                  />
+                </Layer>
+              </Stage>
+            </div>
+            <div className="bottombar">
+              <Bottombar
+                start={this.state.kusamastart}
+                activevalidators={this.state.kusamavalidators.length}
+                validatorcount={this.state.kusamavalidatorcount}
+                bottombarobject={bottombarobject2}
+                isKusama={true}
               />
-              <Relay x={window.innerWidth} y={window.innerHeight} isKusama />
-            </Layer>
-          </Stage>
-        </div>
-        <div className="bottombar">
-          <Bottombar
-            start={this.state.kusamastart}
-            activevalidators={this.state.kusamavalidators.length}
-            validatorcount={this.state.kusamavalidatorcount}
-            bottombarobject={bottombarobject2}
-            isKusama
+            </div>
+          </div>
+        )}
+        {pathArray[5] === 'validator' ? (
+          <ValidatorApp
+            valtotalinfo={this.state.kusamavaltotalinfo}
+            intentions={this.state.kusamaintentions}
+            validatorsandintentions={this.state.kusamavalidatorandintentions}
+            validatorandintentionloading={
+              this.state.kusamavalidatorandintentionloading
+            }
+            isKusama={true}
           />
-        </div>
-      </div>
+        ) : (
+          undefined
+        )}
+
+        {pathArray[5] === 'nominator' ? (
+          <NominatorApp
+            valtotalinfo={this.state.kusamavaltotalinfo}
+            nominatorinfo={this.state.kusamanominatorinfo}
+            intentions={this.state.kusamaintentions}
+            validatorsandintentions={this.state.kusamavalidatorandintentions}
+            validatorandintentionloading={
+              this.state.kusamavalidatorandintentionloading
+            }
+          />
+        ) : (
+          undefined
+        )}
+      </React.Fragment>
     );
   }
 }

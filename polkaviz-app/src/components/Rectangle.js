@@ -31,6 +31,15 @@ class Rectangle extends React.Component {
         state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
       });
     }
+    if (this.props.isKusama) {
+      this.props.history.push({
+        pathname: '/kusama/validator/' + this.props.validatorAddress,
+        state: {
+          totalinfo: this.props.totalinfo,
+          valinfo: this.props.valinfo,
+        },
+      });
+    }
   };
   render() {
     let x1 = this.props.x;

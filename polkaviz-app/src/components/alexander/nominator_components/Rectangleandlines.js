@@ -7,6 +7,7 @@ class Rectangleandlines extends React.Component {
     this.state = {
       showValidatorAddress: false,
     };
+    this.pathArray = window.location.href.split('/');
   }
   handleOnMouseOver = e => {
     e.target.setAttrs({
@@ -25,9 +26,13 @@ class Rectangleandlines extends React.Component {
     this.setState({ showValidatorAddress: false });
   };
   handleClick = () => {
+    let pathArray = window.location.href.split('/');
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander/validator/' + this.props.valinfo.accountId,
+      pathname:
+        pathArray[4] === 'kusama'
+          ? '/kusama/validator/' + this.props.valinfo.accountId
+          : '/alexander/validator/' + this.props.valinfo.accountId,
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
@@ -38,7 +43,9 @@ class Rectangleandlines extends React.Component {
       '......' +
       this.props.valinfo.accountId.toString().slice(-8);
     let stakedtext =
-      'Bonded: ' + this.props.staked.toString().slice(0, 7) + ' DOT';
+      'Bonded: ' +
+      this.props.staked.toString().slice(0, 7) +
+      (this.pathArray[4] === 'kusama' ? ' KSM' : ' DOT');;
     return (
       <React.Fragment>
         <Line

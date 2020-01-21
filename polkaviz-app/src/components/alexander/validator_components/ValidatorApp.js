@@ -20,6 +20,7 @@ class ValidatorApp extends React.Component {
       valinfo: {},
       copied: false,
     };
+    this.pathArray = window.location.href.split('/');
     this.ismounted = false;
     this.totalvalue = 0;
     this.ownvalue = 0;
@@ -66,7 +67,7 @@ class ValidatorApp extends React.Component {
   BackbtnhandleClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: this.pathArray[4] === 'kusama' ? '/kusama' : '/alexander',
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
@@ -96,10 +97,10 @@ class ValidatorApp extends React.Component {
     });
   };
 
-  handleAlexanderClick = () => {
+  handleNetworkClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: this.pathArray[4] === 'kusama' ? '/kusama' : '/alexander',
     });
   };
 
@@ -131,6 +132,14 @@ class ValidatorApp extends React.Component {
       });
       console.log('huyi', value);
       totalinfo = this.props.valtotalinfo;
+      this.totalvalue =
+        this.pathArray[4] === 'kusama'
+          ? value.stakers.total / Math.pow(10, 12)
+          : value.stakers.total / Math.pow(10, 15);
+      this.ownvalue =
+        this.pathArray[4] === 'kusama'
+          ? value.stakers.own / Math.pow(10, 12)
+          : value.stakers.own / Math.pow(10, 15);
       this.totalvalue = value.stakers.total / Math.pow(10, 15);
       this.ownvalue = value.stakers.own / Math.pow(10, 15);
       validator = value.accountId;
@@ -144,8 +153,8 @@ class ValidatorApp extends React.Component {
         )
       ) {
         console.log('yo');
-        this.totalvalue = value.stakingLedger.total;
-        this.ownvalue = value.stakingLedger.total;
+        this.totalvalue = value.stakingLedger.total / 10 ** 12;
+        this.ownvalue = value.stakingLedger.total / 10 ** 12;
       }
     }
 
@@ -156,14 +165,20 @@ class ValidatorApp extends React.Component {
       validator.toString().slice(-8);
 
     let totalbondedtext =
-      'total staked: ' + this.totalvalue.toFixed(3) + ' DOT';
+      'total staked: ' +
+      this.totalvalue.toFixed(3) +
+      (this.pathArray[4] === 'kusama' ? ' KSM' : ' DOT');
     let selfbondedtext =
-      'validator self stake: ' + this.ownvalue.toString().slice(0, 5) + ' DOT';
+      'validator self stake: ' +
+      this.ownvalue.toString().slice(0, 7) +
+      (this.pathArray[4] === 'kusama' ? ' KSM' : ' DOT');
 
     let totalbonded = 0;
     totalbonded = this.totalvalue.toFixed(3) - this.ownvalue.toFixed(3);
     let nominatorbondedtext =
-      'nominator stake: ' + totalbonded.toString().slice(0, 5) + ' DOT';
+      'nominator stake: ' +
+      totalbonded.toString().slice(0, 8) +
+      (this.pathArray[4] === 'kusama' ? ' KSM' : ' DOT');
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
@@ -178,16 +193,16 @@ class ValidatorApp extends React.Component {
       color = 'yellow';
     }
 
-		return this.props.validatorandintentionloading ? (
-			<React.Fragment>
-				<div className="lds-ripple">
-					<div></div>
-					<div></div>
-				</div>
-			</React.Fragment>
-		) : (
-			<div>
-				{/* <div
+    return this.props.validatorandintentionloading ? (
+      <React.Fragment>
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+      </React.Fragment>
+    ) : (
+      <div>
+        {/* <div
           className="back-arrow"
           onClick={this.BackbtnhandleClick}
           onMouseOver={this.BackbtnhandleOnMouseOver}
@@ -201,8 +216,8 @@ class ValidatorApp extends React.Component {
             Polkaviz
           </div>
           <div>/</div>
-          <div className="nav-path-link" onClick={this.handleAlexanderClick}>
-            Alexander
+          <div className="nav-path-link" onClick={this.handleNetworkClick}>
+            {this.pathArray[4] === 'kusama' ? 'Kusama' : 'Alexander'}
           </div>
           <div>/</div>
           <div className="nav-path-current">{validatorname}</div>
@@ -241,13 +256,13 @@ class ValidatorApp extends React.Component {
           </CopyToClipboard>
         </div>
 
-				{/* <div className="home"
+        {/* <div className="home"
             onClick={this.homebtnhandleClick}
             onMouseOver={this.BackbtnhandleOnMouseOver}
             onMouseOut={this.BackbtnhandleOnMouseOut}>
               &#127963;
         </div> */}
-				{/* <div className="valheading">
+        {/* <div className="valheading">
           <h2>{validatorname}</h2>
           <CopyToClipboard text={validator} onCopy={this.onCopy}>
             <span>
@@ -293,31 +308,31 @@ class ValidatorApp extends React.Component {
                         x,y is center of imaginary circle 
                      */}
 
-						<WhiteCircles
-							n={nominators.length}
-							r={radius}
-							x={width / 2 + 13}
-							y={height / 2 + 6}
-							nominators={nominators}
-							history={this.props.history}
-							totalinfo={totalinfo}
-							valinfo={valinfo}
-						/>
+            <WhiteCircles
+              n={nominators.length}
+              r={radius}
+              x={width / 2 + 13}
+              y={height / 2 + 6}
+              nominators={nominators}
+              history={this.props.history}
+              totalinfo={totalinfo}
+              valinfo={valinfo}
+            />
 
-						{/* Arc used to create the semicircle on the right, 
+            {/* Arc used to create the semicircle on the right, 
                     Rotation is used to rotate the arc drawn by 90 degrees in clockwise direction
                 */}
-						<Arc
-							x={width - 2}
-							y={height / 2}
-							innerRadius={height / 2 - 25}
-							outerRadius={height / 2 - 24}
-							rotation={90}
-							angle={180}
-							stroke="#97A1BF"
-							strokeWidth={4}
-						/>
-						{/* Adding 6 to stating and ending y point and 24 to length of line
+            <Arc
+              x={width - 2}
+              y={height / 2}
+              innerRadius={height / 2 - 25}
+              outerRadius={height / 2 - 24}
+              rotation={90}
+              angle={180}
+              stroke="#97A1BF"
+              strokeWidth={4}
+            />
+            {/* Adding 6 to stating and ending y point and 24 to length of line
                     because the upper left corner of rectangle is at width/2,height/2
                     so mid point of rectangle becomes width/2+12,height/2+6
                  */}
@@ -333,28 +348,28 @@ class ValidatorApp extends React.Component {
               opacity={opacity}
             />
 
-						<Rect
-							x={width / 2}
-							y={height / 2}
-							width={26}
-							height={12}
-							fill={color}
-							cornerRadius={10}
-							onMouseOver={this.handleOnMouseOver}
-							onMouseOut={this.handleOnMouseOut}
-						/>
-					</Layer>
-				</Stage>
-				<div className="valbottombar">
-					<ValBottombar
-						totalbondedtext={totalbondedtext}
-						selfbondedtext={selfbondedtext}
-						nominatorbondedtext={nominatorbondedtext}
-					/>
-				</div>
-			</div>
-		);
-	}
+            <Rect
+              x={width / 2}
+              y={height / 2}
+              width={26}
+              height={12}
+              fill={color}
+              cornerRadius={10}
+              onMouseOver={this.handleOnMouseOver}
+              onMouseOut={this.handleOnMouseOut}
+            />
+          </Layer>
+        </Stage>
+        <div className="valbottombar">
+          <ValBottombar
+            totalbondedtext={totalbondedtext}
+            selfbondedtext={selfbondedtext}
+            nominatorbondedtext={nominatorbondedtext}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default withRouter(ValidatorApp);
