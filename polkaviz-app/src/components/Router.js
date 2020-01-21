@@ -1,11 +1,10 @@
-import React from "react";
-import App from "./alexander/App";
-import { Route, Switch, HashRouter } from "react-router-dom";
+import React from 'react';
+import App from './alexander/App';
+import { Route, Switch, HashRouter } from 'react-router-dom';
 // import { WsProvider, ApiPromise } from "@polkadot/api";
-import MainWrapper from "./MainWrapper";
-import KusamaApp from "./kusama/KusamaApp";
+import MainWrapper from './MainWrapper';
+import KusamaApp from './kusama/KusamaApp';
 // import {NavLink} from "react-router-dom"
-
 
 class Router extends React.Component {
   // constructor() {
@@ -54,16 +53,16 @@ class Router extends React.Component {
   // componentDidMount() {
   //   // console.log(this.props)
 
-    // this.createApi();
-    // this.createApi2();
-    // this.interval = setInterval(() => {
-    //   // console.log(this.state.elapsed, this.props.counter);
-    //   this.tick();
-    // }, 1000);
-    // this.kusamainterval = setInterval(() => {
-    //   // console.log(this.state.elapsed, this.props.counter);
-    //   this.kusamatick();
-    // }, 1000);
+  // this.createApi();
+  // this.createApi2();
+  // this.interval = setInterval(() => {
+  //   // console.log(this.state.elapsed, this.props.counter);
+  //   this.tick();
+  // }, 1000);
+  // this.kusamainterval = setInterval(() => {
+  //   // console.log(this.state.elapsed, this.props.counter);
+  //   this.kusamatick();
+  // }, 1000);
   // }
   // tick() {
   //   // console.log("here " + this.props.start)
@@ -399,13 +398,14 @@ class Router extends React.Component {
   //   document.getElementById("mySidenav").style.width = "0";
   //   document.getElementById("main").style.opacity="1";
   //   setInterval(() => {
-  //     window.location.reload()      
+  //     window.location.reload()
   //   }, 1000);
 
   // }
-  
 
   render() {
+    let pathArray = window.location.href.split('/');
+    console.log(pathArray);
     // console.log(window.location.pathname,window.location.search)
     // var pathArray = window.location.href.split('/');
     // console.log(pathArray)
@@ -425,18 +425,18 @@ class Router extends React.Component {
     //   finalblock: this.state.kusamafinalblock,
     //   validatorcount: this.state.kusamatotalValidators
     // };
-    return(
-    //  !loadingdone ? (
-    //   <React.Fragment>
-    //     <div className="lds-ripple">
-    //       <div></div>
-    //       <div></div>
-    //     </div>
-    //   </React.Fragment>
-    // ) : 
+    return (
+      //  !loadingdone ? (
+      //   <React.Fragment>
+      //     <div className="lds-ripple">
+      //       <div></div>
+      //       <div></div>
+      //     </div>
+      //   </React.Fragment>
+      // ) :
       <React.Fragment>
         <HashRouter>
-        {/* {pathArray[4]!=="" ? */}
+          {/* {pathArray[4]!=="" ? */}
           {/* <React.Fragment>
             <div className="nav-grid">
               <div className="nav-empty-space" onClick={this.closeNav}></div>
@@ -453,37 +453,36 @@ class Router extends React.Component {
         </div>
         <span onClick={this.openNav} className="opennav"> &#9776; </span>
           </React.Fragment> */}
-{/* : undefined} */}
-        <div id="main">
-          
+          {/* : undefined} */}
+          <div id="main">
             <Switch>
               <Route
                 exact
                 path="/"
                 render={props => (
                   <MainWrapper
-                    // valtotalinfo={this.state.valtotalinfo}
-                    // createApi={this.createApi}
-                    // validators={this.state.validators}
-                    // start={this.state.start}
-                    // lastAuthor={this.state.lastAuthor}
-                    // validatorcount={this.state.totalValidators}
-                    // bottombarobject={bottombarobject}
-                    // nominatorinfo={this.state.nominatorinfo}
-                    // previousBlock={this.state.previousBlock}
-                    // isloading={this.state.isloading}
-                    // intentions={this.state.intentions}
-                    // validatorsandintentions={this.state.validatorsandintentions}
-                    // kusamavaltotalinfo={this.state.kusamavaltotalinfo}
-                    // kusamacreateApi={this.createApi2}
-                    // kusamavalidators={this.state.kusamavalidators}
-                    // kusamastart={this.state.kusamastart}
-                    // kusamalastAuthor={this.state.kusamalastAuthor}
-                    // kusamavalidatorcount={this.state.kusamatotalValidators}
-                    // kusamabottombarobject={bottombarobject2}
-                    // kusamanominatorinfo={this.state.kusamanominatorinfo}
-                    // kusamapreviousBlock={this.state.kusamapreviousBlock}
-                    // kusamaisloading={this.state.kusamaisloading}
+                  // valtotalinfo={this.state.valtotalinfo}
+                  // createApi={this.createApi}
+                  // validators={this.state.validators}
+                  // start={this.state.start}
+                  // lastAuthor={this.state.lastAuthor}
+                  // validatorcount={this.state.totalValidators}
+                  // bottombarobject={bottombarobject}
+                  // nominatorinfo={this.state.nominatorinfo}
+                  // previousBlock={this.state.previousBlock}
+                  // isloading={this.state.isloading}
+                  // intentions={this.state.intentions}
+                  // validatorsandintentions={this.state.validatorsandintentions}
+                  // kusamavaltotalinfo={this.state.kusamavaltotalinfo}
+                  // kusamacreateApi={this.createApi2}
+                  // kusamavalidators={this.state.kusamavalidators}
+                  // kusamastart={this.state.kusamastart}
+                  // kusamalastAuthor={this.state.kusamalastAuthor}
+                  // kusamavalidatorcount={this.state.kusamatotalValidators}
+                  // kusamabottombarobject={bottombarobject2}
+                  // kusamanominatorinfo={this.state.kusamanominatorinfo}
+                  // kusamapreviousBlock={this.state.kusamapreviousBlock}
+                  // kusamaisloading={this.state.kusamaisloading}
                   />
                 )}
               />
@@ -491,36 +490,36 @@ class Router extends React.Component {
                 path="/alexander"
                 render={props => (
                   <App
-                    // valtotalinfo={this.state.valtotalinfo}
-                    // createApi={this.createApi}
-                    // validators={this.state.validators}
-                    // start={this.state.start}
-                    // lastAuthor={this.state.lastAuthor}
-                    // validatorcount={this.state.totalValidators}
-                    // // bottombarobject={bottombarobject}
-                    // nominatorinfo={this.state.nominatorinfo}
-                    // previousBlock={this.state.previousBlock}
-                    // intentions={this.state.intentions}
-                    // validatorsandintentions={this.state.validatorsandintentions}
+                  // valtotalinfo={this.state.valtotalinfo}
+                  // createApi={this.createApi}
+                  // validators={this.state.validators}
+                  // start={this.state.start}
+                  // lastAuthor={this.state.lastAuthor}
+                  // validatorcount={this.state.totalValidators}
+                  // // bottombarobject={bottombarobject}
+                  // nominatorinfo={this.state.nominatorinfo}
+                  // previousBlock={this.state.previousBlock}
+                  // intentions={this.state.intentions}
+                  // validatorsandintentions={this.state.validatorsandintentions}
                   />
                 )}
               />
               <Route
                 path="/kusama"
-                render={() =>
-                  <KusamaApp />
-                    // valtotalinfo={this.state.kusamavaltotalinfo}
-                    // createApi={this.createApi2}
-                    // validators={this.state.kusamavalidators}
-                    // start={this.state.kusamastart}
-                    // lastAuthor={this.state.kusamalastAuthor}
-                    // validatorcount={this.state.kusamatotalValidators}
-                    // bottombarobject={bottombarobject2}
-                    // nominatorinfo={this.state.kusamanominatorinfo}
-                    // previousBlock={this.state.kusamapreviousBlock}
-                    // kusamaisloading={this.state.kusamaisloading}
-                  
-                }
+                render={props => (
+                  <KusamaApp
+                  // valtotalinfo={this.state.kusamavaltotalinfo}
+                  // createApi={this.createApi2}
+                  // validators={this.state.kusamavalidators}
+                  // start={this.state.kusamastart}
+                  // lastAuthor={this.state.kusamalastAuthor}
+                  // validatorcount={this.state.kusamatotalValidators}
+                  // bottombarobject={bottombarobject2}
+                  // nominatorinfo={this.state.kusamanominatorinfo}
+                  // previousBlock={this.state.kusamapreviousBlock}
+                  // kusamaisloading={this.state.kusamaisloading}
+                  />
+                )}
               />
               {/* <Route
                 exact
@@ -548,10 +547,10 @@ class Router extends React.Component {
                 )}
               /> */}
             </Switch>
-        </div>
-          </HashRouter>
+          </div>
+        </HashRouter>
       </React.Fragment>
-    )
+    );
   }
 }
 export default Router;

@@ -1,11 +1,10 @@
-import React from "react";
-import Counter from "./Counter";
-import FinalizedBlock from "./FinalizedBlock";
-import Session from "./Session";
-import Era from "./Era";
-import ValidatorCount from './ValidatorCount'
-import TotalIssuance from './TotalIssuance.js'
-
+import React from 'react';
+import Counter from './Counter';
+import FinalizedBlock from './FinalizedBlock';
+import Session from './Session';
+import Era from './Era';
+import ValidatorCount from './ValidatorCount';
+import TotalIssuance from './TotalIssuance.js';
 
 class Bottombar extends React.Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class Bottombar extends React.Component {
       sessionLength: 0,
       sessionsPerEra: 0,
       sessionProgress: 0,
-      totalValidators: 0
+      totalValidators: 0,
     };
     this.mounted = true;
   }
@@ -65,22 +64,25 @@ class Bottombar extends React.Component {
   //     }
   //   });
 
-// }
+  // }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.mounted = false;
   }
   render() {
     // console.log(this.props.validatorcount)
     return (
       <React.Fragment>
-        <ValidatorCount 
+        <ValidatorCount
           totalValidators={this.props.bottombarobject.validatorcount}
-          activeValidators={this.props.activevalidators} />
+          activeValidators={this.props.activevalidators}
+        />
         <Counter start={this.props.start} />
         <FinalizedBlock finalblock={this.props.bottombarobject.finalblock} />
         <Session
-          sessionProgress={this.props.bottombarobject.bottombarinfo.sessionProgress}
+          sessionProgress={
+            this.props.bottombarobject.bottombarinfo.sessionProgress
+          }
           sessionLength={this.props.bottombarobject.bottombarinfo.sessionLength}
           isKusama={this.props.isKusama}
         />
@@ -88,9 +90,7 @@ class Bottombar extends React.Component {
           eraLength={this.props.bottombarobject.bottombarinfo.eraLength}
           eraProgress={this.props.bottombarobject.bottombarinfo.eraProgress}
         />
-        <TotalIssuance
-            totalIssued={this.props.bottombarobject.totalIssued}
-            />
+        <TotalIssuance totalIssued={this.props.bottombarobject.totalIssued} />
       </React.Fragment>
     );
   }
