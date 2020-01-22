@@ -72,22 +72,24 @@ class Validator extends React.Component {
     if (!this.props.isKusama) {
       color = '#9335A3';
     }
-    // if (!this.props.isMainWrapper) {
-    //   if (this.props.intentions.includes(this.props.validatorAddress)) {
-    //     x1 = ((x1 - window.innerWidth) / 360) * 390 + window.innerWidth;
-    //     y1 = ((y1 - window.innerHeight) / 360) * 390 + window.innerHeight;
-    //     color = 'yellow';
-    //     opacity = 0;
-    //   }
-    // }
+    if (!this.props.isMainWrapper) {
+      if (this.props.intentions) {
+        x1 = ((x1 - window.innerWidth) / 360) * 390 + window.innerWidth;
+        y1 = ((y1 - window.innerHeight) / 360) * 390 + window.innerHeight;
+        color = 'yellow';
+        opacity = 0;
+      }
+    }
     return (
       <React.Fragment>
+        {/* kusama line defining the validator */}
         <Tail
           x={x2 / 2}
           y={y2 / 2}
           angle={this.props.angle}
           opacity={opacity}
         />
+        {/* kusama rect clickable validator/intentions data */}
         <Rectangle
           x={x1 / 2}
           y={y1 / 2}
