@@ -28,6 +28,8 @@ class KusamaApp extends React.Component {
       kusamaintentions: [],
       kusamavalidatorandintentions: [],
       kusamatotalIssued: '',
+      intentionsData: [],
+      validatorsData: [],
     };
     this.ismounted = true;
   }
@@ -149,7 +151,8 @@ class KusamaApp extends React.Component {
           valinfo: info,
         };
       });
-      console.log(arr4);
+      console.log('Intentions Data', arr4);
+      console.log('Validator Data', arr1);
       // let arr5 = this.state.validators.push(arr4);
       const arr5 = [...arr1, ...arr4];
 
@@ -160,6 +163,8 @@ class KusamaApp extends React.Component {
             kusamavaltotalinfo: arr1,
             kusamavalidatorandintentions: arr5,
             kusamaintentions: arr3,
+            intentionsData: arr4,
+            validatorsData: arr1,
           },
           // () => this.getnominators2()
         );
@@ -235,6 +240,7 @@ class KusamaApp extends React.Component {
   };
 
   render() {
+    const { validatorsData, intentionsData } = this.state;
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
@@ -293,60 +299,70 @@ class KusamaApp extends React.Component {
             <Layer>
               {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-              {arr.map((person, index) => (
-                <>
-                  <Validator
-                    key={index}
-                    validatorAddress={person.valname}
-                    valinfo={person.valinfo}
-                    totalinfo={this.state.kusamavaltotalinfo}
-                    nominatorinfo={this.state.kusamanominatorinfo}
-                    angle={180 - (index * 360) / arr.length}
-                    history={this.props.history}
-                    intentions={intentionsarr}
-                    x={
-                      window.innerWidth +
-                      360 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    y={
-                      window.innerHeight +
-                      360 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    isKusama
-                  />
-                  <IntentionApp
-                    key={index}
-                    validatorAddress={person.valname}
-                    valinfo={person.valinfo}
-                    totalinfo={this.state.kusamavaltotalinfo}
-                    nominatorinfo={this.state.kusamanominatorinfo}
-                    angle={180 - (index * 360) / arr.length}
-                    history={this.props.history}
-                    intentions={intentionsarr}
-                    x={
-                      window.innerWidth +
-                      360 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    y={
-                      window.innerHeight +
-                      360 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    isKusama
-                  />
-                </>
-              ))}
+              {validatorsData.length > 0 &&
+                validatorsData.map((person, index) => (
+                  <>
+                    <Validator
+                      key={index}
+                      validatorAddress={person.valname}
+                      valinfo={person.valinfo}
+                      totalinfo={this.state.kusamavaltotalinfo}
+                      nominatorinfo={this.state.kusamanominatorinfo}
+                      angle={180 - (index * 360) / validatorsData.length}
+                      history={this.props.history}
+                      intentions={intentionsarr}
+                      x={
+                        window.innerWidth +
+                        360 *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / validatorsData.length) *
+                              0.0174533,
+                          )
+                      }
+                      y={
+                        window.innerHeight +
+                        360 *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / validatorsData.length) *
+                              0.0174533,
+                          )
+                      }
+                      isKusama
+                    />
+                  </>
+                ))}
+              {intentionsData.length > 0 &&
+                intentionsData.map((person, index) => (
+                  <>
+                    <IntentionApp
+                      key={index}
+                      validatorAddress={person.valname}
+                      valinfo={person.valinfo}
+                      totalinfo={this.state.kusamavaltotalinfo}
+                      nominatorinfo={this.state.kusamanominatorinfo}
+                      angle={180 - (index * 360) / intentionsData.length}
+                      history={this.props.history}
+                      intentions={intentionsarr}
+                      x={
+                        window.innerWidth +
+                        360 *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / intentionsData.length) *
+                              0.0174533,
+                          )
+                      }
+                      y={
+                        window.innerHeight +
+                        360 *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / intentionsData.length) *
+                              0.0174533,
+                          )
+                      }
+                      isKusama
+                    />
+                  </>
+                ))}
               {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
               <BlockAnimationNew
