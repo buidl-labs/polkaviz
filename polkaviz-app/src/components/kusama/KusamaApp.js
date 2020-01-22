@@ -103,9 +103,21 @@ class KusamaApp extends React.Component {
       let arr1 = [];
       // let arr2 = [];
       // console.log(JSON.stringify(valinfo))
-      const intentions = await apinew.query.staking.validators();
-      const allvals = JSON.parse(JSON.stringify(intentions))[0];
-      console.log(JSON.parse(JSON.stringify(intentions)));
+      const apiIntentions = await fetch(
+        'https://polka-analytic-api.herokuapp.com/intentions',
+      )
+        .then(res => res.json())
+        .then(res => res);
+      // console.log('result', result);
+      let result = apiIntentions.intentions;
+      if (!(result.length > 0)) {
+        const intentions = await apinew.query.staking.validators();
+        result = JSON.parse(JSON.stringify(intentions))[0];
+      }
+      // const intentions = await apinew.query.staking.validators();
+      // const allvals = JSON.parse(JSON.stringify(intentions))[0];
+      const allvals = result;
+      // console.log(JSON.parse(JSON.stringify(intentions)));
       const validatorstotalinfo = await Promise.all(
         this.state.kusamavalidators.map(val =>
           apinew.derive.staking.account(val),
