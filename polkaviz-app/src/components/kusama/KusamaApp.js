@@ -34,7 +34,6 @@ class KusamaApp extends React.Component {
       kusamavalidatorandintentionloading: true,
     };
     this.relayRadius = 118;
-    this.radius = 360;
     this.blockAnimationCoord = { x1: 100, x2: 160, y1: 100, y2: 160 };
     this.ismounted = true;
   }
@@ -306,20 +305,26 @@ class KusamaApp extends React.Component {
       // console.log(stage)
 
       let newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-      this.radius *= newScale;
-      if (this.radius >= 1000) {
-        this.radius = 1000;
-      } else if (this.radius <= 300) {
-        this.radius = 300;
+      this.relayRadius *= newScale;
+      if (this.relayRadius >= 472) {
+        this.relayRadius = 472;
+      } else if (this.relayRadius <= 118) {
+        this.relayRadius = 118;
       }
-      this.relayRadius = this.radius * Math.sqrt(2) * 0.292;
-      if (this.relayRadius >= 450) {
-        this.relayRadius = 450;
-      } else if (this.relayRadius <= 90) {
-        this.relayRadius = 90;
-      }
-      console.log(this.relayRadius);
-      console.log(this.radius);
+      // this.radius *= newScale;
+      // if (this.radius >= 1000) {
+      //   this.radius = 1000;
+      // } else if (this.radius <= 300) {
+      //   this.radius = 300;
+      // }
+      // this.relayRadius = this.radius * Math.sqrt(2) * 0.292;
+      // if (this.relayRadius >= 450) {
+      //   this.relayRadius = 450;
+      // } else if (this.relayRadius <= 90) {
+      //   this.relayRadius = 90;
+      // }
+      // console.log(this.relayRadius);
+      // console.log(this.radius);
     });
   };
 
@@ -424,18 +429,32 @@ class KusamaApp extends React.Component {
                       intentions={intentionsarr}
                       x={
                         window.innerWidth +
-                        this.radius *
+                        (2.75 * this.relayRadius) *
                           Math.cos(
-                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                            (90 - (index * 360) / arr.length) * 0.0174533
                           )
                       }
                       y={
                         window.innerHeight +
-                        this.radius *
+                        (2.75 * this.relayRadius) *
                           Math.sin(
-                            (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                            (90 - (index * 360) / arr.length) * 0.0174533
                           )
                       }
+                      // x={
+                      //   window.innerWidth +
+                      //   this.radius *
+                      //     Math.cos(
+                      //       (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                      //     )
+                      // }
+                      // y={
+                      //   window.innerHeight +
+                      //   this.radius *
+                      //     Math.sin(
+                      //       (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                      //     )
+                      // }
                       isKusama={true}
                     />
                   ))}
