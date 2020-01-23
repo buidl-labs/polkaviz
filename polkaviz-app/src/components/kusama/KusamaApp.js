@@ -105,25 +105,45 @@ class KusamaApp extends React.Component {
     const start = async () => {
       let arr1 = [];
       // let arr2 = [];
-      const validatorstotalinfo = await Promise.all(
-        this.state.kusamavalidators.map(val =>
-          apinew.derive.staking.account(val),
-        ),
-      );
+      // const start = performance.now();
+      try {
+        const response = await fetch('http://localhost:3009/validatorinfo');
+        const data = await response.json();
+        arr1 = JSON.parse(JSON.stringify(data)).map(({ currentValidator }) => {
+          // console.log(info);
+          return {
+            valname: currentValidator.accountId,
+            valinfo: currentValidator,
+          };
+        });
+      } catch (err) {
+        console.log('err', err);
+      }
 
-      console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
-      // const intentionstotalinfo = await Promise.all(
-      //   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
-      // )
-      // console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
+      if (!(arr1.length > 0)) {
+        const validatorstotalinfo = await Promise.all(
+          this.state.kusamavalidators.map(val =>
+            apinew.derive.staking.account(val),
+          ),
+        );
 
-      arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
-        // console.log(info);
-        return {
-          valname: info.accountId,
-          valinfo: info,
-        };
-      });
+        console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
+        // const intentionstotalinfo = await Promise.all(
+        //   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
+        // )
+        // console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
+
+        arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
+          // console.log(info);
+          return {
+            valname: info.accountId,
+            valinfo: info,
+          };
+        });
+      }
+
+      // const end = performance.now();
+      // console.log(`validator time ${end - start}`);
 
       this.setState({
         ValidatorsData: arr1,
