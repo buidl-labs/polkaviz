@@ -6,7 +6,7 @@ import Relay from '../Relay';
 import Validator from '../Validator';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
-import IntentionApp from '../Intentions';
+
 class KusamaApp extends React.Component {
   constructor() {
     super();
@@ -294,58 +294,31 @@ class KusamaApp extends React.Component {
               {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {arr.map((person, index) => (
-                <>
-                  <Validator
-                    key={index}
-                    validatorAddress={person.valname}
-                    valinfo={person.valinfo}
-                    totalinfo={this.state.kusamavaltotalinfo}
-                    nominatorinfo={this.state.kusamanominatorinfo}
-                    angle={180 - (index * 360) / arr.length}
-                    history={this.props.history}
-                    intentions={intentionsarr}
-                    x={
-                      window.innerWidth +
-                      360 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    y={
-                      window.innerHeight +
-                      360 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    isKusama
-                  />
-                  <IntentionApp
-                    key={index}
-                    validatorAddress={person.valname}
-                    valinfo={person.valinfo}
-                    totalinfo={this.state.kusamavaltotalinfo}
-                    nominatorinfo={this.state.kusamanominatorinfo}
-                    angle={180 - (index * 360) / arr.length}
-                    history={this.props.history}
-                    intentions={intentionsarr}
-                    x={
-                      window.innerWidth +
-                      360 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    y={
-                      window.innerHeight +
-                      360 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                        )
-                    }
-                    isKusama
-                  />
-                </>
+                <Validator
+                  key={index}
+                  validatorAddress={person.valname}
+                  valinfo={person.valinfo}
+                  totalinfo={this.state.kusamavaltotalinfo}
+                  nominatorinfo={this.state.kusamanominatorinfo}
+                  angle={180 - (index * 360) / arr.length}
+                  history={this.props.history}
+                  intentions={intentionsarr}
+                  x={
+                    window.innerWidth +
+                    360 *
+                      Math.cos(
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                      )
+                  }
+                  y={
+                    window.innerHeight +
+                    360 *
+                      Math.sin(
+                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                      )
+                  }
+                  isKusama
+                />
               ))}
               {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
