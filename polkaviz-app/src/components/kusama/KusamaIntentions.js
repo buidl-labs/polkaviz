@@ -74,8 +74,8 @@ class Validator extends React.Component {
     }
     if (!this.props.isMainWrapper) {
       if (this.props.intentions) {
-        x1 = ((x1 - window.innerWidth) / 360) * 390 + window.innerWidth;
-        y1 = ((y1 - window.innerHeight) / 360) * 390 + window.innerHeight;
+        x1 = ((x1 - window.innerWidth) / 360) * 420 + window.innerWidth;
+        y1 = ((y1 - window.innerHeight) / 360) * 420 + window.innerHeight;
         color = 'yellow';
         opacity = 0;
       }
