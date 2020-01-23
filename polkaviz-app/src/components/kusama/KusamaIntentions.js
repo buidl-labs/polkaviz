@@ -42,7 +42,7 @@ class Validator extends React.Component {
           this.props.valinfo.stakers.others.length +
           ' nominators';
       }
-      if (this.props.intentions.includes(this.props.validatorAddress)) {
+      if (this.props.intentions) {
         if (this.props.isKusama) {
           let value =
             this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
@@ -55,8 +55,8 @@ class Validator extends React.Component {
           // console.log(value)
           bondvalue = 'Bonded: ' + value.toString() + ' KSM';
 
-          let commissionvalue = this.props.valinfo.validatorPrefs
-            .validatorPayment;
+          //TODO: Recheck calculation for commission
+          let commissionvalue = this.props.valinfo.validatorPrefs.commission;
           commissionvalue = commissionvalue / Math.pow(10, 12);
           commissionvalue = commissionvalue.toFixed(3);
           commission = 'commission: ' + commissionvalue + ' KSM';
