@@ -3,7 +3,8 @@ import { Stage, Layer } from 'react-konva';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
 import Relay from '../Relay';
-import Validator from '../Validator';
+import KusamaValidator from './KusamaValidators';
+import KusamaIntention from './KusamaIntentions';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
 
@@ -28,6 +29,8 @@ class KusamaApp extends React.Component {
       kusamaintentions: [],
       kusamavalidatorandintentions: [],
       kusamatotalIssued: '',
+      ValidatorsData: [],
+      IntentionsData: [],
     };
     this.ismounted = true;
   }
@@ -149,7 +152,8 @@ class KusamaApp extends React.Component {
           valinfo: info,
         };
       });
-      console.log(arr4);
+      console.log('Intentions data', arr4);
+      console.log('Validators data', arr1);
       // let arr5 = this.state.validators.push(arr4);
       const arr5 = [...arr1, ...arr4];
 
@@ -160,6 +164,8 @@ class KusamaApp extends React.Component {
             kusamavaltotalinfo: arr1,
             kusamavalidatorandintentions: arr5,
             kusamaintentions: arr3,
+            ValidatorsData: arr1,
+            IntentionsData: arr4,
           },
           // () => this.getnominators2()
         );
@@ -235,6 +241,7 @@ class KusamaApp extends React.Component {
   };
 
   render() {
+    const { IntentionsData, ValidatorsData } = this.state;
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
@@ -293,28 +300,59 @@ class KusamaApp extends React.Component {
             <Layer>
               {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-              {arr.map((person, index) => (
-                <Validator
+              {ValidatorsData.map((person, index) => (
+                <KusamaValidator
                   key={index}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
                   totalinfo={this.state.kusamavaltotalinfo}
                   nominatorinfo={this.state.kusamanominatorinfo}
-                  angle={180 - (index * 360) / arr.length}
+                  angle={180 - (index * 360) / ValidatorsData.length}
                   history={this.props.history}
                   intentions={intentionsarr}
                   x={
                     window.innerWidth +
                     360 *
                       Math.cos(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                        (90 - 1 - (index * 360) / ValidatorsData.length) *
+                          0.0174533,
                       )
                   }
                   y={
                     window.innerHeight +
                     360 *
                       Math.sin(
-                        (90 - 1 - (index * 360) / arr.length) * 0.0174533,
+                        (90 - 1 - (index * 360) / ValidatorsData.length) *
+                          0.0174533,
+                      )
+                  }
+                  isKusama
+                />
+              ))}
+              {IntentionsData.map((person, index) => (
+                <KusamaIntention
+                  key={index}
+                  validatorAddress={person.valname}
+                  valinfo={person.valinfo}
+                  totalinfo={this.state.kusamavaltotalinfo}
+                  nominatorinfo={this.state.kusamanominatorinfo}
+                  angle={180 - (index * 360) / IntentionsData.length}
+                  history={this.props.history}
+                  intentions={intentionsarr}
+                  x={
+                    window.innerWidth +
+                    360 *
+                      Math.cos(
+                        (90 - 1 - (index * 360) / IntentionsData.length) *
+                          0.0174533,
+                      )
+                  }
+                  y={
+                    window.innerHeight +
+                    360 *
+                      Math.sin(
+                        (90 - 1 - (index * 360) / IntentionsData.length) *
+                          0.0174533,
                       )
                   }
                   isKusama
