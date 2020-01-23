@@ -107,7 +107,9 @@ class KusamaApp extends React.Component {
       // let arr2 = [];
       // const start = performance.now();
       try {
-        const response = await fetch('http://localhost:3009/validatorinfo');
+        const response = await fetch(
+          'https://polka-analytic-api.herokuapp.com/validatorinfo',
+        );
         const data = await response.json();
         arr1 = JSON.parse(JSON.stringify(data)).map(({ currentValidator }) => {
           // console.log(info);
