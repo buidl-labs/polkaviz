@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer } from 'react-konva';
+import { Stage, Layer, Text, Circle } from 'react-konva';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
 import Relay from '../Relay';
@@ -272,6 +272,8 @@ class KusamaApp extends React.Component {
   };
 
   render() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const { IntentionsData, ValidatorsData } = this.state;
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
@@ -329,6 +331,32 @@ class KusamaApp extends React.Component {
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
+              <Circle
+                x={width - 348}
+                y={height - 190}
+                radius={10}
+                fill="#FFEB3B"
+              />
+              <Text
+                x={width - 325}
+                y={height - 195}
+                text="Intentions"
+                fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
+                fontSize={15}
+              />
+              <Circle
+                x={width - 348}
+                y={height - 160}
+                radius={10}
+                fill="#C31169"
+              />
+              <Text
+                x={width - 325}
+                y={height - 165}
+                text="Validators"
+                fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
+                fontSize={15}
+              />
               {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
               {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
               {ValidatorsData.map((person, index) => (
