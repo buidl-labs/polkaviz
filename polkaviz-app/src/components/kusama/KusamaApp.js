@@ -315,7 +315,7 @@ class KusamaApp extends React.Component {
         </div>
 
         <div className="intentions">
-          <div>Next Up:</div>
+          <div>Waiting Validators:</div>
           {intentionsarr.map((ele, index) => {
             return (
               <div className="inten" key={index}>
