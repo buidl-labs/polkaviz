@@ -105,22 +105,6 @@ class KusamaApp extends React.Component {
     const start = async () => {
       let arr1 = [];
       // let arr2 = [];
-      // console.log(JSON.stringify(valinfo))
-      const apiIntentions = await fetch(
-        'https://polka-analytic-api.herokuapp.com/intentions',
-      )
-        .then(res => res.json())
-        .then(res => res);
-      // console.log('result', result);
-      let result = apiIntentions.intentions;
-      if (!(result.length > 0)) {
-        const intentions = await apinew.query.staking.validators();
-        result = JSON.parse(JSON.stringify(intentions))[0];
-      }
-      // const intentions = await apinew.query.staking.validators();
-      // const allvals = JSON.parse(JSON.stringify(intentions))[0];
-      const allvals = result;
-      // console.log(JSON.parse(JSON.stringify(intentions)));
       const validatorstotalinfo = await Promise.all(
         this.state.kusamavalidators.map(val =>
           apinew.derive.staking.account(val),
@@ -140,6 +124,31 @@ class KusamaApp extends React.Component {
           valinfo: info,
         };
       });
+
+      this.setState({
+        ValidatorsData: arr1,
+      });
+      // console.log(JSON.stringify(valinfo))
+      let result = [];
+
+      try {
+        const response = await fetch(
+          'https://polka-analytic-api.herokuapp.com/intentions',
+        );
+        const apiIntentions = await response.json();
+        result = apiIntentions.intentions;
+      } catch (err) {
+        console.log('err', err);
+      }
+      console.log('result', result);
+      if (!(result.length > 0)) {
+        const intentions = await apinew.query.staking.validators();
+        result = JSON.parse(JSON.stringify(intentions))[0];
+      }
+      // const intentions = await apinew.query.staking.validators();
+      // const allvals = JSON.parse(JSON.stringify(intentions))[0];
+      const allvals = result;
+      // console.log(JSON.parse(JSON.stringify(intentions)));
       console.log(arr1);
       const arr2 = arr1.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
@@ -260,7 +269,7 @@ class KusamaApp extends React.Component {
     };
     // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
     // const arr1 = [1,2,3,4,5,6,7,8]
-    return this.state.kusamavalidators.length === 0 ? (
+    return this.state.ValidatorsData.length === 0 ? (
       <>
         <div className="lds-ripple">
           <div />
