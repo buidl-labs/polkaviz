@@ -42,26 +42,37 @@ class Validator extends React.Component {
           this.props.valinfo.stakers.others.length +
           ' nominators';
       }
-      if (this.props.intentions.includes(this.props.validatorAddress)) {
-        if (this.props.isKusama) {
-          let value =
-            this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
-          if (value > 1000) {
-            value = value / Math.pow(10, 3);
-            value = value.toFixed(3);
-            // value = value.split(".")[0]
-            value = value + 'k';
-          } else value = value.toFixed(3);
-          // console.log(value)
-          bondvalue = 'Bonded: ' + value.toString() + ' KSM';
 
-          let commissionvalue = this.props.valinfo.validatorPrefs
-            .validatorPayment;
-          commissionvalue = commissionvalue / Math.pow(10, 12);
-          commissionvalue = commissionvalue.toFixed(3);
-          commission = 'commission: ' + commissionvalue + ' KSM';
-        }
-      }
+      // if (this.props.intentions.includes(this.props.validatorAddress)) {
+      //   if (this.props.isKusama) {
+      //     let value =
+      //       this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
+      //     if (value > 1000) {
+      //       value = value / Math.pow(10, 3);
+      //       value = value.toFixed(3);
+      //       // value = value.split(".")[0]
+      //       value = value + 'k';
+      //     } else value = value.toFixed(3);
+      //     // console.log(value)
+      //     bondvalue = 'Bonded: ' + value.toString() + ' KSM';
+
+      //     let commissionvalue = this.props.valinfo.validatorPrefs
+      //       .validatorPayment;
+      //     commissionvalue = commissionvalue / Math.pow(10, 12);
+      //     commissionvalue = commissionvalue.toFixed(3);
+      //     commission = 'commission: ' + commissionvalue + ' KSM';
+      //   }
+      // }
+    }
+    if (!this.props.isMainWrapper) {
+      nomvalue =
+        'Backed by: ' +
+        this.props.valinfo.stakers.others.length +
+        ' nominators';
+      //Total Stake
+      bondvalue = `Total Stake ${parseInt(
+        this.props.valinfo.stakers.total / 10 ** 12,
+      ).toFixed(3)} KSM`;
     }
     let x1 = this.props.x;
     let y1 = this.props.y;
