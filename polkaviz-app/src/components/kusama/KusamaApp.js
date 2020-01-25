@@ -35,8 +35,30 @@ class KusamaApp extends React.Component {
     this.ismounted = true;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // window.location.reload()
+    let arr1 = [];
+    try {
+      const response = await fetch(
+        'https://polka-analytic-api.herokuapp.com/validatorinfo',
+      );
+      const data = await response.json();
+      if (data && data.length > 0) {
+        arr1 = JSON.parse(JSON.stringify(data)).map(({ currentValidator }) => {
+          // console.log(info);
+          return {
+            valname: currentValidator.accountId,
+            valinfo: currentValidator,
+          };
+        });
+        console.log('arr1', arr1);
+        this.setState({
+          ValidatorsData: arr1,
+        });
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
     this.createApi2();
   }
 
@@ -48,7 +70,8 @@ class KusamaApp extends React.Component {
       this.state.kusamalastAuthor !== nextState.kusamalastAuthor ||
       this.state.kusamafinalblock !== nextState.kusamafinalblock ||
       this.state.kusamabottombarinfo !== nextState.kusamabottombarinfo ||
-      this.state.kusamaisloading !== nextState.kusamaisloading
+      this.state.kusamaisloading !== nextState.kusamaisloading ||
+      this.state.ValidatorsData !== nextState.ValidatorsData
     )
       return true;
     return false;
@@ -106,20 +129,25 @@ class KusamaApp extends React.Component {
       let arr1 = [];
       // let arr2 = [];
       // const start = performance.now();
-      try {
-        const response = await fetch(
-          'https://polka-analytic-api.herokuapp.com/validatorinfo',
-        );
-        const data = await response.json();
-        arr1 = JSON.parse(JSON.stringify(data)).map(({ currentValidator }) => {
-          // console.log(info);
-          return {
-            valname: currentValidator.accountId,
-            valinfo: currentValidator,
-          };
-        });
-      } catch (err) {
-        console.log('err', err);
+      if (arr1.length === 0 && this.state.ValidatorsData.length === 0) {
+        console.log('Run me');
+        try {
+          const response = await fetch(
+            'https://polka-analytic-api.herokuapp.com/validatorinfo',
+          );
+          const data = await response.json();
+          arr1 = JSON.parse(JSON.stringify(data)).map(
+            ({ currentValidator }) => {
+              // console.log(info);
+              return {
+                valname: currentValidator.accountId,
+                valinfo: currentValidator,
+              };
+            },
+          );
+        } catch (err) {
+          console.log('err', err);
+        }
       }
 
       if (!(arr1.length > 0)) {
@@ -203,7 +231,7 @@ class KusamaApp extends React.Component {
       }
     };
 
-    start();
+    await start();
 
     // console.log(intentions.toJSON())
     await apinew.derive.session.info(header => {
