@@ -1,5 +1,5 @@
 import React from 'react';
-import Rectangle from './KusamaRectangle';
+import Rectangle from '../Rectangle';
 import Tail from '../Tail';
 
 class Validator extends React.Component {
