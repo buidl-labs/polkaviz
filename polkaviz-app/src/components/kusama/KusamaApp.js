@@ -368,7 +368,7 @@ class KusamaApp extends React.Component {
               <Text
                 x={width - 325}
                 y={height - 195}
-                text="Intentions"
+                text="Waiting Validators"
                 fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
                 fontSize={15}
               />
@@ -381,7 +381,7 @@ class KusamaApp extends React.Component {
               <Text
                 x={width - 325}
                 y={height - 165}
-                text="Validators"
+                text="Active Validators"
                 fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
                 fontSize={15}
               />
