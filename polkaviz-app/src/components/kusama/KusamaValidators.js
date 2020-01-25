@@ -1,5 +1,5 @@
 import React from 'react';
-import Rectangle from './KusamaRectangle';
+import KusamaRectangle from './KusamaRectangle';
 import Tail from '../Tail';
 
 class Validator extends React.Component {
@@ -7,6 +7,8 @@ class Validator extends React.Component {
     let bondvalue = '';
     let nomvalue = 0;
     let commission = '';
+    let nominatorsStake = 0;
+    let validatorSelfStake = 0;
     if (!this.props.isMainWrapper && this.props.intentions.length !== 0) {
       bondvalue = 'Bonded: No Data found';
       nomvalue = 'Backed by: No Data found';
@@ -73,6 +75,15 @@ class Validator extends React.Component {
       bondvalue = `Total Stake ${parseInt(
         this.props.valinfo.stakers.total / 10 ** 12,
       ).toFixed(3)} KSM`;
+
+      validatorSelfStake = `Self Stake ${parseInt(
+        this.props.valinfo.stakers.own / 10 ** 12,
+      ).toFixed(3)} KSM`;
+
+      nominatorsStake = `Nominators Stake ${(
+        parseInt(this.props.valinfo.stakers.total / 10 ** 12) -
+        parseInt(this.props.valinfo.stakers.own / 10 ** 12)
+      ).toFixed(3)} KSM`;
     }
     let x1 = this.props.x;
     let y1 = this.props.y;
@@ -99,7 +110,7 @@ class Validator extends React.Component {
           angle={this.props.angle}
           opacity={opacity}
         />
-        <Rectangle
+        <KusamaRectangle
           x={x1 / 2}
           y={y1 / 2}
           angle={this.props.angle}
@@ -115,6 +126,8 @@ class Validator extends React.Component {
           isKusama={this.props.isKusama}
           intentions={this.props.intentions}
           color={color}
+          validatorSelfStake={validatorSelfStake}
+          nominatorsStake={nominatorsStake}
         />
       </React.Fragment>
     );

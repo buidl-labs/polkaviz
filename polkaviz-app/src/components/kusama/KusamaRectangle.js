@@ -135,7 +135,7 @@ class Rectangle extends React.Component {
         )}
         {this.state.showValidatorAddress && !this.props.isMainWrapper && (
           <Text
-            text={this.props.bondvalue}
+            text={`${this.props.bondvalue} \n${this.props.validatorSelfStake} \n${this.props.nominatorsStake}`}
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 50}
             fill="#FFFFFF"
