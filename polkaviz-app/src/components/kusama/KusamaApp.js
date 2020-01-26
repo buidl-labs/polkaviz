@@ -37,6 +37,8 @@ class KusamaApp extends React.Component {
 
   async componentDidMount() {
     // window.location.reload()
+    const provider = new WsProvider('wss://kusama-rpc.polkadot.io');
+    const apinew = await ApiPromise.create({ provider });
     let arr1 = [];
     try {
       const response = await fetch(
@@ -51,9 +53,18 @@ class KusamaApp extends React.Component {
             valinfo: currentValidator,
           };
         });
-        console.log('arr1', arr1);
+        const indexes = await apinew.derive.accounts.indexes();
+        const newArr = arr1.map(validator => {
+          const array = Object.entries(indexes).find(val => {
+            return validator.valname === val[0];
+          });
+          return {
+            ...validator,
+            accountIndex: array[1].toString(),
+          };
+        });
         this.setState({
-          ValidatorsData: arr1,
+          ValidatorsData: newArr,
         });
       }
     } catch (err) {
@@ -172,11 +183,21 @@ class KusamaApp extends React.Component {
         });
       }
 
+      const indexes = await apinew.derive.accounts.indexes();
+      const newArr = arr1.map(validator => {
+        const array = Object.entries(indexes).find(val => {
+          return validator.valname === val[0];
+        });
+        return {
+          ...validator,
+          accountIndex: array[1].toString(),
+        };
+      });
       // const end = performance.now();
       // console.log(`validator time ${end - start}`);
 
       this.setState({
-        ValidatorsData: arr1,
+        ValidatorsData: newArr,
       });
       // console.log(JSON.stringify(valinfo))
       let result = [];
@@ -199,8 +220,8 @@ class KusamaApp extends React.Component {
       // const allvals = JSON.parse(JSON.stringify(intentions))[0];
       const allvals = result;
       // console.log(JSON.parse(JSON.stringify(intentions)));
-      console.log(arr1);
-      const arr2 = arr1.map(ele => ele.valname);
+      console.log(newArr);
+      const arr2 = newArr.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
         arr3.map(val => apinew.derive.staking.account(val)),
@@ -211,19 +232,19 @@ class KusamaApp extends React.Component {
           valinfo: info,
         };
       });
-      console.log('Intentions data', arr4);
-      console.log('Validators data', arr1);
+      // console.log('Intentions data', arr4);
+      // console.log('Validators data', arr1);
       // let arr5 = this.state.validators.push(arr4);
-      const arr5 = [...arr1, ...arr4];
+      const arr5 = [...newArr, ...arr4];
 
       if (this.ismounted) {
         // console.log("arr1",arr1)
         this.setState(
           {
-            kusamavaltotalinfo: arr1,
+            kusamavaltotalinfo: newArr,
             kusamavalidatorandintentions: arr5,
             kusamaintentions: arr3,
-            ValidatorsData: arr1,
+            ValidatorsData: newArr,
             IntentionsData: arr4,
           },
           // () => this.getnominators2()
@@ -392,6 +413,7 @@ class KusamaApp extends React.Component {
                   key={index}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
+                  accountIndex={person.accountIndex}
                   totalinfo={this.state.kusamavaltotalinfo}
                   nominatorinfo={this.state.kusamanominatorinfo}
                   angle={180 - (index * 360) / ValidatorsData.length}

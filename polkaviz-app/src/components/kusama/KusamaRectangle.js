@@ -45,11 +45,12 @@ class Rectangle extends React.Component {
     // let x2 = this.props.x/
     let valtext = 'fetching validator information';
     if (!this.props.isMainWrapper && this.props.intentions.length !== 0) {
-      valtext =
-        'accountId: ' +
-        this.props.validatorAddress.toString().slice(0, 8) +
-        '......' +
-        this.props.validatorAddress.toString().slice(-8);
+      valtext = this.props.accountIndex
+        ? `accountId: ${this.props.accountIndex}`
+        : 'accountId: ' +
+          this.props.validatorAddress.toString().slice(0, 8) +
+          '......' +
+          this.props.validatorAddress.toString().slice(-8);
       // console.log(this.props.angle)
     }
     if (this.props.angle <= 45 && this.props.angle >= 0) {
