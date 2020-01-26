@@ -31,6 +31,13 @@ class Rectangle extends React.Component {
         state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
       });
     }
+
+    if (this.props.isKusama) {
+      console.log('clicked!');
+      window.open(
+        `https://polkanalytics.com/#/kusama/validator/${this.props.validatorAddress}`,
+      );
+    }
   };
   render() {
     let x1 = this.props.x;
@@ -102,7 +109,7 @@ class Rectangle extends React.Component {
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533) - 10}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) - 10}
             width={260}
-            height={110}
+            height={120}
             cornerRadius={4.69457}
             fill={'#333333'}
             shadowOffsetY={10}
@@ -135,7 +142,7 @@ class Rectangle extends React.Component {
         )}
         {this.state.showValidatorAddress && !this.props.isMainWrapper && (
           <Text
-            text={`${this.props.bondvalue} \n${this.props.validatorSelfStake} \n${this.props.nominatorsStake}`}
+            text={`${this.props.bondvalue} \n${this.props.validatorSelfStake} \n${this.props.nominatorsStake} \nClick to see validator details`}
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 50}
             fill="#FFFFFF"
