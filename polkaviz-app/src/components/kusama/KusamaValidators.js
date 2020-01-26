@@ -128,6 +128,7 @@ class Validator extends React.Component {
           color={color}
           validatorSelfStake={validatorSelfStake}
           nominatorsStake={nominatorsStake}
+          accountIndex={this.props.accountIndex}
         />
       </React.Fragment>
     );
