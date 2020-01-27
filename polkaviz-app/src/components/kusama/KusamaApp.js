@@ -8,6 +8,7 @@ import KusamaValidator from './KusamaValidators';
 import KusamaIntention from './KusamaIntentions';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
+import { JsxEmit } from 'typescript';
 
 class KusamaApp extends React.Component {
   constructor() {
@@ -68,7 +69,9 @@ class KusamaApp extends React.Component {
       )])
       const validator_data = await validator_response.json();
       const intention_data = await intention_response.json();
-      // console.log('intention_data' + JSON.stringify(intention_data))
+      console.log('intention_data' + JSON.stringify(intention_data))
+      
+      // Handle validator data
       if (validator_data && validator_data.length > 0) {
         arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator }) => {
           // console.log(info);
@@ -78,8 +81,26 @@ class KusamaApp extends React.Component {
           };
         });
         // console.log('arr1++++++++++', arr1);
+      }
+
+      // Handle intention data
+      console.log('intention_data.length' + intention_data.intentions.length)
+      if (intention_data && intention_data.intentions.length > 0) {
+        console.log('+++++++++++______+++++++')
+        console.log(intention_data.intentions)
+        arr2 = intention_data.intentions
+        arr2 = arr2.map( currentIntention => {
+          console.log('currentIntention' + currentIntention);
+          return {
+            valname: currentIntention,
+            // Todo after changes in server
+            // valinfo: currentValidator,
+          };
+        });
+        console.log('arr2++++++++++', arr2);
         this.setState({
           ValidatorsData: arr1,
+          IntentionsData: arr2,
         });
       }
       // if (intention_data && intention_data.length > 0) {
@@ -239,6 +260,7 @@ class KusamaApp extends React.Component {
         arr3.map(val => apinew.derive.staking.account(val)),
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
+        console.log('intention info'+ JSON.stringify(info))
         return {
           valname: info.accountId,
           valinfo: info,
