@@ -247,91 +247,6 @@ class KusamaApp extends React.Component {
       
     }
 
-    const start = async () => {
-      let arr1 = [];
-      // let arr2 = [];
-      // const start = performance.now();
-
-      if (!(arr1.length > 0)) {
-        const validatorstotalinfo = await Promise.all(
-          this.state.ValidatorsData.map(val =>
-            api.derive.staking.account(val.valname),
-          ),
-        );
-
-        console.log('validatorstotalinfo' + JSON.parse(JSON.stringify(validatorstotalinfo)));
-
-        arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
-          // console.log(info);
-          return {
-            valname: info.accountId,
-            valinfo: info,
-          };
-        });
-      }
-
-      const indexes = await api.derive.accounts.indexes();
-      const newArr = arr1.map(validator => {
-        const array = Object.entries(indexes).find(val => {
-          return validator.valname === val[0];
-        });
-        return {
-          ...validator,
-          accountIndex: array[1].toString(),
-        };
-      });
-      console.log('newArr+++++')
-      console.log(JSON.stringify(newArr))
-      this.setState({
-        ValidatorsData: newArr,
-      });
-      // console.log(JSON.stringify(valinfo))
-      let result = [];
-
-      console.log('result', result);
-      if (!(result.length > 0)) {
-        const intentions = await api.query.staking.validators();
-        result = JSON.parse(JSON.stringify(intentions))[0];
-      }
-      // const intentions = await api.query.staking.validators();
-      // const allvals = JSON.parse(JSON.stringify(intentions))[0];
-      const allvals = result;
-      // console.log(JSON.parse(JSON.stringify(intentions)));
-      console.log(newArr);
-      const arr2 = newArr.map(ele => ele.valname);
-      const arr3 = allvals.filter(e => !arr2.includes(e));
-      const intentionstotalinfo = await Promise.all(
-        arr3.map(val => api.derive.staking.account(val)),
-      );
-      const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
-        console.log('intention info'+ JSON.stringify(info))
-        return {
-          valname: info.accountId,
-          valinfo: info,
-        };
-      });
-      // console.log('Intentions data', arr4);
-      // console.log('Validators data', arr1);
-      // let arr5 = this.state.validators.push(arr4);
-      const arr5 = [...newArr, ...arr4];
-
-      if (this.ismounted) {
-        // console.log("arr1",arr1)
-        this.setState(
-          {
-            kusamavaltotalinfo: newArr,
-            kusamavalidatorandintentions: arr5,
-            kusamaintentions: arr3,
-            ValidatorsData: newArr,
-            IntentionsData: arr4,
-          },
-          // () => this.getnominators2()
-        );
-      }
-    };
-
-    await start();
-
     // console.log(intentions.toJSON())
     await api.derive.session.info(header => {
       // console.log(`eraLength #${header.eraLength}`);
@@ -579,7 +494,7 @@ class KusamaApp extends React.Component {
         <div className="bottombar">
           <Bottombar
             start={this.state.kusamastart}
-            activevalidators={this.state.kusamavalidators.length}
+            activevalidators={this.state.ValidatorsData.length}
             validatorcount={this.state.kusamavalidatorcount}
             bottombarobject={bottombarobject2}
             isKusama
