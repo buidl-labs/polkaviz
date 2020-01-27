@@ -40,7 +40,7 @@ class KusamaApp extends React.Component {
   componentDidMount() {
     // window.location.reload()
     this.serverApi();
-    this.createApi2();
+    this.polkaApi();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -110,11 +110,12 @@ class KusamaApp extends React.Component {
     }
   }
 
-  async createApi2() {
+  // for fetching data from polkadot/api
+  async polkaApi() {
     const provider = new WsProvider('wss://kusama-rpc.polkadot.io');
-    const apinew = await ApiPromise.create({ provider });
+    const api = await ApiPromise.create({ provider });
 
-    const balance = await apinew.query.balances.totalIssuance();
+    const balance = await api.query.balances.totalIssuance();
     console.log(balance.toString());
     const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3);
     if (this.ismounted) {
@@ -123,7 +124,7 @@ class KusamaApp extends React.Component {
       });
     }
 
-    await apinew.derive.chain.subscribeNewHeads(block => {
+    await api.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
       const lastAuthor = block.author.toString();
       if (this.ismounted) {
@@ -138,7 +139,7 @@ class KusamaApp extends React.Component {
         });
       }
     });
-    const totalValidators = await apinew.query.staking.validatorCount();
+    const totalValidators = await api.query.staking.validatorCount();
     // console.log("this", totalValidators.words["0"], totalValidators);
     if (this.ismounted) {
       this.setState({
@@ -146,7 +147,7 @@ class KusamaApp extends React.Component {
       });
     }
 
-    await apinew.query.session.validators(validators => {
+    await api.query.session.validators(validators => {
       // console.log(validators)
       const sessionValidators = validators.map(x => x.toString());
       // console.log(sessionValidators)
@@ -186,15 +187,11 @@ class KusamaApp extends React.Component {
       if (!(arr1.length > 0)) {
         const validatorstotalinfo = await Promise.all(
           this.state.kusamavalidators.map(val =>
-            apinew.derive.staking.account(val),
+            api.derive.staking.account(val),
           ),
         );
 
         console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
-        // const intentionstotalinfo = await Promise.all(
-        //   JSON.parse(JSON.stringify(intentions))[0].map(intention => apinew.derive.staking.info(intention))
-        // )
-        // console.log(JSON.parse(JSON.stringify(intentionstotalinfo)))
 
         arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
           // console.log(info);
@@ -205,7 +202,7 @@ class KusamaApp extends React.Component {
         });
       }
 
-      const indexes = await apinew.derive.accounts.indexes();
+      const indexes = await api.derive.accounts.indexes();
       const newArr = arr1.map(validator => {
         const array = Object.entries(indexes).find(val => {
           return validator.valname === val[0];
@@ -233,10 +230,10 @@ class KusamaApp extends React.Component {
       }
       console.log('result', result);
       if (!(result.length > 0)) {
-        const intentions = await apinew.query.staking.validators();
+        const intentions = await api.query.staking.validators();
         result = JSON.parse(JSON.stringify(intentions))[0];
       }
-      // const intentions = await apinew.query.staking.validators();
+      // const intentions = await api.query.staking.validators();
       // const allvals = JSON.parse(JSON.stringify(intentions))[0];
       const allvals = result;
       // console.log(JSON.parse(JSON.stringify(intentions)));
@@ -244,7 +241,7 @@ class KusamaApp extends React.Component {
       const arr2 = newArr.map(ele => ele.valname);
       const arr3 = allvals.filter(e => !arr2.includes(e));
       const intentionstotalinfo = await Promise.all(
-        arr3.map(val => apinew.derive.staking.account(val)),
+        arr3.map(val => api.derive.staking.account(val)),
       );
       const arr4 = JSON.parse(JSON.stringify(intentionstotalinfo)).map(info => {
         console.log('intention info'+ JSON.stringify(info))
@@ -276,7 +273,7 @@ class KusamaApp extends React.Component {
     await start();
 
     // console.log(intentions.toJSON())
-    await apinew.derive.session.info(header => {
+    await api.derive.session.info(header => {
       // console.log(`eraLength #${header.eraLength}`);
       // console.log(`eraProgress #${header.eraProgress}`);
       // console.log(`sessionLength #${header.sessionLength}`);
