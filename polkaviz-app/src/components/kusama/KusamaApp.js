@@ -167,6 +167,40 @@ class KusamaApp extends React.Component {
           });
         }
       });
+      
+      let validatorstotalinfo = await Promise.all(
+        this.state.ValidatorsData.map(val =>
+          api.derive.staking.account(val.valname),
+        ),
+      );
+
+      console.log('++++validatorstotalinfo++++' + JSON.parse(JSON.stringify(validatorstotalinfo)));
+
+      validatorstotalinfo = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
+        // console.log(info);
+        return {
+          valname: info.accountId,
+          valinfo: info,
+        };
+      });
+
+      this.setState({
+        ValidatorsData: validatorstotalinfo,
+      });
+
+      const indexes = await api.derive.accounts.indexes();
+      const newArr = validatorstotalinfo.map(validator => {
+        const indexKey = validator.valname
+        return {
+          ...validator,
+          accountIndex: indexes[indexKey],
+        };
+      });
+      console.log('newArr+++++_________')
+      console.log(JSON.stringify(newArr))
+      this.setState({
+        ValidatorsData: newArr,
+      });
     }
     
 
@@ -182,7 +216,7 @@ class KusamaApp extends React.Component {
           ),
         );
 
-        console.log(JSON.parse(JSON.stringify(validatorstotalinfo)));
+        console.log('validatorstotalinfo' + JSON.parse(JSON.stringify(validatorstotalinfo)));
 
         arr1 = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
           // console.log(info);
@@ -203,7 +237,8 @@ class KusamaApp extends React.Component {
           accountIndex: array[1].toString(),
         };
       });
-      console.log('newArr+++++'+ JSON.stringify(newArr))
+      console.log('newArr+++++')
+      console.log(JSON.stringify(newArr))
       this.setState({
         ValidatorsData: newArr,
       });
