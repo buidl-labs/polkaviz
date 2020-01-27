@@ -66,7 +66,7 @@ class Validator extends React.Component {
       //   }
       // }
     }
-    if (!this.props.isMainWrapper) {
+    if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
       nomvalue =
         'Backed by: ' +
         this.props.valinfo.stakers.others.length +
