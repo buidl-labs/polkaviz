@@ -98,24 +98,14 @@ class KusamaApp extends React.Component {
           };
         });
         console.log('arr2++++++++++', arr2);
+        
+        // set state to render both intention and validators 
         this.setState({
           ValidatorsData: arr1,
           IntentionsData: arr2,
         });
       }
-      // if (intention_data && intention_data.length > 0) {
-      //   arr1 = JSON.parse(JSON.stringify(intention_data)).map(({ currentValidator }) => {
-      //     // console.log(info);
-      //     return {
-      //       valname: currentValidator.accountId,
-      //       valinfo: currentValidator,
-      //     };
-      //   });
-      //   console.log('arr1', arr1);
-      //   this.setState({
-      //     ValidatorsData: arr1,
-      //   });
-      // }
+      
     } catch (err) {
       console.log('err', err);
     }
@@ -226,9 +216,7 @@ class KusamaApp extends React.Component {
           accountIndex: array[1].toString(),
         };
       });
-      // const end = performance.now();
-      // console.log(`validator time ${end - start}`);
-
+      
       this.setState({
         ValidatorsData: newArr,
       });
@@ -316,33 +304,6 @@ class KusamaApp extends React.Component {
     });
   }
 
-  // getnominators2 = async () => {
-  //   let arr = [];
-  //   // console.log("valtotal", this.state.valtotalinfo);
-  //   this.state.kusamavaltotalinfo.forEach(ele => {
-  //     console.log(ele);
-  //     ele.valinfo.stakers.others.forEach(nom => {
-  //       arr.push(nom.who);
-  //     });
-  //   });
-
-  //   // console.log("here are unfiltered", arr);
-  //   function onlyUnique(value, index, self) {
-  //     return self.indexOf(value) === index;
-  //   }
-
-  //   let nominators = arr.filter(onlyUnique);
-  //   // console.log("total", nominators);
-
-  //   const nominatorstotalinfo = await Promise.all(
-  //     nominators.map(val => this.state.apipromise.derive.staking.info(val))
-  //   );
-
-  //   let arr2 = JSON.parse(JSON.stringify(nominatorstotalinfo));
-  //   this.setState({
-  //     kusamanominatorinfo: arr2
-  //   });
-  // };
   componentWillUnmount() {
     this.ismounted = false;
   }
@@ -365,8 +326,6 @@ class KusamaApp extends React.Component {
     if (this.state.kusamavalidatorandintentions.length !== 0) {
       arr = this.state.kusamavalidatorandintentions;
     }
-    // console.log(arr,"arr")
-    // const intentionsarr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
     const intentionsarr = this.state.kusamaintentions;
     const bottombarobject2 = {
       bottombarinfo: this.state.kusamabottombarinfo,
@@ -374,8 +333,6 @@ class KusamaApp extends React.Component {
       validatorcount: this.state.kusamatotalValidators,
       totalIssued: `${this.state.kusamatotalIssued.toString()} M`,
     };
-    // const validatortext = "Validators: " + this.state.validators.length + "/" + this.state.totalvalidators
-    // const arr1 = [1,2,3,4,5,6,7,8]
     return this.state.ValidatorsData.length === 0 ? (
       <>
         <div className="lds-ripple">
