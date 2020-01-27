@@ -69,7 +69,7 @@ class KusamaApp extends React.Component {
       )])
       const validator_data = await validator_response.json();
       const intention_data = await intention_response.json();
-      console.log('intention_data' + JSON.stringify(intention_data))
+      // console.log('intention_data' + JSON.stringify(intention_data))
       
       // Handle validator data
       if (validator_data && validator_data.length > 0) {
@@ -84,20 +84,19 @@ class KusamaApp extends React.Component {
       }
 
       // Handle intention data
-      console.log('intention_data.length' + intention_data.intentions.length)
       if (intention_data && intention_data.intentions.length > 0) {
-        console.log('+++++++++++______+++++++')
-        console.log(intention_data.intentions)
+        // console.log('+++++++++++______+++++++')
+        // console.log(intention_data.intentions)
         arr2 = intention_data.intentions
         arr2 = arr2.map( currentIntention => {
-          console.log('currentIntention' + currentIntention);
+          // console.log('currentIntention' + currentIntention);
           return {
             valname: currentIntention,
             // Todo after changes in server
             // valinfo: currentValidator,
           };
         });
-        console.log('arr2++++++++++', arr2);
+        // console.log('arr2++++++++++', arr2);
         
         // set state to render both intention and validators 
         this.setState({
