@@ -189,6 +189,9 @@ class KusamaApp extends React.Component {
       });
 
       const indexes = await api.derive.accounts.indexes();
+      this.setState({
+        indexes: indexes,
+      });
       const newArr = validatorstotalinfo.map(validator => {
         const indexKey = validator.valname
         return {
@@ -203,6 +206,46 @@ class KusamaApp extends React.Component {
       });
     }
     
+
+    if (this.state.IntentionsData.length === 0) {
+      let stakingValidators = await api.query.staking.validators();
+      stakingValidators = JSON.parse(JSON.stringify(stakingValidators))[0];
+      
+      
+
+      console.log('++++stakingValidators++++' + stakingValidators);
+      const activeValidators = this.state.ValidatorsData.map(ele => ele.valname);
+      console.log('++++activeValidators++++' + activeValidators);
+      const intentions = stakingValidators.filter(e => !activeValidators.includes(e));
+      console.log('++++intentions++++' + intentions);
+      const intentionsObject = intentions.map(x => {
+        return {
+          valname: x.toString(),
+          // valinfo: 
+        };
+      });
+      console.log('hellooooooooo')
+      console.log('++++intentions++++' + intentionsObject);
+      this.setState({
+        IntentionsData: intentionsObject,
+      });
+      const getIntentionsAccountInfo = await Promise.all(
+        intentions.map(val => api.derive.staking.account(val)),
+      );
+      const intentionstotalinfo = JSON.parse(JSON.stringify(getIntentionsAccountInfo)).map(info => {
+        console.log('intention info'+ JSON.stringify(info))
+        return {
+          valname: info.accountId,
+          valinfo: info,
+          accountIndex: this.state.indexes[info.accountId],
+        };
+      });
+      this.setState({
+        IntentionsData: intentionstotalinfo,
+      });
+
+      
+    }
 
     const start = async () => {
       let arr1 = [];
