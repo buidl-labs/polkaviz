@@ -36,41 +36,9 @@ class KusamaApp extends React.Component {
     this.ismounted = true;
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     // window.location.reload()
-    const provider = new WsProvider('wss://kusama-rpc.polkadot.io');
-    const apinew = await ApiPromise.create({ provider });
-    let arr1 = [];
-    try {
-      const response = await fetch(
-        'https://polka-analytic-api.herokuapp.com/validatorinfo',
-      );
-      const data = await response.json();
-      if (data && data.length > 0) {
-        arr1 = JSON.parse(JSON.stringify(data)).map(({ currentValidator }) => {
-          // console.log(info);
-          return {
-            valname: currentValidator.accountId,
-            valinfo: currentValidator,
-          };
-        });
-        const indexes = await apinew.derive.accounts.indexes();
-        const newArr = arr1.map(validator => {
-          const array = Object.entries(indexes).find(val => {
-            return validator.valname === val[0];
-          });
-          return {
-            ...validator,
-            accountIndex: array[1].toString(),
-          };
-        });
-        this.setState({
-          ValidatorsData: newArr,
-        });
-      }
-    } catch (err) {
-      console.log('err', err);
-    }
+    this.serverApi();
     this.createApi2();
   }
 
@@ -87,6 +55,49 @@ class KusamaApp extends React.Component {
     )
       return true;
     return false;
+  }
+
+  async serverApi() {
+    let arr1 = [];
+    let arr2 = [];
+    try {
+      const [validator_response, intention_response] = await Promise.all ([fetch(
+        'https://polka-analytic-api.herokuapp.com/validatorinfo',
+      ), fetch(
+        'https://polka-analytic-api.herokuapp.com/intentions',
+      )])
+      const validator_data = await validator_response.json();
+      const intention_data = await intention_response.json();
+      // console.log('intention_data' + JSON.stringify(intention_data))
+      if (validator_data && validator_data.length > 0) {
+        arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator }) => {
+          // console.log(info);
+          return {
+            valname: currentValidator.accountId,
+            valinfo: currentValidator,
+          };
+        });
+        // console.log('arr1++++++++++', arr1);
+        this.setState({
+          ValidatorsData: arr1,
+        });
+      }
+      // if (intention_data && intention_data.length > 0) {
+      //   arr1 = JSON.parse(JSON.stringify(intention_data)).map(({ currentValidator }) => {
+      //     // console.log(info);
+      //     return {
+      //       valname: currentValidator.accountId,
+      //       valinfo: currentValidator,
+      //     };
+      //   });
+      //   console.log('arr1', arr1);
+      //   this.setState({
+      //     ValidatorsData: arr1,
+      //   });
+      // }
+    } catch (err) {
+      console.log('err', err);
+    }
   }
 
   async createApi2() {
