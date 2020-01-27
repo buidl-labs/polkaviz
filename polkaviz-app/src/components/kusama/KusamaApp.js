@@ -152,12 +152,17 @@ class KusamaApp extends React.Component {
 
     if (this.state.ValidatorsData.length === 0) {
       await api.query.session.validators(validators => {
-        // console.log(validators)
-        const sessionValidators = validators.map(x => x.toString());
+        console.log('query session validators ' + validators)
+        const sessionValidators = validators.map(x => {
+          return {
+            valname: x.toString(),
+            // valinfo: 
+          };
+        });
         // console.log(sessionValidators)
         if (this.ismounted) {
           this.setState({
-            kusamavalidators: sessionValidators,
+            ValidatorsData: sessionValidators,
             kusamaisloading: false,
           });
         }
@@ -172,8 +177,8 @@ class KusamaApp extends React.Component {
 
       if (!(arr1.length > 0)) {
         const validatorstotalinfo = await Promise.all(
-          this.state.kusamavalidators.map(val =>
-            api.derive.staking.account(val),
+          this.state.ValidatorsData.map(val =>
+            api.derive.staking.account(val.valname),
           ),
         );
 
@@ -198,7 +203,7 @@ class KusamaApp extends React.Component {
           accountIndex: array[1].toString(),
         };
       });
-      
+      console.log('newArr+++++'+ newArr)
       this.setState({
         ValidatorsData: newArr,
       });
