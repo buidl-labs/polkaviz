@@ -39,7 +39,7 @@ class KusamaApp extends React.Component {
 
   componentDidMount() {
     // window.location.reload()
-    this.serverApi();
+    // this.serverApi();
     this.polkaApi();
   }
 
@@ -89,11 +89,11 @@ class KusamaApp extends React.Component {
         // console.log(intention_data.intentions)
         arr2 = intention_data.intentions
         arr2 = arr2.map( currentIntention => {
-          // console.log('currentIntention' + currentIntention);
+          console.log('currentIntention' + currentIntention);
+          console.log('currentIntention index' + JSON.stringify(intention_data.info[arr2.indexOf(currentIntention)]));
           return {
             valname: currentIntention,
-            // Todo after changes in server
-            // valinfo: currentValidator,
+            valinfo: JSON.stringify(intention_data.info[arr2.indexOf(currentIntention)]),
           };
         });
         // console.log('arr2++++++++++', arr2);
@@ -150,42 +150,25 @@ class KusamaApp extends React.Component {
       });
     }
 
-    await api.query.session.validators(validators => {
-      // console.log(validators)
-      const sessionValidators = validators.map(x => x.toString());
-      // console.log(sessionValidators)
-      if (this.ismounted) {
-        this.setState({
-          kusamavalidators: sessionValidators,
-          kusamaisloading: false,
-        });
-      }
-    });
+    if (this.state.ValidatorsData.length === 0) {
+      await api.query.session.validators(validators => {
+        // console.log(validators)
+        const sessionValidators = validators.map(x => x.toString());
+        // console.log(sessionValidators)
+        if (this.ismounted) {
+          this.setState({
+            kusamavalidators: sessionValidators,
+            kusamaisloading: false,
+          });
+        }
+      });
+    }
+    
 
     const start = async () => {
       let arr1 = [];
       // let arr2 = [];
       // const start = performance.now();
-      if (arr1.length === 0 && this.state.ValidatorsData.length === 0) {
-        console.log('Run me');
-        try {
-          const response = await fetch(
-            'https://polka-analytic-api.herokuapp.com/validatorinfo',
-          );
-          const data = await response.json();
-          arr1 = JSON.parse(JSON.stringify(data)).map(
-            ({ currentValidator }) => {
-              // console.log(info);
-              return {
-                valname: currentValidator.accountId,
-                valinfo: currentValidator,
-              };
-            },
-          );
-        } catch (err) {
-          console.log('err', err);
-        }
-      }
 
       if (!(arr1.length > 0)) {
         const validatorstotalinfo = await Promise.all(
@@ -222,15 +205,6 @@ class KusamaApp extends React.Component {
       // console.log(JSON.stringify(valinfo))
       let result = [];
 
-      try {
-        const response = await fetch(
-          'https://polka-analytic-api.herokuapp.com/intentions',
-        );
-        const apiIntentions = await response.json();
-        result = apiIntentions.intentions;
-      } catch (err) {
-        console.log('err', err);
-      }
       console.log('result', result);
       if (!(result.length > 0)) {
         const intentions = await api.query.staking.validators();
@@ -321,6 +295,7 @@ class KusamaApp extends React.Component {
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
+    console.log('this.state.ValidatorsData.length: '+this.state.ValidatorsData.length)
     let arr = this.state.kusamavalidators;
     if (this.state.kusamavalidatorandintentions.length !== 0) {
       arr = this.state.kusamavalidatorandintentions;
@@ -543,3 +518,4 @@ class KusamaApp extends React.Component {
 }
 
 export default withRouter(KusamaApp);
+
