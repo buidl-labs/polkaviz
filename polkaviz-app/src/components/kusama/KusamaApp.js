@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Stage, Layer, Text, Circle } from 'react-konva';
 import { withRouter } from 'react-router-dom';
