@@ -115,14 +115,6 @@ class KusamaApp extends React.Component {
     const provider = new WsProvider('wss://kusama-rpc.polkadot.io');
     const api = await ApiPromise.create({ provider });
 
-    const balance = await api.query.balances.totalIssuance();
-    console.log(balance.toString());
-    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3);
-    if (this.ismounted) {
-      this.setState({
-        kusamatotalIssued: totalIssued,
-      });
-    }
 
     await api.derive.chain.subscribeNewHeads(block => {
       // console.log(`block #${block.author}`);
@@ -139,6 +131,17 @@ class KusamaApp extends React.Component {
         });
       }
     });
+    
+    const balance = await api.query.balances.totalIssuance();
+    console.log(balance.toString());
+    const totalIssued = (balance.toString() / Math.pow(10, 18)).toFixed(3);
+    if (this.ismounted) {
+      this.setState({
+        kusamatotalIssued: totalIssued,
+      });
+    }
+
+    
     const totalValidators = await api.query.staking.validatorCount();
     // console.log("this", totalValidators.words["0"], totalValidators);
     if (this.ismounted) {
