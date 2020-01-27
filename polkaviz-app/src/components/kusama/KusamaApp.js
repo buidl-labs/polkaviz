@@ -203,7 +203,7 @@ class KusamaApp extends React.Component {
           accountIndex: array[1].toString(),
         };
       });
-      console.log('newArr+++++'+ newArr)
+      console.log('newArr+++++'+ JSON.stringify(newArr))
       this.setState({
         ValidatorsData: newArr,
       });
@@ -300,8 +300,10 @@ class KusamaApp extends React.Component {
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
+    const authorIndex = this.state.ValidatorsData.findIndex(p => p.valname == this.state.kusamalastAuthor)
+    console.log('authorIndex' + authorIndex)
     console.log('this.state.ValidatorsData.length: '+this.state.ValidatorsData.length)
-    let arr = this.state.kusamavalidators;
+    let arr = this.state.ValidatorsData;
     if (this.state.kusamavalidatorandintentions.length !== 0) {
       arr = this.state.kusamavalidatorandintentions;
     }
@@ -440,14 +442,10 @@ class KusamaApp extends React.Component {
               {/* {console.log(this.state.bottombarobject.finalblock)}
               {console.log(this.state.previousBlock)} */}
               <BlockAnimationNew
-                key={this.state.kusamavalidators.indexOf(
-                  this.state.kusamalastAuthor,
-                )}
+                key={authorIndex}
                 angle={
                   180 -
-                  (this.state.kusamavalidators.indexOf(
-                    this.state.kusamalastAuthor,
-                  ) *
+                  (authorIndex *
                     360) /
                     arr.length
                 }
@@ -456,9 +454,7 @@ class KusamaApp extends React.Component {
                   100 *
                     Math.cos(
                       (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
+                        (authorIndex *
                           360) /
                           arr.length) *
                         0.0174533,
@@ -469,9 +465,7 @@ class KusamaApp extends React.Component {
                   100 *
                     Math.sin(
                       (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
+                        (authorIndex *
                           360) /
                           arr.length) *
                         0.0174533,
@@ -482,9 +476,7 @@ class KusamaApp extends React.Component {
                   160 *
                     Math.cos(
                       (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
+                        (authorIndex *
                           360) /
                           arr.length) *
                         0.0174533,
@@ -495,9 +487,7 @@ class KusamaApp extends React.Component {
                   160 *
                     Math.sin(
                       (90 -
-                        (this.state.kusamavalidators.indexOf(
-                          this.state.kusamalastAuthor,
-                        ) *
+                        (authorIndex *
                           360) /
                           arr.length) *
                         0.0174533,
