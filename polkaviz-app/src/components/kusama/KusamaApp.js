@@ -352,11 +352,11 @@ class KusamaApp extends React.Component {
 
         <div className="intentions">
           <div>Waiting Validators:</div>
-          {intentionsarr.map((ele, index) => {
+          {IntentionsData.map((ele, index) => {
             return (
               <div className="inten" key={index}>
                 <span className="valsign" />
-                {`${ele.toString().slice(0, 8)}......${ele
+                {`${ele.valname.toString().slice(0, 8)}......${ele.valname
                   .toString()
                   .slice(-8)}`}
               </div>
