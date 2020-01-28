@@ -98,11 +98,7 @@ class Rectangle extends React.Component {
           onMouseOut={
             !this.props.isMainWrapper ? this.handleOnMouseOut : undefined
           }
-          onClick={
-            this.props.isMainWrapper || this.props.intentions.length === 0
-              ? undefined
-              : this.handleClick
-          }
+          onClick={this.handleClick}
         />
 
         {this.state.showValidatorAddress && !this.props.isMainWrapper && (
