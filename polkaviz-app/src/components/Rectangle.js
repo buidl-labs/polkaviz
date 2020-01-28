@@ -79,8 +79,8 @@ class Rectangle extends React.Component {
         <Rect
           x={this.props.x}
           y={this.props.y}
-          width={6}
-          height={12}
+          width={3.5}
+          height={10}
           fill={this.props.color}
           cornerRadius={4.69457}
           rotation={this.props.angle}

@@ -385,7 +385,7 @@ class KusamaApp extends React.Component {
                   intentions={[]}
                   x={
                     window.innerWidth +
-                    360 *
+                    500 *
                       Math.cos(
                         (90 - 1 - (index * 360) / ValidatorsData.length) *
                           0.0174533,
@@ -393,7 +393,7 @@ class KusamaApp extends React.Component {
                   }
                   y={
                     window.innerHeight +
-                    360 *
+                    500 *
                       Math.sin(
                         (90 - 1 - (index * 360) / ValidatorsData.length) *
                           0.0174533,
@@ -414,7 +414,7 @@ class KusamaApp extends React.Component {
                   intentions={IntentionsData}
                   x={
                     window.innerWidth +
-                    360 *
+                    500 *
                       Math.cos(
                         (90 - 1 - (index * 360) / IntentionsData.length) *
                           0.0174533,
@@ -422,7 +422,7 @@ class KusamaApp extends React.Component {
                   }
                   y={
                     window.innerHeight +
-                    360 *
+                    500 *
                       Math.sin(
                         (90 - 1 - (index * 360) / IntentionsData.length) *
                           0.0174533,

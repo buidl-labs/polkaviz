@@ -13,7 +13,7 @@ class Relay extends React.Component {
       <Circle
         x={this.props.x / 2}
         y={this.props.y / 2}
-        radius={118}
+        radius={190}
         fill={fillcolor}
         stroke={strokecolor}
         strokeWidth={4}
