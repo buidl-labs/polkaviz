@@ -152,7 +152,7 @@ class KusamaApp extends React.Component {
 
     if (this.state.ValidatorsData.length === 0) {
       await api.query.session.validators(validators => {
-        console.log('query session validators ' + validators)
+        // console.log('query session validators ' + validators)
         const sessionValidators = validators.map(x => {
           return {
             valname: x.toString(),
@@ -174,7 +174,7 @@ class KusamaApp extends React.Component {
         ),
       );
 
-      console.log('++++validatorstotalinfo++++' + JSON.parse(JSON.stringify(validatorstotalinfo)));
+      // console.log('++++validatorstotalinfo++++' + JSON.parse(JSON.stringify(validatorstotalinfo)));
 
       validatorstotalinfo = JSON.parse(JSON.stringify(validatorstotalinfo)).map(info => {
         // console.log(info);
@@ -189,9 +189,6 @@ class KusamaApp extends React.Component {
       });
 
       const indexes = await api.derive.accounts.indexes();
-      this.setState({
-        indexes: indexes,
-      });
       const newArr = validatorstotalinfo.map(validator => {
         const indexKey = validator.valname
         return {
@@ -199,8 +196,8 @@ class KusamaApp extends React.Component {
           accountIndex: indexes[indexKey],
         };
       });
-      console.log('newArr+++++_________')
-      console.log(JSON.stringify(newArr))
+      // console.log('newArr+++++_________')
+      // console.log(JSON.stringify(newArr))
       this.setState({
         ValidatorsData: newArr,
       });
@@ -213,31 +210,31 @@ class KusamaApp extends React.Component {
       
       
 
-      console.log('++++stakingValidators++++' + stakingValidators);
+      // console.log('++++stakingValidators++++' + stakingValidators);
       const activeValidators = this.state.ValidatorsData.map(ele => ele.valname);
-      console.log('++++activeValidators++++' + activeValidators);
+      // console.log('++++activeValidators++++' + activeValidators);
       const intentions = stakingValidators.filter(e => !activeValidators.includes(e));
-      console.log('++++intentions++++' + intentions);
+      // console.log('++++intentions++++' + intentions);
       const intentionsObject = intentions.map(x => {
         return {
           valname: x.toString(),
           // valinfo: 
         };
       });
-      console.log('hellooooooooo')
-      console.log('++++intentions++++' + intentionsObject);
+      // console.log('++++intentions++++' + intentionsObject);
       this.setState({
         IntentionsData: intentionsObject,
       });
       const getIntentionsAccountInfo = await Promise.all(
         intentions.map(val => api.derive.staking.account(val)),
       );
+      const indexes = await api.derive.accounts.indexes();
       const intentionstotalinfo = JSON.parse(JSON.stringify(getIntentionsAccountInfo)).map(info => {
-        console.log('intention info'+ JSON.stringify(info))
+        // console.log('intention info'+ JSON.stringify(info))
         return {
           valname: info.accountId,
           valinfo: info,
-          accountIndex: this.state.indexes[info.accountId],
+          accountIndex: indexes[info.accountId],
         };
       });
       this.setState({
@@ -287,6 +284,7 @@ class KusamaApp extends React.Component {
   };
 
   render() {
+    // TODO: Remove not in use variables/contants
     const width = window.innerWidth;
     const height = window.innerHeight;
     const { IntentionsData, ValidatorsData } = this.state;
@@ -294,12 +292,10 @@ class KusamaApp extends React.Component {
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
     const authorIndex = this.state.ValidatorsData.findIndex(p => p.valname == this.state.kusamalastAuthor)
-    console.log('authorIndex' + authorIndex)
-    console.log('this.state.ValidatorsData.length: '+this.state.ValidatorsData.length)
-    let arr = this.state.ValidatorsData;
-    if (this.state.kusamavalidatorandintentions.length !== 0) {
-      arr = this.state.kusamavalidatorandintentions;
-    }
+    // console.log('authorIndex' + authorIndex)
+    // console.log('this.state.ValidatorsData.length: '+this.state.ValidatorsData.length)
+    const arr = this.state.ValidatorsData;
+    
     const intentionsarr = this.state.kusamaintentions;
     const bottombarobject2 = {
       bottombarinfo: this.state.kusamabottombarinfo,
