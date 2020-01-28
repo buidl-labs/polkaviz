@@ -39,7 +39,7 @@ class KusamaApp extends React.Component {
 
   componentDidMount() {
     // window.location.reload()
-    // this.serverApi();
+    this.serverApi();
     this.polkaApi();
   }
 
@@ -73,11 +73,13 @@ class KusamaApp extends React.Component {
       
       // Handle validator data
       if (validator_data && validator_data.length > 0) {
-        arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator }) => {
+        arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator, accountIndex }) => {
           // console.log(info);
           return {
             valname: currentValidator.accountId,
             valinfo: currentValidator,
+            accountIndex: accountIndex,
+
           };
         });
         // console.log('arr1++++++++++', arr1);
@@ -85,15 +87,16 @@ class KusamaApp extends React.Component {
 
       // Handle intention data
       if (intention_data && intention_data.intentions.length > 0) {
-        // console.log('+++++++++++______+++++++')
-        // console.log(intention_data.intentions)
-        arr2 = intention_data.intentions
-        arr2 = arr2.map( currentIntention => {
+        console.log('+++++++++++______+++++++')
+        console.log(intention_data.intentions)
+        const intentionsValname = intention_data.intentions
+        const intentionsInfo = intention_data.info
+        const arr2 = intentionsValname.map( currentIntention => {
           console.log('currentIntention' + currentIntention);
-          console.log('currentIntention index' + JSON.stringify(intention_data.info[arr2.indexOf(currentIntention)]));
+          console.log('currentIntention index' + JSON.stringify(intentionsValname.indexOf(currentIntention)));
           return {
             valname: currentIntention,
-            valinfo: JSON.stringify(intention_data.info[arr2.indexOf(currentIntention)]),
+            valinfo: JSON.stringify(intentionsInfo[intentionsValname.indexOf(currentIntention)]),
           };
         });
         // console.log('arr2++++++++++', arr2);
