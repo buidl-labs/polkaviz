@@ -7,7 +7,7 @@ class Validator extends React.Component {
     let bondvalue = '';
     let nomvalue = 0;
     let commission = '';
-    if (!this.props.isMainWrapper && this.props.intentions.length !== 0) {
+    if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
       bondvalue = 'Bonded: No Data found';
       nomvalue = 'Backed by: No Data found';
       if (!this.props.isKusama) {

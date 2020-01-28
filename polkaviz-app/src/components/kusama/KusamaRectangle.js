@@ -44,7 +44,7 @@ class Rectangle extends React.Component {
     let y1 = this.props.y;
     // let x2 = this.props.x/
     let valtext = 'fetching validator information';
-    if (!this.props.isMainWrapper && this.props.intentions.length !== 0) {
+    if (!this.props.isMainWrapper && this.props.accountIndex !== undefined) {
       valtext = this.props.accountIndex
         ? `accountId: ${this.props.accountIndex}`
         : 'accountId: ' +
