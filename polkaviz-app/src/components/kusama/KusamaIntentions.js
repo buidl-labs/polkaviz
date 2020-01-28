@@ -42,7 +42,7 @@ class Validator extends React.Component {
           this.props.valinfo.stakers.others.length +
           ' nominators';
       }
-      if (this.props.intentions) {
+      if (!this.props.intentions) {
         if (this.props.isKusama) {
           let value =
             this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
