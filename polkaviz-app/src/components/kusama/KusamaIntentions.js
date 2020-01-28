@@ -7,6 +7,7 @@ class Validator extends React.Component {
     let bondvalue = '';
     let nomvalue = 0;
     let commission = '';
+    console.log("thispropsintentions", this.props.intentions)
     if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
       bondvalue = 'Bonded: No Data found';
       nomvalue = 'Backed by: No Data found';
@@ -61,6 +62,13 @@ class Validator extends React.Component {
           commissionvalue = commissionvalue.toFixed(3);
           commission = 'commission: ' + commissionvalue + ' KSM';
         }
+      }
+
+      if (this.props.intentions.length > 0) {
+        bondvalue = `Self Stake ${parseInt(this.props.valinfo.stakers.own / 10 ** 12,).toFixed(3)} KSM`;
+        nomvalue = 'Backed by: ' +
+        this.props.valinfo.stakers.others.length +
+        ' nominators';
       }
     }
     let x1 = this.props.x;

@@ -92,11 +92,11 @@ class KusamaApp extends React.Component {
         const intentionsValname = intention_data.intentions
         const intentionsInfo = intention_data.info
         const arr2 = intentionsValname.map( currentIntention => {
-          console.log('currentIntention' + currentIntention);
-          console.log('currentIntention index' + JSON.stringify(intentionsValname.indexOf(currentIntention)));
+          // console.log('currentIntention' + currentIntention);
+          // console.log('currentIntention index' + JSON.stringify(intentionsValname.indexOf(currentIntention)));
           return {
             valname: currentIntention,
-            valinfo: JSON.stringify(intentionsInfo[intentionsValname.indexOf(currentIntention)]),
+            valinfo: JSON.parse(JSON.stringify(intentionsInfo[intentionsValname.indexOf(currentIntention)])),
           };
         });
         // console.log('arr2++++++++++', arr2);
@@ -382,7 +382,7 @@ class KusamaApp extends React.Component {
                   nominatorinfo={this.state.kusamanominatorinfo}
                   angle={180 - (index * 360) / ValidatorsData.length}
                   history={this.props.history}
-                  intentions={intentionsarr}
+                  intentions={[]}
                   x={
                     window.innerWidth +
                     360 *
@@ -411,7 +411,7 @@ class KusamaApp extends React.Component {
                   nominatorinfo={this.state.kusamanominatorinfo}
                   angle={180 - (index * 360) / IntentionsData.length}
                   history={this.props.history}
-                  intentions={intentionsarr}
+                  intentions={IntentionsData}
                   x={
                     window.innerWidth +
                     360 *
