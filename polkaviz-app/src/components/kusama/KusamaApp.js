@@ -9,6 +9,7 @@ import KusamaIntention from './KusamaIntentions';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
 import { JsxEmit } from 'typescript';
+import Counter from '../Counter';
 
 class KusamaApp extends React.Component {
   constructor() {
@@ -333,27 +334,34 @@ class KusamaApp extends React.Component {
             <hr style={{margin: '5px 0'}}/>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Validators</p>
-              <p className="keyStats-List-Content">159/160</p>
+              <p className="keyStats-List-Content">{this.state.ValidatorsData.length}/{bottombarobject2.validatorcount}</p>
             </div>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Last Block</p>
-              <p className="keyStats-List-Content">0.9</p>
+              <p className="keyStats-List-Content">
+                <Counter start={this.state.kusamastart} />
+              </p>
             </div>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Block</p>
-              <p className="keyStats-List-Content">834,546</p>
+              <p className="keyStats-List-Content">{bottombarobject2.finalblock}</p>
             </div>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Epoch</p>
-              <p className="keyStats-List-Content">275/600</p>
+              <p className="keyStats-List-Content">
+              {bottombarobject2.bottombarinfo.sessionProgress}/
+              {bottombarobject2.bottombarinfo.sessionLength}
+              </p>
             </div>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Era</p>
-              <p className="keyStats-List-Content">3777/3600</p>
+              <p className="keyStats-List-Content">
+              {bottombarobject2.bottombarinfo.eraProgress}/{bottombarobject2.bottombarinfo.eraLength}
+              </p>
             </div>
             <div className="keyStats-List">
               <p className="keyStats-List-Header">Total Issuance</p>
-              <p className="keyStats-List-Content">8.375 M</p>
+              <p className="keyStats-List-Content">{bottombarobject2.totalIssued}</p>
             </div>
           </div>
         </div>
