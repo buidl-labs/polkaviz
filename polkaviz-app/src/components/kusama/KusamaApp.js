@@ -327,18 +327,35 @@ class KusamaApp extends React.Component {
           <div className="nav-path-current">Kusama</div>
         </div>
 
-        <div className="intentions">
-          <div>Waiting Validators:</div>
-          {IntentionsData.map((ele, index) => {
-            return (
-              <div className="inten" key={index}>
-                <span className="valsign" />
-                {`${ele.valname.toString().slice(0, 8)}......${ele.valname
-                  .toString()
-                  .slice(-8)}`}
-              </div>
-            );
-          })}
+        <div className="keyStats">
+          <div className="keyStats-Container">
+            <h4 style={{textAlign: "center", fontSize: 22}}>Key Stats</h4>
+            <hr style={{margin: '5px 0'}}/>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Validators</p>
+              <p className="keyStats-List-Content">159/160</p>
+            </div>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Last Block</p>
+              <p className="keyStats-List-Content">0.9</p>
+            </div>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Block</p>
+              <p className="keyStats-List-Content">834,546</p>
+            </div>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Epoch</p>
+              <p className="keyStats-List-Content">275/600</p>
+            </div>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Era</p>
+              <p className="keyStats-List-Content">3777/3600</p>
+            </div>
+            <div className="keyStats-List">
+              <p className="keyStats-List-Header">Total Issuance</p>
+              <p className="keyStats-List-Content">8.375 M</p>
+            </div>
+          </div>
         </div>
 
         <div className="relay-circle">
