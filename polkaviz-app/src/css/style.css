@@ -266,6 +266,42 @@ body {
   scrollbar-width: thin;
 }
 
+.keyStats-Container {
+  box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -5px -5px 0px 1px rgba(242, 242, 242, 0.23);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.keyStats {
+  position: absolute;
+  width: 250px;
+  height: 400px;
+  overflow: auto;
+  /* scroll-behavior: smooth; */
+  z-index: 1;
+  top:100px;
+  left: 100px;
+  color: white;
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.keyStats-List {
+  display: flex;
+  flex-direction: column;
+}
+
+.keyStats-List-Content {
+  color: rgb(158, 158, 158);
+  font-size: 14px;
+}
+
+.keyStats-List-Header {
+  font-weight: 700;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+
 .intentions::-webkit-scrollbar {
   width: 15px;
   height: 15px;
