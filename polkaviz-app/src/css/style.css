@@ -267,9 +267,10 @@ body {
 }
 
 .keyStats-Container {
-  box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -5px -5px 0px 1px rgba(242, 242, 242, 0.23);
+  /* box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -5px -5px 0px 1px rgba(242, 242, 242, 0.23); */
+  box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -2px -1px 0px 1px rgba(242, 242, 242, 0.23);
   border-radius: 10px;
-  padding: 5px 10px;
+  padding: 5px 10px 5px 20px;
 }
 
 .keyStats {

@@ -26,9 +26,7 @@ class Counter extends React.Component {
     var seconds = (elapsed / 10).toFixed(1);
 
     return (
-      <div className="counter">
-        <p>last block: {seconds}</p>
-      </div>
+        <p>{seconds}</p>
     );
   }
 }
