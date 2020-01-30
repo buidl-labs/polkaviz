@@ -89,8 +89,8 @@ class KusamaApp extends React.Component {
 
       // Handle intention data
       if (intention_data && intention_data.intentions.length > 0) {
-        console.log('+++++++++++______+++++++')
-        console.log(intention_data.intentions)
+        // console.log('+++++++++++______+++++++')
+        // console.log(intention_data.intentions)
         const intentionsValname = intention_data.intentions
         const intentionsInfo = intention_data.info
         const arr2 = intentionsValname.map( currentIntention => {
