@@ -290,7 +290,7 @@ class KusamaApp extends React.Component {
 
   render() {
     // TODO: Remove not in use variables/contants
-    const width = window.innerWidth;
+    const commonWidth = window.innerWidth + 300;
     const height = window.innerHeight;
     const { IntentionsData, ValidatorsData } = this.state;
     // console.table(this.state)
@@ -387,7 +387,7 @@ class KusamaApp extends React.Component {
                   history={this.props.history}
                   intentions={[]}
                   x={
-                    window.innerWidth +
+                    commonWidth +
                     500 *
                       Math.cos(
                         (90 - 1 - (index * 360) / ValidatorsData.length) *
@@ -416,7 +416,7 @@ class KusamaApp extends React.Component {
                   history={this.props.history}
                   intentions={IntentionsData}
                   x={
-                    window.innerWidth +
+                    commonWidth - 40 +
                     500 *
                       Math.cos(
                         (90 - 1 - (index * 360) / IntentionsData.length) *
@@ -445,7 +445,7 @@ class KusamaApp extends React.Component {
                     arr.length
                 }
                 x1={
-                  window.innerWidth / 2 +
+                  commonWidth / 2 +
                   100 *
                     Math.cos(
                       (90 -
@@ -467,7 +467,7 @@ class KusamaApp extends React.Component {
                     )
                 }
                 x2={
-                  window.innerWidth / 2 +
+                  commonWidth / 2 +
                   160 *
                     Math.cos(
                       (90 -
@@ -489,7 +489,7 @@ class KusamaApp extends React.Component {
                     )
                 }
               />
-              <Relay x={window.innerWidth} y={window.innerHeight} isKusama />
+              <Relay x={commonWidth} y={window.innerHeight} isKusama />
             </Layer>
           </Stage>
         </div>
