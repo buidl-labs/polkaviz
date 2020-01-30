@@ -10,6 +10,7 @@ import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
 import { JsxEmit } from 'typescript';
 import Counter from '../Counter';
+import KusamaKeyStats from './KusamaKeyStats';
 
 class KusamaApp extends React.Component {
   constructor() {
@@ -307,6 +308,19 @@ class KusamaApp extends React.Component {
       validatorcount: this.state.kusamatotalValidators,
       totalIssued: `${this.state.kusamatotalIssued.toString()} M`,
     };
+
+    const keyStats = {
+      validatorCount: this.state.ValidatorsData.length,
+      validatorTotalCount: this.state.kusamatotalValidators,
+      finalBlock: this.state.kusamafinalblock,
+      lastBlockCounter: this.state.kusamastart,
+      eraProgress: this.state.kusamabottombarinfo.eraProgress,
+      eraLength: this.state.kusamabottombarinfo.eraLength,
+      sessionProgress: this.state.kusamabottombarinfo.sessionProgress,
+      sessionLength: this.state.kusamabottombarinfo.sessionLength,
+      totalIssued: `${this.state.kusamatotalIssued.toString()} M`
+    }
+
     return this.state.ValidatorsData.length === 0 ? (
       <>
         <div className="lds-ripple">
@@ -328,43 +342,7 @@ class KusamaApp extends React.Component {
           <div className="nav-path-current">Kusama</div>
         </div>
 
-        <div className="keyStats">
-          <div className="keyStats-Container">
-            <h4 style={{textAlign: "center", fontSize: 22}}>Key Stats</h4>
-            <hr style={{margin: '5px 0'}}/>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Validators</p>
-              <p className="keyStats-List-Content">{this.state.ValidatorsData.length}/{bottombarobject2.validatorcount}</p>
-            </div>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Last Block</p>
-              <p className="keyStats-List-Content">
-                <Counter start={this.state.kusamastart} />
-              </p>
-            </div>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Block</p>
-              <p className="keyStats-List-Content">{bottombarobject2.finalblock}</p>
-            </div>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Epoch</p>
-              <p className="keyStats-List-Content">
-              {bottombarobject2.bottombarinfo.sessionProgress}/
-              {bottombarobject2.bottombarinfo.sessionLength}
-              </p>
-            </div>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Era</p>
-              <p className="keyStats-List-Content">
-              {bottombarobject2.bottombarinfo.eraProgress}/{bottombarobject2.bottombarinfo.eraLength}
-              </p>
-            </div>
-            <div className="keyStats-List">
-              <p className="keyStats-List-Header">Total Issuance</p>
-              <p className="keyStats-List-Content">{bottombarobject2.totalIssued}</p>
-            </div>
-          </div>
-        </div>
+        <KusamaKeyStats keyStats={keyStats} />
 
         <div className="relay-circle">
           <Stage width={window.innerWidth} height={window.innerHeight}>
@@ -514,15 +492,6 @@ class KusamaApp extends React.Component {
               <Relay x={window.innerWidth} y={window.innerHeight} isKusama />
             </Layer>
           </Stage>
-        </div>
-        <div className="bottombar">
-          <Bottombar
-            start={this.state.kusamastart}
-            activevalidators={this.state.ValidatorsData.length}
-            validatorcount={this.state.kusamavalidatorcount}
-            bottombarobject={bottombarobject2}
-            isKusama
-          />
         </div>
       </div>
     );
