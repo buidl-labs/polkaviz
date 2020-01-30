@@ -348,26 +348,26 @@ class KusamaApp extends React.Component {
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
               <Circle
-                x={width - 348}
+                x={150}
                 y={height - 190}
                 radius={10}
                 fill="#FFEB3B"
               />
               <Text
-                x={width - 325}
+                x={165}
                 y={height - 195}
                 text="Waiting Validators"
                 fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
                 fontSize={15}
               />
               <Circle
-                x={width - 348}
+                x={150}
                 y={height - 160}
                 radius={10}
                 fill="#C31169"
               />
               <Text
-                x={width - 325}
+                x={165}
                 y={height - 165}
                 text="Active Validators"
                 fill={this.props.colorMode === 'light' ? '#1A202C' : '#718096'}
