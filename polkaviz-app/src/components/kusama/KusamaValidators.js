@@ -68,7 +68,7 @@ class Validator extends React.Component {
     }
     if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
       nomvalue =
-        'Backed by: ' +
+        'Backed by ' +
         this.props.valinfo.stakers.others.length +
         ' nominators';
       //Total Stake
@@ -129,6 +129,7 @@ class Validator extends React.Component {
           validatorSelfStake={validatorSelfStake}
           nominatorsStake={nominatorsStake}
           accountIndex={this.props.accountIndex}
+          onValidatorHover={this.props.onValidatorHover}
         />
       </React.Fragment>
     );
