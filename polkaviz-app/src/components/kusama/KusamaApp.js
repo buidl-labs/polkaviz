@@ -34,7 +34,8 @@ class KusamaApp extends React.Component {
       kusamatotalIssued: '',
       ValidatorsData: [],
       IntentionsData: [],
-      specificValidatorInfo: {}
+      specificValidatorInfo: {},
+      specificIntentionInfo: {}
     };
     this.ismounted = true;
   }
@@ -55,7 +56,9 @@ class KusamaApp extends React.Component {
       this.state.kusamabottombarinfo !== nextState.kusamabottombarinfo ||
       this.state.kusamaisloading !== nextState.kusamaisloading ||
       this.state.ValidatorsData !== nextState.ValidatorsData ||
-      this.state.specificValidatorInfo !== nextState.specificValidatorInfo
+      this.state.specificValidatorInfo !== nextState.specificValidatorInfo ||
+      this.state.specificIntentionInfo !== nextState.specificIntentionInfo
+
     )
       return true;
     return false;
@@ -292,7 +295,19 @@ class KusamaApp extends React.Component {
   onValidatorHover = (info) => {
     // console.log("validator info", info);
     this.setState({
+      specificIntentionInfo: {},
       specificValidatorInfo: info
+    });
+  }
+
+  onIntentionHover = (info) => {
+    // console.log("intention info", info);
+    //check if specific validator info's length is more than 1
+      //then empty it
+      //and then set the info parameter label to specific intention info
+    this.setState({
+      specificValidatorInfo: {},
+      specificIntentionInfo: info
     });
   }
 
@@ -300,7 +315,7 @@ class KusamaApp extends React.Component {
     // TODO: Remove not in use variables/contants
     const commonWidth = window.innerWidth + 300;
     const height = window.innerHeight;
-    const { IntentionsData, ValidatorsData, specificValidatorInfo } = this.state;
+    const { IntentionsData, ValidatorsData, specificValidatorInfo, specificIntentionInfo } = this.state;
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
@@ -417,6 +432,7 @@ class KusamaApp extends React.Component {
               {IntentionsData.map((person, index) => (
                 <KusamaIntention
                   key={index}
+                  onIntentionHover={this.onIntentionHover}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
                   totalinfo={this.state.kusamavaltotalinfo}
@@ -548,6 +564,36 @@ class KusamaApp extends React.Component {
                 fontFamily="Roboto Mono"
                 fill="#FFFFFF"
                 fontSize={18}
+              />
+
+              <Text
+                text={Object.keys(specificIntentionInfo).length > 0 && "Account ID"}
+                x={window.innerWidth - 655}
+                y={window.innerHeight - 510}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+                fontSize={30}
+              />
+              <Text
+                text={specificIntentionInfo && specificIntentionInfo.accountId}
+                x={window.innerWidth - 650}
+                y={window.innerHeight - 470}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+              <Text
+                text={specificIntentionInfo && specificIntentionInfo.backersText}
+                x={window.innerWidth - 650}
+                y={window.innerHeight - 450}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+              <Text
+                text={specificIntentionInfo && specificIntentionInfo.selfText}
+                x={window.innerWidth - 650}
+                y={window.innerHeight - 430}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
               />
             </Layer>
           </Stage>
