@@ -11,7 +11,6 @@ import Bottombar from '../Bottombar';
 import { JsxEmit } from 'typescript';
 import Counter from '../Counter';
 import KusamaKeyStats from './KusamaKeyStats';
-
 class KusamaApp extends React.Component {
   constructor() {
     super();
@@ -35,6 +34,7 @@ class KusamaApp extends React.Component {
       kusamatotalIssued: '',
       ValidatorsData: [],
       IntentionsData: [],
+      specificValidatorInfo: {}
     };
     this.ismounted = true;
   }
@@ -54,7 +54,8 @@ class KusamaApp extends React.Component {
       this.state.kusamafinalblock !== nextState.kusamafinalblock ||
       this.state.kusamabottombarinfo !== nextState.kusamabottombarinfo ||
       this.state.kusamaisloading !== nextState.kusamaisloading ||
-      this.state.ValidatorsData !== nextState.ValidatorsData
+      this.state.ValidatorsData !== nextState.ValidatorsData ||
+      this.state.specificValidatorInfo !== nextState.specificValidatorInfo
     )
       return true;
     return false;
@@ -288,11 +289,18 @@ class KusamaApp extends React.Component {
     });
   };
 
+  onValidatorHover = (info) => {
+    // console.log("validator info", info);
+    this.setState({
+      specificValidatorInfo: info
+    });
+  }
+
   render() {
     // TODO: Remove not in use variables/contants
     const commonWidth = window.innerWidth + 300;
     const height = window.innerHeight;
-    const { IntentionsData, ValidatorsData } = this.state;
+    const { IntentionsData, ValidatorsData, specificValidatorInfo } = this.state;
     // console.table(this.state)
     // console.log(this.state.kusamavalidators,"vals")
     console.count('kusama rendered');
@@ -378,6 +386,7 @@ class KusamaApp extends React.Component {
               {ValidatorsData.map((person, index) => (
                 <KusamaValidator
                   key={index}
+                  onValidatorHover={this.onValidatorHover}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
                   accountIndex={person.accountIndex}
@@ -490,6 +499,56 @@ class KusamaApp extends React.Component {
                 }
               />
               <Relay x={commonWidth} y={window.innerHeight} isKusama />
+              <Text
+                text={specificValidatorInfo && specificValidatorInfo.accountIdText}
+                x={window.innerWidth - 680}
+                y={window.innerHeight - 500}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+                fontSize={24}
+              />
+              <Text
+                text={specificValidatorInfo && specificValidatorInfo.nominatorsStakeText}
+                x={window.innerWidth - 670}
+                y={window.innerHeight - 470}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+              <Text
+                text={specificValidatorInfo && specificValidatorInfo.validatorSelfStakeText}
+                x={window.innerWidth - 650}
+                y={window.innerHeight - 450}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+              <Text
+                text={specificValidatorInfo && specificValidatorInfo.totalStakeText}
+                x={window.innerWidth - 660}
+                y={window.innerHeight - 430}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+              <Text
+                text={specificValidatorInfo && specificValidatorInfo.backersText}
+                x={window.innerWidth - 650}
+                y={window.innerHeight - 410}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+              />
+
+              <Text
+                onClick={() => {
+                  window.open(
+                    `https://polkanalytics.com/#/kusama/validator/${specificValidatorInfo.validatorAddress}`,
+                  );
+                }}
+                text={Object.keys(specificValidatorInfo).length > 0 && "Explore"}
+                x={window.innerWidth - 610}
+                y={window.innerHeight - 300}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+                fontSize={18}
+              />
             </Layer>
           </Stage>
         </div>

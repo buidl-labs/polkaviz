@@ -46,7 +46,7 @@ class Rectangle extends React.Component {
     let valtext = 'fetching validator information';
     if (!this.props.isMainWrapper && this.props.accountIndex !== undefined) {
       valtext = this.props.accountIndex
-        ? `accountId: ${this.props.accountIndex}`
+        ? `Account ID: ${this.props.accountIndex}`
         : 'accountId: ' +
           this.props.validatorAddress.toString().slice(0, 8) +
           '......' +
@@ -92,8 +92,24 @@ class Rectangle extends React.Component {
           fill={this.props.color}
           cornerRadius={4.69457}
           rotation={this.props.angle}
-          onMouseOver={
-            !this.props.isMainWrapper ? this.handleOnMouseOver : undefined
+          onMouseOver={(e) => {
+            // !this.props.isMainWrapper ? this.handleOnMouseOver : undefined
+            if(!this.props.isMainWrapper){
+              e.target.setAttrs({
+                scaleX: 1.4,
+                scaleY: 1.4,
+              });
+              document.body.style.cursor = 'pointer';
+              this.props.onValidatorHover({
+                accountIdText: valtext,
+                nominatorsStakeText: this.props.nominatorsStake,
+                totalStakeText: this.props.bondvalue,
+                validatorSelfStakeText: this.props.validatorSelfStake,
+                backersText: this.props.nominators,
+                validatorAddress: this.props.validatorAddress,
+              })
+            }
+          }
           }
           onMouseOut={
             !this.props.isMainWrapper ? this.handleOnMouseOut : undefined
