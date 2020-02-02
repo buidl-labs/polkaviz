@@ -35,7 +35,8 @@ class KusamaApp extends React.Component {
       ValidatorsData: [],
       IntentionsData: [],
       specificValidatorInfo: {},
-      specificIntentionInfo: {}
+      specificIntentionInfo: {},
+      showFirstViewInstructions: true,
     };
     this.ismounted = true;
   }
@@ -296,7 +297,8 @@ class KusamaApp extends React.Component {
     // console.log("validator info", info);
     this.setState({
       specificIntentionInfo: {},
-      specificValidatorInfo: info
+      specificValidatorInfo: info,
+      showFirstViewInstructions: false,
     });
   }
 
@@ -307,7 +309,8 @@ class KusamaApp extends React.Component {
       //and then set the info parameter label to specific intention info
     this.setState({
       specificValidatorInfo: {},
-      specificIntentionInfo: info
+      specificIntentionInfo: info,
+      showFirstViewInstructions: false,
     });
   }
 
@@ -515,6 +518,14 @@ class KusamaApp extends React.Component {
                 }
               />
               <Relay x={commonWidth} y={window.innerHeight} isKusama />
+              <Text
+                text={this.state.showFirstViewInstructions && "Hover over validators \n and intentions to see info"}
+                x={window.innerWidth - 725}
+                y={window.innerHeight - 410}
+                fontFamily="Roboto Mono"
+                fill="#FFFFFF"
+                fontSize={20}
+              />
               <Text
                 text={specificValidatorInfo && specificValidatorInfo.accountIdText}
                 x={window.innerWidth - 680}
