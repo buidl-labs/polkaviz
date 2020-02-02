@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { Stage, Layer, Text, Circle } from 'react-konva';
+import { Stage, Layer, Text, Circle, Rect } from 'react-konva';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
 import Relay from '../Relay';
@@ -552,6 +552,37 @@ class KusamaApp extends React.Component {
                 fill="#FFFFFF"
               />
 
+              {/* <React
+                x={window.innerWidth - 610}
+                  y={window.innerHeight - 300}
+                stroke={'#555'}
+                strokeWidth={5} 
+                fill={'#ddd'}
+                width={300}
+                height={110}
+                shadowColor={'black'}
+                shadowBlur={10}
+                shadowOffsetX={10}
+                shadowOffsetY={10}
+                shadowOpacity={0.2}
+                cornerRadius={10} /> */}
+                {Object.keys(specificValidatorInfo).length > 0 && 
+                <Rect
+                  x={window.innerWidth - 620}
+                  y={window.innerHeight - 315}
+                  width={100}
+                  height={50}
+                  cornerRadius={4.69457}
+                  fill={'#fff'}
+                  shadowOffsetY={5}
+                  shadowOffsetX={5}
+                  shadowBlur={5}
+                  shadowColor="#ddd"
+                  shadowOpacity={0.5}
+                  onMouseOver={() => {
+                    document.body.style.cursor = 'pointer';
+                  }}
+                />}
               <Text
                 onClick={() => {
                   window.open(
@@ -562,7 +593,7 @@ class KusamaApp extends React.Component {
                 x={window.innerWidth - 610}
                 y={window.innerHeight - 300}
                 fontFamily="Roboto Mono"
-                fill="#FFFFFF"
+                fill="#000"
                 fontSize={18}
               />
 
