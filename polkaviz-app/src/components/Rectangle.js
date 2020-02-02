@@ -13,7 +13,16 @@ class Rectangle extends React.Component {
       scaleY: 1.4,
     });
     document.body.style.cursor = 'pointer';
-    this.setState({ showValidatorAddress: true });
+    // this.setState({ showValidatorAddress: true });
+    this.props.onIntentionHover({
+      accountId: 
+      this.props.validatorAddress.toString().slice(0, 8) +
+      '......' +
+      this.props.validatorAddress.toString().slice(-8),
+      backersText: this.props.nominators,
+      selfText: this.props.bondvalue,
+    })
+    // console.log("intentions info");
   };
   handleOnMouseOut = e => {
     e.target.setAttrs({

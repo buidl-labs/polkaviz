@@ -112,6 +112,7 @@ class Validator extends React.Component {
           isKusama={this.props.isKusama}
           intentions={this.props.intentions}
           color={color}
+          onIntentionHover={this.props.onIntentionHover}
         />
       </React.Fragment>
     );
