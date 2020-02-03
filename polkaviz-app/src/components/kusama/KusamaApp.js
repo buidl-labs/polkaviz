@@ -11,6 +11,7 @@ import Bottombar from '../Bottombar';
 import { JsxEmit } from 'typescript';
 import Counter from '../Counter';
 import KusamaKeyStats from './KusamaKeyStats';
+import SpecificInfo from './SpecificInfo';
 class KusamaApp extends React.Component {
   constructor() {
     super();
@@ -520,123 +521,16 @@ class KusamaApp extends React.Component {
               <Relay x={commonWidth} y={window.innerHeight} isKusama />
               <Text
                 text={this.state.showFirstViewInstructions && "Hover over validators \n and intentions to see info"}
-                x={window.innerWidth - 725}
-                y={window.innerHeight - 410}
+                x={window.innerWidth - 730}
+                y={window.innerHeight - 420}
                 fontFamily="Roboto Mono"
                 fill="#FFFFFF"
                 fontSize={20}
+                align="center"
               />
-              <Text
-                text={specificValidatorInfo && specificValidatorInfo.accountIdText}
-                x={window.innerWidth - 680}
-                y={window.innerHeight - 500}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-                fontSize={24}
-              />
-              <Text
-                text={specificValidatorInfo && specificValidatorInfo.nominatorsStakeText}
-                x={window.innerWidth - 670}
-                y={window.innerHeight - 470}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-              <Text
-                text={specificValidatorInfo && specificValidatorInfo.validatorSelfStakeText}
-                x={window.innerWidth - 650}
-                y={window.innerHeight - 450}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-              <Text
-                text={specificValidatorInfo && specificValidatorInfo.totalStakeText}
-                x={window.innerWidth - 660}
-                y={window.innerHeight - 430}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-              <Text
-                text={specificValidatorInfo && specificValidatorInfo.backersText}
-                x={window.innerWidth - 650}
-                y={window.innerHeight - 410}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-
-              {/* <React
-                x={window.innerWidth - 610}
-                  y={window.innerHeight - 300}
-                stroke={'#555'}
-                strokeWidth={5} 
-                fill={'#ddd'}
-                width={300}
-                height={110}
-                shadowColor={'black'}
-                shadowBlur={10}
-                shadowOffsetX={10}
-                shadowOffsetY={10}
-                shadowOpacity={0.2}
-                cornerRadius={10} /> */}
-                {Object.keys(specificValidatorInfo).length > 0 && 
-                <Rect
-                  x={window.innerWidth - 620}
-                  y={window.innerHeight - 315}
-                  width={100}
-                  height={50}
-                  cornerRadius={4.69457}
-                  fill={'#fff'}
-                  shadowOffsetY={5}
-                  shadowOffsetX={5}
-                  shadowBlur={5}
-                  shadowColor="#ddd"
-                  shadowOpacity={0.5}
-                  onMouseOver={() => {
-                    document.body.style.cursor = 'pointer';
-                  }}
-                />}
-              <Text
-                onClick={() => {
-                  window.open(
-                    `https://polkanalytics.com/#/kusama/validator/${specificValidatorInfo.validatorAddress}`,
-                  );
-                }}
-                text={Object.keys(specificValidatorInfo).length > 0 && "Explore"}
-                x={window.innerWidth - 610}
-                y={window.innerHeight - 300}
-                fontFamily="Roboto Mono"
-                fill="#000"
-                fontSize={18}
-              />
-
-              <Text
-                text={Object.keys(specificIntentionInfo).length > 0 && "Account ID"}
-                x={window.innerWidth - 655}
-                y={window.innerHeight - 510}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-                fontSize={30}
-              />
-              <Text
-                text={specificIntentionInfo && specificIntentionInfo.accountId}
-                x={window.innerWidth - 650}
-                y={window.innerHeight - 470}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-              <Text
-                text={specificIntentionInfo && specificIntentionInfo.backersText}
-                x={window.innerWidth - 650}
-                y={window.innerHeight - 450}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
-              <Text
-                text={specificIntentionInfo && specificIntentionInfo.selfText}
-                x={window.innerWidth - 650}
-                y={window.innerHeight - 430}
-                fontFamily="Roboto Mono"
-                fill="#FFFFFF"
-              />
+              <SpecificInfo 
+              specificValidatorInfo={specificValidatorInfo}
+              specificIntentionInfo={specificIntentionInfo} />
             </Layer>
           </Stage>
         </div>

@@ -13,7 +13,7 @@ class Rectangle extends React.Component {
       scaleY: 1.4,
     });
     document.body.style.cursor = 'pointer';
-    this.setState({ showValidatorAddress: true });
+    // this.setState({ showValidatorAddress: true });
   };
   handleOnMouseOut = e => {
     e.target.setAttrs({
@@ -21,7 +21,7 @@ class Rectangle extends React.Component {
       scaleY: 1,
     });
     document.body.style.cursor = 'default';
-    this.setState({ showValidatorAddress: false });
+    // this.setState({ showValidatorAddress: false });
   };
   handleClick = () => {
     document.body.style.cursor = 'default';
