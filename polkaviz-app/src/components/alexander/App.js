@@ -3,7 +3,7 @@ import React from 'react';
 import { Stage, Layer } from 'react-konva';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
-import Relay from '../Relay';
+import Relay from '../Homeview/HomeRelay';
 import Validator from '../Validator';
 import BlockAnimation from './BlockAnimation';
 import Bottombar from '../Bottombar';
