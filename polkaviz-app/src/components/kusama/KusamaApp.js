@@ -475,7 +475,7 @@ class KusamaApp extends React.Component {
                 }
                 x1={
                   commonWidth / 2 +
-                  100 *
+                  160 *
                     Math.cos(
                       (90 -
                         (authorIndex *
@@ -486,7 +486,7 @@ class KusamaApp extends React.Component {
                 }
                 y1={
                   window.innerHeight / 2 +
-                  100 *
+                  160 *
                     Math.sin(
                       (90 -
                         (authorIndex *
@@ -497,7 +497,7 @@ class KusamaApp extends React.Component {
                 }
                 x2={
                   commonWidth / 2 +
-                  160 *
+                  240 *
                     Math.cos(
                       (90 -
                         (authorIndex *
@@ -508,7 +508,7 @@ class KusamaApp extends React.Component {
                 }
                 y2={
                   window.innerHeight / 2 +
-                  160 *
+                  240 *
                     Math.sin(
                       (90 -
                         (authorIndex *
