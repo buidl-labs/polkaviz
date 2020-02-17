@@ -1,9 +1,9 @@
 import React from 'react';
-import Relay from './Relay';
+import Relay from './HomeRelay';
 import { Stage, Layer } from 'react-konva';
-import Validator from './Validator';
-import BlockAnimation from './alexander/BlockAnimation';
-import BlockAnimationNew from './kusama/BlockAnimation-new';
+import Validator from './HomeValidator';
+import BlockAnimation from '../alexander/BlockAnimation';
+import BlockAnimationNew from '../kusama/BlockAnimation-new';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
 

@@ -48,7 +48,7 @@ class App extends React.Component {
   }
 
   async createApi() {
-    const provider = new WsProvider('wss://poc3-rpc.polkadot.io');
+    const provider = new WsProvider('wss://westend-rpc.polkadot.io');
     const api = await ApiPromise.create({ provider });
 
     const balance = await api.query.balances.totalIssuance();
