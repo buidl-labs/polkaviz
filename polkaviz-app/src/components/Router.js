@@ -1,6 +1,6 @@
 // Emergency fix for alexander deprecation
 import React from 'react';
-// import App from './alexander/App';
+import App from './alexander/App';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 import MainWrapper from './Homeview/HomeMainWrapper';
