@@ -521,8 +521,8 @@ class KusamaApp extends React.Component {
               <Relay x={commonWidth} y={window.innerHeight} isKusama />
               <Text
                 text={this.state.showFirstViewInstructions && "Hover over validators \n and intentions to see info"}
-                x={window.innerWidth - 730}
-                y={window.innerHeight - 420}
+                x={commonWidth / 2 - 160}
+                y={window.innerHeight / 2}
                 fontFamily="Roboto Mono"
                 fill="#FFFFFF"
                 fontSize={20}
@@ -530,7 +530,8 @@ class KusamaApp extends React.Component {
               />
               <SpecificInfo 
               specificValidatorInfo={specificValidatorInfo}
-              specificIntentionInfo={specificIntentionInfo} />
+              specificIntentionInfo={specificIntentionInfo}
+              commonWidth={commonWidth} />
             </Layer>
           </Stage>
         </div>

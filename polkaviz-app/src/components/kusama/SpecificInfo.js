@@ -1,13 +1,15 @@
 import React from 'react';
 import {Text, Rect} from 'react-konva';
 
-const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo }) => {
+const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo, commonWidth }) => {
+  const commonWidthUpdated = commonWidth / 2 - 120;
+  const commonHeight = window.innerHeight / 2;
   return (
     <>
       <Text
         text={specificValidatorInfo && specificValidatorInfo.accountIdText}
-        x={window.innerWidth - 680}
-        y={window.innerHeight - 500}
+        x={commonWidthUpdated}
+        y={commonHeight - 100}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
         fontSize={24}
@@ -16,8 +18,8 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo }) => {
         text={
           specificValidatorInfo && specificValidatorInfo.nominatorsStakeText
         }
-        x={window.innerWidth - 670}
-        y={window.innerHeight - 470}
+        x={commonWidthUpdated}
+        y={commonHeight - 70}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
@@ -25,30 +27,30 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo }) => {
         text={
           specificValidatorInfo && specificValidatorInfo.validatorSelfStakeText
         }
-        x={window.innerWidth - 650}
-        y={window.innerHeight - 450}
+        x={commonWidthUpdated}
+        y={commonHeight - 50}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
       <Text
         text={specificValidatorInfo && specificValidatorInfo.totalStakeText}
-        x={window.innerWidth - 660}
-        y={window.innerHeight - 430}
+        x={commonWidthUpdated}
+        y={commonHeight - 30}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
       <Text
         text={specificValidatorInfo && specificValidatorInfo.backersText}
-        x={window.innerWidth - 650}
-        y={window.innerHeight - 410}
+        x={commonWidthUpdated}
+        y={commonHeight - 10}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
 
       {Object.keys(specificValidatorInfo).length > 0 && (
         <Rect
-          x={window.innerWidth - 620}
-          y={window.innerHeight - 315}
+          x={commonWidthUpdated + 60}
+          y={commonHeight + 90}
           width={100}
           height={50}
           cornerRadius={4.69457}
@@ -76,8 +78,8 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo }) => {
             document.body.style.cursor = 'default';
         }}
         text={Object.keys(specificValidatorInfo).length > 0 && 'Explore'}
-        x={window.innerWidth - 610}
-        y={window.innerHeight - 300}
+        x={commonWidthUpdated + 65}
+        y={commonHeight + 100}
         fontFamily="Roboto Mono"
         fill="#000"
         fontSize={18}
@@ -85,30 +87,30 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo }) => {
 
       <Text
         text={Object.keys(specificIntentionInfo).length > 0 && 'Account ID'}
-        x={window.innerWidth - 655}
-        y={window.innerHeight - 510}
+        x={commonWidthUpdated + 20}
+        y={commonHeight - 100}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
         fontSize={30}
       />
       <Text
         text={specificIntentionInfo && specificIntentionInfo.accountId}
-        x={window.innerWidth - 650}
-        y={window.innerHeight - 470}
+        x={commonWidthUpdated + 20}
+        y={commonHeight - 70}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
       <Text
         text={specificIntentionInfo && specificIntentionInfo.backersText}
-        x={window.innerWidth - 650}
-        y={window.innerHeight - 450}
+        x={commonWidthUpdated + 20}
+        y={commonHeight - 40}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
       <Text
         text={specificIntentionInfo && specificIntentionInfo.selfText}
-        x={window.innerWidth - 650}
-        y={window.innerHeight - 430}
+        x={commonWidthUpdated + 20}
+        y={commonHeight - 10}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
