@@ -14,14 +14,14 @@ class Rectangle extends React.Component {
     });
     document.body.style.cursor = 'pointer';
     // this.setState({ showValidatorAddress: true });
-    this.props.onIntentionHover({
-      accountId: 
-      this.props.validatorAddress.toString().slice(0, 8) +
-      '......' +
-      this.props.validatorAddress.toString().slice(-8),
-      backersText: this.props.nominators,
-      selfText: this.props.bondvalue,
-    })
+    // this.props.onIntentionHover({
+    //   accountId: 
+    //   this.props.validatorAddress.toString().slice(0, 8) +
+    //   '......' +
+    //   this.props.validatorAddress.toString().slice(-8),
+    //   backersText: this.props.nominators,
+    //   selfText: this.props.bondvalue,
+    // })
     // console.log("intentions info");
   };
   handleOnMouseOut = e => {
@@ -36,7 +36,7 @@ class Rectangle extends React.Component {
     document.body.style.cursor = 'default';
     if (!this.props.isKusama) {
       this.props.history.push({
-        pathname: '/alexander/validator/' + this.props.validatorAddress,
+        pathname: '/westend/validator/' + this.props.validatorAddress,
         state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
       });
     }

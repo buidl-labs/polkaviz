@@ -132,7 +132,7 @@ class MainWrapper extends React.Component {
   alexanderClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: '/westend',
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
@@ -176,12 +176,12 @@ class MainWrapper extends React.Component {
         <div className="mainWrapper">
           <div className="container">
             <div className="headingmainwrapper1" id="alexandertext">
-              <h2>Alexander Network</h2>
+              <h2>Westend Network</h2>
             </div>
             <div className="relay-circle">
               {this.props.isloading ? (
                 <p className="alexanderconnecting">
-                  Please wait while we connect to alexander network
+                  Please wait while we connect to Westend network
                 </p>
               ) : (
                 <Stage

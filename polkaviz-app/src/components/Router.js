@@ -30,7 +30,7 @@ class Router extends React.Component {
                 )}
               />
               <Route
-                path="/alexander"
+                path="/westend"
                 render={props => (
                   <App
                   />

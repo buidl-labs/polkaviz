@@ -261,7 +261,7 @@ class App extends React.Component {
                 Polkaviz
               </div>
               <div>/</div>
-              <div className="nav-path-current">Alexander</div>
+              <div className="nav-path-current">Westend</div>
             </div>
 
             <div className="intentions">

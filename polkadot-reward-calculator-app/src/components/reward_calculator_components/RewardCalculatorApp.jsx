@@ -20,9 +20,9 @@ class RewardCalculatorApp extends React.Component {
 		return (
 			<Stack p={8} pt={2}>
 				<Box>
-					<Heading>Alexander Network</Heading>
+					<Heading>Westend Network</Heading>
 					<Text fontSize="xl">
-						Rewards calculator for Alexander Network inside{" "}
+						Rewards calculator for Westend Network inside{" "}
 						<Link href="https://polkadot.network/" color="teal.500" isExternal>
 							Polkadot Ecosystem
 						</Link>{" "}

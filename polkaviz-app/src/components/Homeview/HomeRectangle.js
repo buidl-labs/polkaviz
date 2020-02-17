@@ -27,7 +27,7 @@ class Rectangle extends React.Component {
     document.body.style.cursor = 'default';
     if (!this.props.isKusama) {
       this.props.history.push({
-        pathname: '/alexander/validator/' + this.props.validatorAddress,
+        pathname: '/westend/validator/' + this.props.validatorAddress,
         state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
       });
     }

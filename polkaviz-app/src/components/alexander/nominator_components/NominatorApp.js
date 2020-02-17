@@ -79,7 +79,7 @@ class NominatorApp extends React.Component {
   BackbtnhandleClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: '/westend',
       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
     });
   };
@@ -109,7 +109,7 @@ class NominatorApp extends React.Component {
   handleAlexanderClick = () => {
     document.body.style.cursor = 'default';
     this.props.history.push({
-      pathname: '/alexander',
+      pathname: '/westend',
     });
   };
 
@@ -209,7 +209,7 @@ class NominatorApp extends React.Component {
           </div>
           <div>/</div>
           <div className="nav-path-link" onClick={this.handleAlexanderClick}>
-            Alexander
+            Westend
           </div>
           <div>/</div>
           <div className="nav-path-current">{nominatorname}</div>
