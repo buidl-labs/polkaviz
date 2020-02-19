@@ -17,22 +17,22 @@ const KusamaKeyStats = ({keyStats}) => {
       <h4 style={{textAlign: "center", fontSize: 22}}>Key Stats</h4>
       <hr style={{margin: '5px 0'}}/>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Validators</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Validators</p>
+        <p className="keyStats-List-Header">
         {keyStats.validatorCount > 0 && keyStats.validatorTotalCount > 0 ?
         <span>{keyStats.validatorCount}/{keyStats.validatorTotalCount}</span>
         : <MyLoader />}
         </p>
       </div>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Last Block</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Last Block</p>
+        <p className="keyStats-List-Header">
           <Counter start={keyStats.lastBlockCounter} />
         </p>
       </div>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Block</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Block</p>
+        <p className="keyStats-List-Header">
         {keyStats.finalBlock > 0 ?
         <NumberFormat
           value={keyStats.finalBlock}
@@ -43,24 +43,24 @@ const KusamaKeyStats = ({keyStats}) => {
         </p>
       </div>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Epoch</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Epoch</p>
+        <p className="keyStats-List-Header">
         {keyStats.sessionProgress > 0 && keyStats.sessionLength > 0 ?
         <span>{keyStats.sessionProgress}/{keyStats.sessionLength}</span>
         : <MyLoader />}
         </p>
       </div>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Era</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Era</p>
+        <p className="keyStats-List-Header">
         {keyStats.eraProgress > 0 && keyStats.eraLength > 0 ?
         <span>{keyStats.eraProgress}/{keyStats.eraLength}</span>
         : <MyLoader />}
         </p>
       </div>
       <div className="keyStats-List">
-        <p className="keyStats-List-Header">Total Issuance</p>
-        <p className="keyStats-List-Content">
+        <p className="keyStats-List-Content">Total Issuance</p>
+        <p className="keyStats-List-Header">
         {keyStats.totalIssued.length > 2 ? 
         <span>{keyStats.totalIssued}</span>
         : <MyLoader />}
