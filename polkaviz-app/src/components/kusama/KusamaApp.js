@@ -303,6 +303,15 @@ class KusamaApp extends React.Component {
     });
   }
 
+  onValidatorMouseOut = (e) => {
+    e.target.setAttrs({
+      scaleX: 1,
+      scaleY: 1,
+    });
+    document.body.style.cursor = 'default';
+    this.forceUpdate();
+  }
+
   onIntentionHover = (info) => {
     // console.log("intention info", info);
     //check if specific validator info's length is more than 1
@@ -313,6 +322,15 @@ class KusamaApp extends React.Component {
       specificIntentionInfo: info,
       showFirstViewInstructions: false,
     });
+  }
+
+  onIntentionMouseOut = (e) => {
+    e.target.setAttrs({
+      scaleX: 1,
+      scaleY: 1,
+    });
+    document.body.style.cursor = 'default';
+    this.forceUpdate();
   }
 
   render() {
@@ -406,6 +424,7 @@ class KusamaApp extends React.Component {
                 <KusamaValidator
                   key={index}
                   onValidatorHover={this.onValidatorHover}
+                  onValidatorMouseOut={this.onValidatorMouseOut}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
                   accountIndex={person.accountIndex}
@@ -437,6 +456,7 @@ class KusamaApp extends React.Component {
                 <KusamaIntention
                   key={index}
                   onIntentionHover={this.onIntentionHover}
+                  onIntentionMouseOut={this.onIntentionMouseOut}
                   validatorAddress={person.valname}
                   valinfo={person.valinfo}
                   totalinfo={this.state.kusamavaltotalinfo}

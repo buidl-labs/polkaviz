@@ -130,6 +130,7 @@ class Validator extends React.Component {
           nominatorsStake={nominatorsStake}
           accountIndex={this.props.accountIndex}
           onValidatorHover={this.props.onValidatorHover}
+          onValidatorMouseOut={this.props.onValidatorMouseOut}
         />
       </React.Fragment>
     );

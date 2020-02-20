@@ -14,23 +14,24 @@ class Rectangle extends React.Component {
     });
     document.body.style.cursor = 'pointer';
     // this.setState({ showValidatorAddress: true });
-    // this.props.onIntentionHover({
-    //   accountId: 
-    //   this.props.validatorAddress.toString().slice(0, 8) +
-    //   '......' +
-    //   this.props.validatorAddress.toString().slice(-8),
-    //   backersText: this.props.nominators,
-    //   selfText: this.props.bondvalue,
-    // })
+    this.props.onIntentionHover({
+      accountId: 
+      this.props.validatorAddress.toString().slice(0, 8) +
+      '......' +
+      this.props.validatorAddress.toString().slice(-8),
+      backersText: this.props.nominators,
+      selfText: this.props.bondvalue,
+    })
     // console.log("intentions info");
   };
   handleOnMouseOut = e => {
-    e.target.setAttrs({
-      scaleX: 1,
-      scaleY: 1,
-    });
-    document.body.style.cursor = 'default';
-    this.setState({ showValidatorAddress: false });
+    this.props.onIntentionMouseOut(e);
+    // e.target.setAttrs({
+    //   scaleX: 1,
+    //   scaleY: 1,
+    // });
+    // document.body.style.cursor = 'default';
+    // this.setState({ showValidatorAddress: false });
   };
   handleClick = () => {
     document.body.style.cursor = 'default';
@@ -88,7 +89,7 @@ class Rectangle extends React.Component {
         <Rect
           x={this.props.x}
           y={this.props.y}
-          width={3.5}
+          width={6}
           height={10}
           fill={this.props.color}
           cornerRadius={4.69457}

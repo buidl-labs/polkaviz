@@ -87,8 +87,8 @@ class Rectangle extends React.Component {
         <Rect
           x={this.props.x}
           y={this.props.y}
-          width={5}
-          height={10}
+          width={8}
+          height={12}
           fill={this.props.color}
           cornerRadius={4.69457}
           rotation={this.props.angle}
@@ -111,10 +111,12 @@ class Rectangle extends React.Component {
             }
           }
           }
-          onMouseOut={
-            !this.props.isMainWrapper ? this.handleOnMouseOut : undefined
+          onMouseOut={(e) =>{
+              if(!this.props.isMainWrapper){
+                this.props.onValidatorMouseOut(e);
+              }
+            }
           }
-          // onClick={this.handleClick}
         />
 
         {this.state.showValidatorAddress && !this.props.isMainWrapper && (

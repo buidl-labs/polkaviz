@@ -113,6 +113,7 @@ class Validator extends React.Component {
           intentions={this.props.intentions}
           color={color}
           onIntentionHover={this.props.onIntentionHover}
+          onIntentionMouseOut={this.props.onIntentionMouseOut}
         />
       </React.Fragment>
     );
