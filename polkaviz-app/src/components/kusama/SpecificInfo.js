@@ -7,13 +7,13 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo, commonWidt
   return (
     <>
       <Text
-        text={specificValidatorInfo && specificValidatorInfo.accountIdText}
-        x={commonWidthUpdated}
-        y={commonHeight - 100}
-        fontFamily="Roboto Mono"
-        fill="#FFFFFF"
-        fontSize={24}
-      />
+          text={specificValidatorInfo && specificValidatorInfo.backersText}
+          x={commonWidthUpdated - 15}
+          y={commonHeight - 100}
+          fontFamily="Roboto Mono"
+          fill="#FFFFFF"
+          fontSize={20}
+        />
       <Text
         text={
           specificValidatorInfo && specificValidatorInfo.nominatorsStakeText
@@ -39,8 +39,9 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo, commonWidt
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
+
       <Text
-        text={specificValidatorInfo && specificValidatorInfo.backersText}
+        text={specificValidatorInfo && specificValidatorInfo.accountIdText}
         x={commonWidthUpdated}
         y={commonHeight - 10}
         fontFamily="Roboto Mono"
@@ -78,39 +79,32 @@ const SpecificInfo = ({ specificValidatorInfo, specificIntentionInfo, commonWidt
             document.body.style.cursor = 'default';
         }}
         text={Object.keys(specificValidatorInfo).length > 0 && 'Explore'}
-        x={commonWidthUpdated + 65}
-        y={commonHeight + 100}
+        x={commonWidthUpdated + 70}
+        y={commonHeight + 105}
         fontFamily="Roboto Mono"
         fill="#000"
         fontSize={18}
       />
 
       <Text
-        text={Object.keys(specificIntentionInfo).length > 0 && 'Account ID'}
-        x={commonWidthUpdated + 20}
+        text={specificIntentionInfo && specificIntentionInfo.backersText}
+        x={commonWidthUpdated - 10}
         y={commonHeight - 100}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
-        fontSize={30}
+        fontSize={20}
       />
       <Text
-        text={specificIntentionInfo && specificIntentionInfo.accountId}
+        text={specificIntentionInfo && specificIntentionInfo.selfText}
         x={commonWidthUpdated + 20}
         y={commonHeight - 70}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
       <Text
-        text={specificIntentionInfo && specificIntentionInfo.backersText}
+        text={specificIntentionInfo && specificIntentionInfo.accountId}
         x={commonWidthUpdated + 20}
-        y={commonHeight - 40}
-        fontFamily="Roboto Mono"
-        fill="#FFFFFF"
-      />
-      <Text
-        text={specificIntentionInfo && specificIntentionInfo.selfText}
-        x={commonWidthUpdated + 20}
-        y={commonHeight - 10}
+        y={commonHeight - 50}
         fontFamily="Roboto Mono"
         fill="#FFFFFF"
       />
