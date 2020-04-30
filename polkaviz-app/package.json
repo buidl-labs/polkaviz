@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@polkadot/api": "^1.0.1",
+    "@polkadot/api": "^1.12.2",
     "bs58": "^4.0.1",
     "konva": "^3.4.1",
     "react": "^16.8.6",
@@ -13,9 +13,8 @@
     "react-konva": "^16.8.7-3",
     "react-number-format": "^4.2.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.3.0",
-    "react-spring": "^8.0.27",
-    "typescript": "^3.6.3"
+    "react-scripts": "^3.4.1",
+    "react-spring": "^8.0.27"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,7 +38,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.9.0",

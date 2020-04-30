@@ -8,7 +8,6 @@ import KusamaValidator from './KusamaValidators';
 import KusamaIntention from './KusamaIntentions';
 import BlockAnimationNew from './BlockAnimation-new';
 import Bottombar from '../Bottombar';
-import { JsxEmit } from 'typescript';
 import Counter from '../Counter';
 import KusamaKeyStats from './KusamaKeyStats';
 import SpecificInfo from './SpecificInfo';
