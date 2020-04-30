@@ -253,26 +253,25 @@ class KusamaApp extends React.Component {
 
       
     }
-
     // console.log(intentions.toJSON())
     await api.derive.session.info(header => {
-      // console.log(`eraLength #${header.eraLength}`);
-      // console.log(`eraProgress #${header.eraProgress}`);
-      // console.log(`sessionLength #${header.sessionLength}`);
-      // console.log(`sessionProgress #${header.sessionProgress}`);
+      console.log('header'+ JSON.stringify(header))
+      // header{"activeEra":728,"activeEraStart":1588138074000,"currentEra":728,"currentIndex":3662,"eraLength":3600,"isEpoch":true,"sessionLength":600,"sessionsPerEra":6,"validatorCount":225}
+      console.log(`eraLength #${header.eraLength}`);
+      // console.log(`eraProgress #${eraProgress}`);
+      console.log(`sessionLength #${header.sessionLength}`);
+      // console.log(`sessionProgress #${sessionProgress}`);
       const eraLength = header.eraLength.toString();
-      const eraProgress = header.eraProgress.toString();
+      // const eraProgress = header.eraProgress.toString();
       const sessionLength = header.sessionLength.toString();
-      const sessionProgress = header.sessionProgress.toString();
+      // const sessionProgress = header.sessionProgress.toString();
       // console.log(eraLength,eraProgress,sessionLength,sessionProgress)
       if (this.ismounted) {
         this.setState(
           {
             kusamabottombarinfo: {
               eraLength,
-              eraProgress,
-              sessionLength,
-              sessionProgress,
+              sessionLength
             },
             kusamaisloading: false,
           },
@@ -280,6 +279,42 @@ class KusamaApp extends React.Component {
         );
       }
     });
+
+    await Promise.all([
+      api.derive.session.sessionProgress(x => {
+        const kusamabottombarinfo = {...this.state.kusamabottombarinfo}
+        console.log(JSON.stringify(kusamabottombarinfo))
+        kusamabottombarinfo.sessionProgress = x.toString();
+        console.log(JSON.stringify(kusamabottombarinfo))
+        if(this.ismounted){
+          this.setState(
+            {
+              kusamabottombarinfo
+            }
+            // () => this.createApi()
+          );
+        }
+      }),
+      api.derive.session.eraProgress(x => {
+        const kusamabottombarinfo = {...this.state.kusamabottombarinfo}
+        console.log(JSON.stringify(kusamabottombarinfo))
+        kusamabottombarinfo.eraProgress = x.toString();
+        console.log(JSON.stringify(kusamabottombarinfo))
+        if(this.ismounted){
+          this.setState(
+            {
+              kusamabottombarinfo
+            }
+            // () => this.createApi()
+          );
+        }
+      })
+    ]);
+    // console.log('sessionProgress+, eraProgress: ' + sessionProgress+ ', '+  eraProgress)
+    // console.log('state.kusamabottombarinfo: '+ JSON.stringify(this.state.kusamabottombarinfo))
+    
+    // console.log('state.kusamabottombarinfo: '+ JSON.stringify(this.state.kusamabottombarinfo))
+
   }
 
   componentWillUnmount() {
@@ -539,4 +574,5 @@ class KusamaApp extends React.Component {
 }
 
 export default withRouter(KusamaApp);
+
 
