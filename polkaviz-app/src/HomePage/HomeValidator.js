@@ -1,14 +1,13 @@
 import React from 'react';
-import Rectangle from '../Rectangle';
-import Tail from '../Tail';
+import Rectangle from './HomeRectangle';
+import Tail from './HomeTail';
 
 class Validator extends React.Component {
   render() {
     let bondvalue = '';
     let nomvalue = 0;
     let commission = '';
-    // console.log("thispropsintentions", this.props.intentions)
-    if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
+    if (!this.props.isMainWrapper && this.props.intentions.length !== 0) {
       bondvalue = 'Bonded: No Data found';
       nomvalue = 'Backed by: No Data found';
       if (!this.props.isKusama) {
@@ -43,7 +42,7 @@ class Validator extends React.Component {
           this.props.valinfo.stakers.others.length +
           ' nominators';
       }
-      if (!this.props.intentions) {
+      if (this.props.intentions.includes(this.props.validatorAddress)) {
         if (this.props.isKusama) {
           let value =
             this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
@@ -56,19 +55,12 @@ class Validator extends React.Component {
           // console.log(value)
           bondvalue = 'Bonded: ' + value.toString() + ' KSM';
 
-          //TODO: Recheck calculation for commission
-          let commissionvalue = this.props.valinfo.validatorPrefs.commission;
+          let commissionvalue = this.props.valinfo.validatorPrefs
+            .validatorPayment;
           commissionvalue = commissionvalue / Math.pow(10, 12);
           commissionvalue = commissionvalue.toFixed(3);
           commission = 'commission: ' + commissionvalue + ' KSM';
         }
-      }
-
-      if (this.props.intentions.length > 0) {
-        bondvalue = `Self Stake ${parseInt(this.props.valinfo.stakers.own / 10 ** 12,).toFixed(3)} KSM`;
-        nomvalue = 'Backed by: ' +
-        this.props.valinfo.stakers.others.length +
-        ' nominators';
       }
     }
     let x1 = this.props.x;
@@ -81,9 +73,9 @@ class Validator extends React.Component {
       color = '#9335A3';
     }
     if (!this.props.isMainWrapper) {
-      if (this.props.intentions) {
-        x1 = ((x1 - window.innerWidth) / 360) * 420 + window.innerWidth;
-        y1 = ((y1 - window.innerHeight) / 360) * 420 + window.innerHeight;
+      if (this.props.intentions.includes(this.props.validatorAddress)) {
+        x1 = ((x1 - window.innerWidth) / 360) * 390 + window.innerWidth;
+        y1 = ((y1 - window.innerHeight) / 360) * 390 + window.innerHeight;
         color = 'yellow';
         opacity = 0;
       }
@@ -112,8 +104,6 @@ class Validator extends React.Component {
           isKusama={this.props.isKusama}
           intentions={this.props.intentions}
           color={color}
-          onIntentionHover={this.props.onIntentionHover}
-          onIntentionMouseOut={this.props.onIntentionMouseOut}
         />
       </React.Fragment>
     );

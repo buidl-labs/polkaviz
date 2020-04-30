@@ -3,7 +3,7 @@ import React from 'react';
 import { Stage, Layer } from 'react-konva';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
-import Relay from '../Relay';
+import Relay from '../Homeview/HomeRelay';
 import Validator from '../Validator';
 import BlockAnimation from './BlockAnimation';
 import Bottombar from '../Bottombar';
@@ -48,7 +48,7 @@ class App extends React.Component {
   }
 
   async createApi() {
-    const provider = new WsProvider('wss://poc3-rpc.polkadot.io');
+    const provider = new WsProvider('wss://westend-rpc.polkadot.io');
     const api = await ApiPromise.create({ provider });
 
     const balance = await api.query.balances.totalIssuance();
@@ -261,7 +261,7 @@ class App extends React.Component {
                 Polkaviz
               </div>
               <div>/</div>
-              <div className="nav-path-current">Alexander</div>
+              <div className="nav-path-current">Westend</div>
             </div>
 
             <div className="intentions">

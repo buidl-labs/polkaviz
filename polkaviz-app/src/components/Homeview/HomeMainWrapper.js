@@ -1,12 +1,12 @@
 import React from 'react';
-import Relay from './Relay';
+import Relay from './HomeRelay';
 import { Stage, Layer } from 'react-konva';
-import Validator from './Validator';
-import BlockAnimation from './alexander/BlockAnimation';
-import BlockAnimationNew from './kusama/BlockAnimation-new';
+import Validator from './HomeValidator';
+import BlockAnimation from '../alexander/BlockAnimation';
+import BlockAnimationNew from '../kusama/BlockAnimation-new';
 import { withRouter } from 'react-router-dom';
 import { WsProvider, ApiPromise } from '@polkadot/api';
-
+import WestendDevelopment from '../../../src/Images/westend.png';
 class MainWrapper extends React.Component {
   constructor() {
     super();
@@ -31,7 +31,7 @@ class MainWrapper extends React.Component {
 
   componentDidMount() {
     this.createApi2();
-    this.createApi();
+    // this.createApi();
     // document.getElementById("mySidenav").style.display="none";
     // document.getElementsByClassName("opennav")[0].style.display="none"
   }
@@ -70,38 +70,38 @@ class MainWrapper extends React.Component {
     });
   }
 
-  async createApi() {
-    const provider = new WsProvider('wss://westend-rpc.polkadot.io');
-    const api = await ApiPromise.create({ provider });
-    // console.log(api.derive.chain.subscribeNewHeads())
-    await api.derive.chain.subscribeNewHeads(block => {
-      // console.log(`block #${block.author}`);
-      const lastAuthor = block.author.toString();
-      if (this.ismounted) {
-        this.setState({ lastAuthor: lastAuthor });
-      }
-      const start = new Date();
-      const blockNumber = block.number.toString();
-      if (this.ismounted) {
-        this.setState({
-          start: start,
-          finalblock: blockNumber,
-          previousBlock: blockNumber,
-        });
-      }
-    });
+  // async createApi() {
+  //   const provider = new WsProvider('wss://westend-rpc.polkadot.io');
+  //   const api = await ApiPromise.create({ provider });
+  //   // console.log(api.derive.chain.subscribeNewHeads())
+  //   await api.derive.chain.subscribeNewHeads(block => {
+  //     // console.log(`block #${block.author}`);
+  //     const lastAuthor = block.author.toString();
+  //     if (this.ismounted) {
+  //       this.setState({ lastAuthor: lastAuthor });
+  //     }
+  //     const start = new Date();
+  //     const blockNumber = block.number.toString();
+  //     if (this.ismounted) {
+  //       this.setState({
+  //         start: start,
+  //         finalblock: blockNumber,
+  //         previousBlock: blockNumber,
+  //       });
+  //     }
+  //   });
 
-    await api.query.session.validators(validators => {
-      // console.log(validators)
-      const sessionValidators = validators.map(x => x.toString());
-      if (this.ismounted) {
-        this.setState({
-          validators: sessionValidators,
-          isloading: false,
-        });
-      }
-    });
-  }
+  //   await api.query.session.validators(validators => {
+  //     // console.log(validators)
+  //     const sessionValidators = validators.map(x => x.toString());
+  //     if (this.ismounted) {
+  //       this.setState({
+  //         validators: sessionValidators,
+  //         isloading: false,
+  //       });
+  //     }
+  //   });
+  // }
 
   componentWillUnmount() {
     this.ismounted = false;
@@ -155,7 +155,7 @@ class MainWrapper extends React.Component {
     //     }
     const arr2 = this.state.kusamavalidators;
     let loadingdone = false;
-    if (!this.state.isloading && !this.state.kusamaisloading) {
+    if (!this.state.kusamaisloading) {
       loadingdone = true;
     }
     // const validatortext = "Validators: " + this.props.validators.length + "/" + this.props.totalvalidators
@@ -184,124 +184,9 @@ class MainWrapper extends React.Component {
                   Please wait while we connect to Westend network
                 </p>
               ) : (
-                <Stage
-                  width={window.innerWidth / 2}
-                  height={window.innerHeight}
-                  onClick={this.alexanderClick}
-                  onMouseOver={() => this.handleOnMouseOverstage1()}
-                  onMouseOut={() => this.handleOnMouseOutstage1()}
-                >
-                  <Layer>
-                    {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-                    {/*in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-                    {arr.map((person, index) => (
-                      <Validator
-                        key={index}
-                        validatorAddress={undefined}
-                        valinfo={undefined}
-                        totalinfo={undefined}
-                        nominatorinfo={undefined}
-                        angle={180 - (index * 360) / arr.length}
-                        history={this.props.history}
-                        x={
-                          window.innerWidth / 2 +
-                          360 *
-                            Math.cos(
-                              (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                            )
-                        }
-                        y={
-                          window.innerHeight -
-                          200 +
-                          360 *
-                            Math.sin(
-                              (90 - 1 - (index * 360) / arr.length) * 0.0174533,
-                            )
-                        }
-                        isMainWrapper={true}
-                        // intentions={this.props.intentions}
-                      />
-                    ))}
-                    {/* {console.log(this.props.bottombarobject.finalblock)}
-              {console.log(this.props.previousBlock)} */}
-                    {this.state.previousBlock !== undefined &&
-                      this.state.validators.indexOf(this.state.lastAuthor) !==
-                        -1 && (
-                        <BlockAnimation
-                          key={this.state.validators.indexOf(
-                            this.state.lastAuthor,
-                          )}
-                          angle={
-                            180 -
-                            (this.state.validators.indexOf(
-                              this.state.lastAuthor,
-                            ) *
-                              360) /
-                              arr.length
-                          }
-                          x1={
-                            window.innerWidth / 4 +
-                            100 *
-                              Math.cos(
-                                (90 -
-                                  (this.state.validators.indexOf(
-                                    this.state.lastAuthor,
-                                  ) *
-                                    360) /
-                                    arr.length) *
-                                  0.0174533,
-                              )
-                          }
-                          y1={
-                            window.innerHeight / 2 -
-                            100 +
-                            100 *
-                              Math.sin(
-                                (90 -
-                                  (this.state.validators.indexOf(
-                                    this.state.lastAuthor,
-                                  ) *
-                                    360) /
-                                    arr.length) *
-                                  0.0174533,
-                              )
-                          }
-                          x2={
-                            window.innerWidth / 4 +
-                            160 *
-                              Math.cos(
-                                (90 -
-                                  (this.state.validators.indexOf(
-                                    this.state.lastAuthor,
-                                  ) *
-                                    360) /
-                                    arr.length) *
-                                  0.0174533,
-                              )
-                          }
-                          y2={
-                            window.innerHeight / 2 -
-                            100 +
-                            160 *
-                              Math.sin(
-                                (90 -
-                                  (this.state.validators.indexOf(
-                                    this.state.lastAuthor,
-                                  ) *
-                                    360) /
-                                    arr.length) *
-                                  0.0174533,
-                              )
-                          }
-                        />
-                      )}
-                    <Relay
-                      x={window.innerWidth / 2}
-                      y={window.innerHeight - 200}
-                      id="alexanderRelay"
-                    />
-                  </Layer>
-                </Stage>
+                <div style={{height: window.innerHeight, width: window.innerWidth / 2}}>
+                <img style={{ width: window.innerWidth / 2}} src={WestendDevelopment} />
+                </div>
               )}
             </div>
           </div>

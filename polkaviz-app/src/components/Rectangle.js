@@ -25,18 +25,19 @@ class Rectangle extends React.Component {
     // console.log("intentions info");
   };
   handleOnMouseOut = e => {
-    e.target.setAttrs({
-      scaleX: 1,
-      scaleY: 1,
-    });
-    document.body.style.cursor = 'default';
-    this.setState({ showValidatorAddress: false });
+    this.props.onIntentionMouseOut(e);
+    // e.target.setAttrs({
+    //   scaleX: 1,
+    //   scaleY: 1,
+    // });
+    // document.body.style.cursor = 'default';
+    // this.setState({ showValidatorAddress: false });
   };
   handleClick = () => {
     document.body.style.cursor = 'default';
     if (!this.props.isKusama) {
       this.props.history.push({
-        pathname: '/alexander/validator/' + this.props.validatorAddress,
+        pathname: '/westend/validator/' + this.props.validatorAddress,
         state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
       });
     }
@@ -88,7 +89,7 @@ class Rectangle extends React.Component {
         <Rect
           x={this.props.x}
           y={this.props.y}
-          width={3.5}
+          width={6}
           height={10}
           fill={this.props.color}
           cornerRadius={4.69457}
