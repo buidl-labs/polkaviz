@@ -1,10 +1,11 @@
-// Emergency fix for alexander deprecation
+/* eslint-disable */
 import React from 'react';
 // import App from './alexander/App';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 // import { WsProvider, ApiPromise } from "@polkadot/api";
 // import MainWrapper from './MainWrapper';
 import KusamaApp from './kusama/KusamaApp';
+import MainWrapper from './MainWrapper';
 // import {NavLink} from "react-router-dom"
 
 class Router extends React.Component {
@@ -461,18 +462,7 @@ class Router extends React.Component {
                 exact
                 path="/"
                 render={props => (
-                  <KusamaApp
-                  // valtotalinfo={this.state.kusamavaltotalinfo}
-                  // createApi={this.createApi2}
-                  // validators={this.state.kusamavalidators}
-                  // start={this.state.kusamastart}
-                  // lastAuthor={this.state.kusamalastAuthor}
-                  // validatorcount={this.state.kusamatotalValidators}
-                  // bottombarobject={bottombarobject2}
-                  // nominatorinfo={this.state.kusamanominatorinfo}
-                  // previousBlock={this.state.kusamapreviousBlock}
-                  // kusamaisloading={this.state.kusamaisloading}
-                  />
+                  <MainWrapper />
                 )}
               />
               <Route

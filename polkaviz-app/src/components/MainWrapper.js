@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Relay from './Relay';
 import { Stage, Layer } from 'react-konva';
@@ -71,7 +72,7 @@ class MainWrapper extends React.Component {
   }
 
   async createApi() {
-    const provider = new WsProvider('wss://poc3-rpc.polkadot.io');
+    const provider = new WsProvider('wss://westend-rpc.polkadot.io');
     const api = await ApiPromise.create({ provider });
     // console.log(api.derive.chain.subscribeNewHeads())
     await api.derive.chain.subscribeNewHeads(block => {
@@ -176,7 +177,7 @@ class MainWrapper extends React.Component {
         <div className="mainWrapper">
           <div className="container">
             <div className="headingmainwrapper1" id="alexandertext">
-              <h2>Alexander Network</h2>
+              <h2>Westend Testnet(under development)</h2>
             </div>
             <div className="relay-circle">
               {this.props.isloading ? (
@@ -187,7 +188,7 @@ class MainWrapper extends React.Component {
                 <Stage
                   width={window.innerWidth / 2}
                   height={window.innerHeight}
-                  onClick={this.alexanderClick}
+                  // onClick={this.alexanderClick}
                   onMouseOver={() => this.handleOnMouseOverstage1()}
                   onMouseOut={() => this.handleOnMouseOutstage1()}
                 >
@@ -205,7 +206,7 @@ class MainWrapper extends React.Component {
                         history={this.props.history}
                         x={
                           window.innerWidth / 2 +
-                          360 *
+                          450 *
                             Math.cos(
                               (90 - 1 - (index * 360) / arr.length) * 0.0174533,
                             )
@@ -213,7 +214,7 @@ class MainWrapper extends React.Component {
                         y={
                           window.innerHeight -
                           200 +
-                          360 *
+                          450 *
                             Math.sin(
                               (90 - 1 - (index * 360) / arr.length) * 0.0174533,
                             )
@@ -241,7 +242,7 @@ class MainWrapper extends React.Component {
                           }
                           x1={
                             window.innerWidth / 4 +
-                            100 *
+                            140 *
                               Math.cos(
                                 (90 -
                                   (this.state.validators.indexOf(
@@ -255,7 +256,7 @@ class MainWrapper extends React.Component {
                           y1={
                             window.innerHeight / 2 -
                             100 +
-                            100 *
+                            140 *
                               Math.sin(
                                 (90 -
                                   (this.state.validators.indexOf(
@@ -268,7 +269,7 @@ class MainWrapper extends React.Component {
                           }
                           x2={
                             window.innerWidth / 4 +
-                            160 *
+                            210 *
                               Math.cos(
                                 (90 -
                                   (this.state.validators.indexOf(
@@ -282,7 +283,7 @@ class MainWrapper extends React.Component {
                           y2={
                             window.innerHeight / 2 -
                             100 +
-                            160 *
+                            210 *
                               Math.sin(
                                 (90 -
                                   (this.state.validators.indexOf(
@@ -299,6 +300,7 @@ class MainWrapper extends React.Component {
                       x={window.innerWidth / 2}
                       y={window.innerHeight - 200}
                       id="alexanderRelay"
+                      isMainWrapper={true}
                     />
                   </Layer>
                 </Stage>
@@ -337,7 +339,7 @@ class MainWrapper extends React.Component {
                         history={this.props.history}
                         x={
                           window.innerWidth / 2 +
-                          360 *
+                          450 *
                             Math.cos(
                               (90 - 1 - (index * 360) / arr2.length) *
                                 0.0174533,
@@ -346,7 +348,7 @@ class MainWrapper extends React.Component {
                         y={
                           window.innerHeight -
                           200 +
-                          360 *
+                          450 *
                             Math.sin(
                               (90 - 1 - (index * 360) / arr2.length) *
                                 0.0174533,
@@ -373,7 +375,7 @@ class MainWrapper extends React.Component {
                         }
                         x1={
                           window.innerWidth / 4 +
-                          100 *
+                          140 *
                             Math.cos(
                               (90 -
                                 (this.state.kusamavalidators.indexOf(
@@ -387,7 +389,7 @@ class MainWrapper extends React.Component {
                         y1={
                           window.innerHeight / 2 -
                           100 +
-                          100 *
+                          140 *
                             Math.sin(
                               (90 -
                                 (this.state.kusamavalidators.indexOf(
@@ -400,7 +402,7 @@ class MainWrapper extends React.Component {
                         }
                         x2={
                           window.innerWidth / 4 +
-                          160 *
+                          210 *
                             Math.cos(
                               (90 -
                                 (this.state.kusamavalidators.indexOf(
@@ -414,7 +416,7 @@ class MainWrapper extends React.Component {
                         y2={
                           window.innerHeight / 2 -
                           100 +
-                          160 *
+                          210 *
                             Math.sin(
                               (90 -
                                 (this.state.kusamavalidators.indexOf(
@@ -431,6 +433,7 @@ class MainWrapper extends React.Component {
                       x={window.innerWidth / 2}
                       y={window.innerHeight - 200}
                       isKusama={true}
+                      isMainWrapper={true}
                     />
                   </Layer>
                 </Stage>
