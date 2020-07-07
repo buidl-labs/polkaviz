@@ -69,51 +69,48 @@ class KusamaApp extends React.Component {
     let arr1 = [];
     let arr2 = [];
     try {
-      const [validator_response, intention_response] = await Promise.all ([fetch(
-        'https://polka-analytic-api.herokuapp.com/validatorinfo',
-      ), fetch(
-        'https://polka-analytic-api.herokuapp.com/intentions',
-      )])
+      const validator_response = await fetch('https://yieldscan-api.onrender.com/api/actors/validators')
       const validator_data = await validator_response.json();
-      const intention_data = await intention_response.json();
-      // console.log('intention_data' + JSON.stringify(intention_data))
       
-      // Handle validator data
-      if (validator_data && validator_data.length > 0) {
-        arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator, accountIndex }) => {
-          // console.log(info);
-          return {
-            valname: currentValidator.accountId,
-            valinfo: currentValidator,
-            accountIndex: accountIndex,
+      // // Handle validator data
+      // if (validator_data && validator_data.length > 0) {
+      //   arr1 = JSON.parse(JSON.stringify(validator_data)).map(({ currentValidator, accountIndex }) => {
+      //     // console.log(info);
+      //     return {
+      //       valname: currentValidator.accountId,
+      //       valinfo: currentValidator,
+      //       accountIndex: accountIndex,
 
-          };
-        });
-        // console.log('arr1++++++++++', arr1);
-      }
+      //     };
+      //   });
+      //   // console.log('arr1++++++++++', arr1);
+      // }
 
-      // Handle intention data
-      if (intention_data && intention_data.intentions.length > 0) {
-        // console.log('+++++++++++______+++++++')
-        // console.log(intention_data.intentions)
-        const intentionsValname = intention_data.intentions
-        const intentionsInfo = intention_data.info
-        const arr2 = intentionsValname.map( currentIntention => {
-          // console.log('currentIntention' + currentIntention);
-          // console.log('currentIntention index' + JSON.stringify(intentionsValname.indexOf(currentIntention)));
-          return {
-            valname: currentIntention,
-            valinfo: JSON.parse(JSON.stringify(intentionsInfo[intentionsValname.indexOf(currentIntention)])),
-          };
-        });
-        // console.log('arr2++++++++++', arr2);
+      // // Handle intention data
+      // if (intention_data && intention_data.intentions.length > 0) {
+      //   // console.log('+++++++++++______+++++++')
+      //   // console.log(intention_data.intentions)
+      //   const intentionsValname = intention_data.intentions
+      //   const intentionsInfo = intention_data.info
+      //   const arr2 = intentionsValname.map( currentIntention => {
+      //     // console.log('currentIntention' + currentIntention);
+      //     // console.log('currentIntention index' + JSON.stringify(intentionsValname.indexOf(currentIntention)));
+      //     return {
+      //       valname: currentIntention,
+      //       valinfo: JSON.parse(JSON.stringify(intentionsInfo[intentionsValname.indexOf(currentIntention)])),
+      //     };
+      //   });
+      //   // console.log('arr2++++++++++', arr2);
         
-        // set state to render both intention and validators 
-        this.setState({
-          ValidatorsData: arr1,
-          IntentionsData: arr2,
-        });
-      }
+      //   // set state to render both intention and validators 
+      //   this.setState({
+      //     ValidatorsData: arr1,
+      //     IntentionsData: arr2,
+      //   });
+      // }
+      this.setState({
+        ValidatorsData: validator_data
+      })
       
     } catch (err) {
       console.log('err', err);
@@ -214,45 +211,45 @@ class KusamaApp extends React.Component {
     }
     
 
-    if (this.state.IntentionsData.length === 0) {
-      let stakingValidators = await api.query.staking.validators();
-      stakingValidators = JSON.parse(JSON.stringify(stakingValidators))[0];
+    // if (this.state.IntentionsData.length === 0) {
+    //   let stakingValidators = await api.query.staking.validators();
+    //   stakingValidators = JSON.parse(JSON.stringify(stakingValidators))[0];
       
       
 
-      // console.log('++++stakingValidators++++' + stakingValidators);
-      const activeValidators = this.state.ValidatorsData.map(ele => ele.valname);
-      // console.log('++++activeValidators++++' + activeValidators);
-      const intentions = stakingValidators.filter(e => !activeValidators.includes(e));
-      // console.log('++++intentions++++' + intentions);
-      const intentionsObject = intentions.map(x => {
-        return {
-          valname: x.toString(),
-          // valinfo: 
-        };
-      });
-      // console.log('++++intentions++++' + intentionsObject);
-      this.setState({
-        IntentionsData: intentionsObject,
-      });
-      const getIntentionsAccountInfo = await Promise.all(
-        intentions.map(val => api.derive.staking.account(val)),
-      );
-      const indexes = await api.derive.accounts.indexes();
-      const intentionstotalinfo = JSON.parse(JSON.stringify(getIntentionsAccountInfo)).map(info => {
-        // console.log('intention info'+ JSON.stringify(info))
-        return {
-          valname: info.accountId,
-          valinfo: info,
-          accountIndex: indexes[info.accountId],
-        };
-      });
-      this.setState({
-        IntentionsData: intentionstotalinfo,
-      });
+    //   // console.log('++++stakingValidators++++' + stakingValidators);
+    //   const activeValidators = this.state.ValidatorsData.map(ele => ele.valname);
+    //   // console.log('++++activeValidators++++' + activeValidators);
+    //   const intentions = stakingValidators.filter(e => !activeValidators.includes(e));
+    //   // console.log('++++intentions++++' + intentions);
+    //   const intentionsObject = intentions.map(x => {
+    //     return {
+    //       valname: x.toString(),
+    //       // valinfo: 
+    //     };
+    //   });
+    //   // console.log('++++intentions++++' + intentionsObject);
+    //   this.setState({
+    //     IntentionsData: intentionsObject,
+    //   });
+    //   const getIntentionsAccountInfo = await Promise.all(
+    //     intentions.map(val => api.derive.staking.account(val)),
+    //   );
+    //   const indexes = await api.derive.accounts.indexes();
+    //   const intentionstotalinfo = JSON.parse(JSON.stringify(getIntentionsAccountInfo)).map(info => {
+    //     // console.log('intention info'+ JSON.stringify(info))
+    //     return {
+    //       valname: info.accountId,
+    //       valinfo: info,
+    //       accountIndex: indexes[info.accountId],
+    //     };
+    //   });
+    //   this.setState({
+    //     IntentionsData: intentionstotalinfo,
+    //   });
 
       
-    }
+    // }
     // console.log(intentions.toJSON())
     await api.derive.session.info(header => {
       console.log('header'+ JSON.stringify(header))
@@ -440,11 +437,15 @@ class KusamaApp extends React.Component {
                 <KusamaValidator
                   key={index}
                   onValidatorHover={this.onValidatorHover}
-                  validatorAddress={person.valname}
-                  valinfo={person.valinfo}
-                  accountIndex={person.accountIndex}
-                  totalinfo={this.state.kusamavaltotalinfo}
-                  nominatorinfo={this.state.kusamanominatorinfo}
+                  name={person.name}
+                  stashId={person.accountIndex}
+                  nomCount={person.numOfNominators}
+                  rewardsPer100KSM={person.rewardsPer100KSM}
+                  commission={person.commission}
+                  othersStake={person.othersStake}
+                  ownStake={person.ownStake}
+                  riskScore={person.riskScore}
+                  estimatedPoolReward={person.estimatedPoolReward}
                   angle={180 - (index * 360) / ValidatorsData.length}
                   history={this.props.history}
                   intentions={[]}
@@ -574,5 +575,4 @@ class KusamaApp extends React.Component {
 }
 
 export default withRouter(KusamaApp);
-
 

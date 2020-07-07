@@ -1,7 +1,8 @@
-*{
+* {
   margin: 0;
 }
-.container , .kusamacontainer{
+.container,
+.kusamacontainer {
   background: #262733;
   position: relative;
   width: 100%;
@@ -9,8 +10,8 @@
   left: 0;
   top: 0;
 }
-.kusamacontainer{
-  background:#000000;
+.kusamacontainer {
+  background: #000000;
 }
 
 .heading h2 {
@@ -31,26 +32,25 @@
   color: #ffffff;
 }
 
-
 /* .valheading h2,.valheading span{
-  margin: 0 auto;
-  position: absolute;
-  display: inline-block;
-  width: 1087.81px;
-  height: 21.13px;
-  left: 58px;
-  top: 71px;
+    margin: 0 auto;
+    position: absolute;
+    display: inline-block;
+    width: 1087.81px;
+    height: 21.13px;
+    left: 58px;
+    top: 71px;
+  
+    font-family: "Roboto Mono";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 23.4729px;
+    line-height: 28px;
+  
+    color: #ffffff;
+  } */
 
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 23.4729px;
-  line-height: 28px;
-
-  color: #ffffff;
-} */
-
-.valheading span img{
+.valheading span img {
   color: #ffffff;
 }
 
@@ -67,24 +67,34 @@
   width: 100%;
   height: 100%;
 }
-.nombottombar{
-  margin:0 0 0 0;
+.nombottombar {
+  margin: 0 0 0 0;
   display: flex;
   width: 70%;
   height: 100%;
   /* position: absolute;
-  top: 50%; */
+    top: 50%; */
 }
-.valbottombar{
-  margin:0 0 0 0;
+.valbottombar {
+  margin: 0 0 0 0;
   display: flex;
   width: 70%;
   height: 100%;
   /* position: absolute;
-  top: 50%; */
+    top: 50%; */
 }
 
-.counter, .era, .session, .finalizedblock, .validatorcount, .totalbonded, .selfbonded, .nominatorbonded, .controllername, .bondvalue, .totalissuance{
+.counter,
+.era,
+.session,
+.finalizedblock,
+.validatorcount,
+.totalbonded,
+.selfbonded,
+.nominatorbonded,
+.controllername,
+.bondvalue,
+.totalissuance {
   margin: 0 auto;
   position: relative;
   /* width: 225.81px; */
@@ -100,33 +110,37 @@
   padding-left: 5%;
   color: #ffffff;
 }
-.counter, .era, .session, .finalizedblock, .validatorcount, .totalissuance {
+.counter,
+.era,
+.session,
+.finalizedblock,
+.validatorcount,
+.totalissuance {
   bottom: 70px;
 }
-.totalissuance{
-    padding-right: 6%;
+.totalissuance {
+  padding-right: 6%;
 }
 /* .finalizedblock{
-  
-} */
+    
+  } */
 p {
   display: inline-grid;
 }
 /* .finalizedblock{
-   width: 245.81px; 
-   padding-right: 2%; 
-}
+     width: 245.81px; 
+     padding-right: 2%; 
+  }
+  
+  .totalbonded, .selfbonded, .nominatorbonded{
+     width: 550.81px; 
+     padding-left: 5%; 
+  } */
 
-.totalbonded, .selfbonded, .nominatorbonded{
-   width: 550.81px; 
-   padding-left: 5%; 
-} */
-
-
-.controllername, .bondvalue{
+.controllername,
+.bondvalue {
   width: 700.81px;
 }
-
 
 .validator {
   margin: 0 auto;
@@ -153,7 +167,6 @@ body {
   top: 0;
 }
 
-
 .lds-ripple {
   display: inline-block;
   position: absolute;
@@ -162,7 +175,7 @@ body {
   top: 36%;
   left: 45%;
 }
-.black{
+.black {
   background-color: #000000;
 }
 .lds-ripple div {
@@ -195,7 +208,6 @@ body {
   }
 }
 
-
 .lds-text {
   display: inline-block;
   position: relative;
@@ -206,58 +218,54 @@ body {
   color: white;
 }
 
-
-.back-arrow{
-  position:absolute;
-  left:32px;
-  top:25px;
-  color:#ffffff;
-  font-family:"Arial";
-  font-size:35px;
-  width:34px;
+.back-arrow {
+  position: absolute;
+  left: 32px;
+  top: 25px;
+  color: #ffffff;
+  font-family: "Arial";
+  font-size: 35px;
+  width: 34px;
   height: 30px;
   z-index: 1;
 }
-.back-arrow:hover{
+.back-arrow:hover {
   transform: scale(1.1);
 }
 
 /* .home{
-  position:absolute;
-  left:82px;
-  top:28px;
-  color:#ffffff;
-  font-family:"Arial";
-  font-size:25px;
-  width:34px;
-  height: 30px;
-  z-index: 1;
-}
-.home:hover{
-  transform: scale(1.1);
-} */
+    position:absolute;
+    left:82px;
+    top:28px;
+    color:#ffffff;
+    font-family:"Arial";
+    font-size:25px;
+    width:34px;
+    height: 30px;
+    z-index: 1;
+  }
+  .home:hover{
+    transform: scale(1.1);
+  } */
 
-
-.mainWrapper{
+.mainWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
 
-
-.right-stage{
+.right-stage {
   background-color: black;
 }
 
-
-.intentions{
+.intentions {
   position: absolute;
   width: 300px;
   height: 200px;
   overflow: auto;
   /* scroll-behavior: smooth; */
   z-index: 1;
-  top:100px;
+  top: 100px;
   right: 100px;
   color: white;
   font-size: 14px;
@@ -268,7 +276,8 @@ body {
 
 .keyStats-Container {
   /* box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -5px -5px 0px 1px rgba(242, 242, 242, 0.23); */
-  box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16), inset -2px -1px 0px 1px rgba(242, 242, 242, 0.23);
+  box-shadow: 0 3px 0px rgba(255, 255, 255, 0.16),
+    inset -2px -1px 0px 1px rgba(242, 242, 242, 0.23);
   border-radius: 10px;
   padding: 5px 10px 5px 20px;
 }
@@ -280,7 +289,7 @@ body {
   overflow: auto;
   /* scroll-behavior: smooth; */
   z-index: 1;
-  top:100px;
+  top: 100px;
   left: 100px;
   color: white;
   font-size: 14px;
@@ -307,16 +316,16 @@ body {
   width: 15px;
   height: 15px;
 }
-.intentions::-webkit-scrollbar-track-piece  {
-  background-color: #C2D2E4;
+.intentions::-webkit-scrollbar-track-piece {
+  background-color: #c2d2e4;
 }
 
 .intentions::-webkit-scrollbar-thumb:vertical {
   height: 30px;
-  background-color: #0A4C95;
+  background-color: #0a4c95;
 }
 
-.valsign{
+.valsign {
   width: 15px;
   height: 8px;
   background-color: yellow;
@@ -324,34 +333,35 @@ body {
   display: inline-block;
   margin-right: 10px;
 }
-.mainwrapper-text{
-  background-color:#c1cfda;
+.mainwrapper-text {
+  background-color: #c1cfda;
   padding-left: 58px;
-  padding-top:51px;
+  padding-top: 51px;
   height: 120px;
 }
-.mainwrapper-text h2{
+.mainwrapper-text h2 {
   padding-top: 10px;
   font-size: 16px;
   font-family: Roboto Mono;
   font-style: normal;
   font-weight: normal;
 }
-.mainwrapper-text h1{
+.mainwrapper-text h1 {
   font-size: 24px;
   font-family: Roboto Mono;
   font-style: normal;
   font-weight: normal;
 }
 /* .inten ::before {
-  content:"   ";
-  height: 20px;
-  width: 30px;
-  border-radius:20%;
-  background-color: yellow;
-} */
+    content:"   ";
+    height: 20px;
+    width: 30px;
+    border-radius:20%;
+    background-color: yellow;
+  } */
 
-.headingmainwrapper1 h2, .headingmainwrapper2 h2 {
+.headingmainwrapper1 h2,
+.headingmainwrapper2 h2 {
   margin: 0 auto;
   position: absolute;
   display: inline-block;
@@ -365,63 +375,63 @@ body {
   color: #ffffff;
   text-align: center;
 }
-.headingmainwrapper1{
-  opacity:0;
+.headingmainwrapper1 {
+  opacity: 0;
 }
-.headingmainwrapper2{
-  opacity:0;
+.headingmainwrapper2 {
+  opacity: 0;
 }
- .headingmainwrapper1 h2 {
+.headingmainwrapper1 h2 {
   bottom: 30%;
 }
 .headingmainwrapper2 h2 {
   bottom: 11%;
-} 
-.kusamaconnecting{
+}
+.kusamaconnecting {
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 28px;
-  color: #ffffff; 
-  margin-top:45%;
-  margin-left:10%;
+  color: #ffffff;
+  margin-top: 45%;
+  margin-left: 10%;
 }
 
-.animate{
+.animate {
   position: relative;
   animation-name: fadeinup;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
-@keyframes fadeinup{
-  from{
-      top: 90%;
-      opacity: 0;
+@keyframes fadeinup {
+  from {
+    top: 90%;
+    opacity: 0;
   }
-  to{
-      top: 70%;
-      opacity: 1;
+  to {
+    top: 70%;
+    opacity: 1;
   }
 }
-.animatereverse{
+.animatereverse {
   position: relative;
   animation-name: fadeoutdown;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
-@keyframes fadeoutdown{
-  from{
-      top: 70%;
-      opacity: 1;
+@keyframes fadeoutdown {
+  from {
+    top: 70%;
+    opacity: 1;
   }
-  to{
-      top: 90%;
-      opacity: 0;
+  to {
+    top: 90%;
+    opacity: 0;
   }
 }
 
-.nav-grid{
+.nav-grid {
   display: none;
   grid-template-columns: 2.5fr 1fr;
   position: absolute;
@@ -432,7 +442,7 @@ body {
   gap: 0;
 }
 
-.nav-empty-space{
+.nav-empty-space {
   opacity: 0.25;
   z-index: 10;
   margin-right: -5%;
@@ -449,9 +459,8 @@ body {
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   background-color: #c1cfda;
-  
 }
-.opennav{
+.opennav {
   z-index: 1;
   position: absolute;
   top: 5%;
@@ -459,7 +468,7 @@ body {
   color: white;
   font-size: 2em;
 }
-.opennav:hover{
+.opennav:hover {
   cursor: pointer;
   color: #006989;
 }
@@ -472,7 +481,7 @@ body {
   color: black;
   display: block;
   transition: 0.3s;
-  border-bottom: 2px solid rgba(255,255,255,0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   margin: 5% 10%;
   transition: border 0.3s ease-in-out 0s;
 }
@@ -480,7 +489,7 @@ body {
 /* When you mouse over the navigation links, change their color */
 .navlink:hover {
   /* color: #f1f1f1; */
-  border-bottom-color: rgba(255,255,255,1)
+  border-bottom-color: rgba(255, 255, 255, 1);
 }
 
 /* Position and style the close button (top right corner) */
@@ -492,11 +501,11 @@ body {
   margin-left: 50px;
   color: black;
 }
-.sidenav .closebtn:hover{
+.sidenav .closebtn:hover {
   cursor: pointer;
   color: white;
 }
-.sidenav h2{
+.sidenav h2 {
   color: black;
   margin-left: 10%;
   margin-top: 8%;
@@ -505,11 +514,15 @@ body {
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
-.nav-path{
+.nav-path {
   position: absolute;
   top: 3%;
   left: 5%;
@@ -522,30 +535,31 @@ body {
   line-height: 23px;
   width: 80%;
   /* height: 43px; */
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-.nav-path-link, .na-path-current{
+.nav-path-link,
+.na-path-current {
   /* display: inline; */
 }
-.nav-path div{
-  padding: 1% .5%;
+.nav-path div {
+  padding: 1% 0.5%;
   /* padding-bottom: 0%; */
   border-radius: 10%;
 }
 
-.nav-path-link:hover{
+.nav-path-link:hover {
   cursor: pointer;
   background-color: rgb(65, 65, 66);
   color: aqua;
 }
 
-.nav-path span{
+.nav-path span {
   margin-left: 20px;
   z-index: 10;
   padding: 1%;
 }
-.nav-path span:hover{
+.nav-path span:hover {
   cursor: pointer;
   color: red;
 }
