@@ -1,5 +1,5 @@
-import React from 'react';
-import { Rect, Text } from 'react-konva';
+import React from "react";
+import { Rect, Text } from "react-konva";
 
 class Rectangle extends React.Component {
   constructor(props) {
@@ -7,52 +7,50 @@ class Rectangle extends React.Component {
     this.state = { showValidatorAddress: false };
   }
 
-  handleOnMouseOver = e => {
-    e.target.setAttrs({
-      scaleX: 1.4,
-      scaleY: 1.4,
-    });
-    document.body.style.cursor = 'pointer';
-    // this.setState({ showValidatorAddress: true });
-  };
-  handleOnMouseOut = e => {
-    e.target.setAttrs({
-      scaleX: 1,
-      scaleY: 1,
-    });
-    document.body.style.cursor = 'default';
-    // this.setState({ showValidatorAddress: false });
-  };
-  handleClick = () => {
-    document.body.style.cursor = 'default';
-    if (!this.props.isKusama) {
-      this.props.history.push({
-        pathname: '/alexander/validator/' + this.props.validatorAddress,
-        state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
-      });
-    }
+  // handleOnMouseOver = (e) => {
+  //   e.target.setAttrs({
+  //     scaleX: 1.4,
+  //     scaleY: 1.4,
+  //   });
+  //   document.body.style.cursor = "pointer";
+  //   this.setState({ showValidatorAddress: true });
+  // };
+  // handleOnMouseOut = (e) => {
+  //   e.target.setAttrs({
+  //     scaleX: 1,
+  //     scaleY: 1,
+  //   });
+  //   document.body.style.cursor = "default";
+  //   this.setState({ showValidatorAddress: false });
+  // };
+  // handleClick = () => {
+  //   document.body.style.cursor = "default";
+  //   if (!this.props.isKusama) {
+  //     this.props.history.push({
+  //       pathname: "/alexander/validator/" + this.props.validatorAddress,
+  //       state: { totalinfo: this.props.totalinfo, valinfo: this.props.valinfo },
+  //     });
+  //   }
 
-    if (this.props.isKusama) {
-      console.log('clicked!');
-      window.open(
-        `https://polkanalytics.com/#/kusama/validator/${this.props.validatorAddress}`,
-      );
-    }
-  };
+  //   if (this.props.isKusama) {
+  //     console.log("clicked!");
+  //     window.open(
+  //       `https://polkanalytics.com/#/kusama/validator/${this.props.validatorAddress}`
+  //     );
+  //   }
+  // };
   render() {
     let x1 = this.props.x;
     let y1 = this.props.y;
-    // let x2 = this.props.x/
-    let valtext = 'fetching validator information';
-    if (!this.props.isMainWrapper && this.props.accountIndex !== undefined) {
-      valtext = this.props.accountIndex
-        ? `Account ID: ${this.props.accountIndex}`
-        : 'accountId: ' +
-          this.props.validatorAddress.toString().slice(0, 8) +
-          '......' +
-          this.props.validatorAddress.toString().slice(-8);
-      // console.log(this.props.angle)
-    }
+    console.log(JSON.stringify(this.props));
+    let valtext = "fetching validator info";
+    valtext =
+      this.props.name != null
+        ? `${this.props.name}`
+        : this.props.stashId.slice(0, 8) +
+          "....." +
+          this.props.stashId.slice(-8);
+    // console.log(this.props.angle)
     if (this.props.angle <= 45 && this.props.angle >= 0) {
       x1 = this.props.x + 50;
       y1 = this.props.y - 80;
@@ -93,38 +91,39 @@ class Rectangle extends React.Component {
           cornerRadius={4.69457}
           rotation={this.props.angle}
           onMouseOver={(e) => {
-            // !this.props.isMainWrapper ? this.handleOnMouseOver : undefined
-            if(!this.props.isMainWrapper){
-              e.target.setAttrs({
-                scaleX: 1.4,
-                scaleY: 1.4,
+            // !this.props.isMainWrapper ? this.props.handleOnMouseOver : undefined
+            if (!this.props.isMainWrapper) {
+              this.props.handleOnMouseOver(e);
+              this.props.setSpecificInfo({
+                x: this.props.x,
+                y: this.props.y,
+                angle: this.props.angle,
+                name: this.props.name,
+                stashId: this.props.stashId,
+                nomCount: this.props.nomCount,
+                rewardsPer100KSM: this.props.rewardsPer100KSM,
+                commission: this.props.commission,
+                othersStake: this.props.othersStake,
+                ownStake: this.props.ownStake,
+                riskScore: this.props.riskScore,
+                estimatedPoolReward: this.props.estimatedPoolReward,
               });
-              document.body.style.cursor = 'pointer';
-              this.props.onValidatorHover({
-                accountIdText: valtext,
-                nominatorsStakeText: this.props.nominatorsStake,
-                totalStakeText: this.props.bondvalue,
-                validatorSelfStakeText: this.props.validatorSelfStake,
-                backersText: this.props.nominators,
-                validatorAddress: this.props.validatorAddress,
-              })
             }
-          }
-          }
+          }}
           onMouseOut={
-            !this.props.isMainWrapper ? this.handleOnMouseOut : undefined
+            !this.props.isMainWrapper ? this.props.handleOnMouseOut : undefined
           }
           // onClick={this.handleClick}
         />
 
-        {this.state.showValidatorAddress && !this.props.isMainWrapper && (
+        {/* {this.state.showValidatorAddress && !this.props.isMainWrapper && (
           <Rect
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533) - 10}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) - 10}
             width={260}
             height={120}
             cornerRadius={4.69457}
-            fill={'#333333'}
+            fill={"#333333"}
             shadowOffsetY={10}
             shadowBlur={10}
             shadowColor="black"
@@ -137,6 +136,7 @@ class Rectangle extends React.Component {
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 10}
             fontFamily="Roboto Mono"
+            align="center"
             fill="#FFFFFF"
           />
         )}
@@ -150,6 +150,7 @@ class Rectangle extends React.Component {
             }
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 30}
+            align="center"
             fill="#FFFFFF"
           />
         )}
@@ -158,6 +159,7 @@ class Rectangle extends React.Component {
             text={`${this.props.bondvalue} \n${this.props.validatorSelfStake} \n${this.props.nominatorsStake} \nClick to see validator details`}
             x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
             y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 50}
+            align="center"
             fill="#FFFFFF"
           />
         )}
@@ -168,9 +170,10 @@ class Rectangle extends React.Component {
               text="Click to show Validator Analytics"
               x={x1 + 20 * Math.sin(this.props.angle * 0.0174533)}
               y={y1 - 20 * Math.cos(this.props.angle * 0.0174533) + 80}
+              align="center"
               fill="#9099B6"
             />
-          )}
+          )} */}
       </React.Fragment>
     );
   }

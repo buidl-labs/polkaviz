@@ -1,17 +1,17 @@
-import React from 'react';
-import KusamaRectangle from './KusamaRectangle';
-import Tail from '../Tail';
+import React from "react";
+import KusamaRectangle from "./KusamaRectangle";
+import Tail from "../Tail";
 
 class Validator extends React.Component {
   render() {
-    let bondvalue = '';
+    let bondvalue = "";
     let nomvalue = 0;
-    let commission = '';
+    let commission = "";
     let nominatorsStake = 0;
     let validatorSelfStake = 0;
     if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
-      bondvalue = 'Bonded: No Data found';
-      nomvalue = 'Backed by: No Data found';
+      bondvalue = "Bonded: No Data found";
+      nomvalue = "Backed by: No Data found";
       if (!this.props.isKusama) {
         let totalvalue =
           parseInt(this.props.valinfo.stakers.total) / Math.pow(10, 15);
@@ -23,26 +23,26 @@ class Validator extends React.Component {
           ownvalue = parseInt(this.props.valinfo.stakingLedger.total);
         }
         console.log(
-          'totalbonded: ' +
+          "totalbonded: " +
             totalbonded +
-            ' totalvalue: ' +
+            " totalvalue: " +
             totalvalue +
-            ' ownvalue: ' +
-            ownvalue,
+            " ownvalue: " +
+            ownvalue
         );
         // console.log('totalbonded: '+ parseInt(totalbonded) + ' totalvalue: '+ parseInt(totalvalue) + ' ownvalue: ' + parseInt(ownvalue));
 
         totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
         bondvalue =
-          'Bonded: ' +
+          "Bonded: " +
           ownvalue.toString().slice(0, 5) +
-          ' (+ ' +
+          " (+ " +
           totalbonded.toString().slice(0, 5) +
-          ' ) DOT';
+          " ) DOT";
         nomvalue =
-          'Backed by: ' +
+          "Backed by: " +
           this.props.valinfo.stakers.others.length +
-          ' nominators';
+          " nominators";
       }
 
       // if (this.props.intentions.includes(this.props.validatorAddress)) {
@@ -68,16 +68,14 @@ class Validator extends React.Component {
     }
     if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
       nomvalue =
-        'Backed by ' +
-        this.props.valinfo.stakers.others.length +
-        ' nominators';
+        "Backed by " + this.props.valinfo.stakers.others.length + " nominators";
       //Total Stake
       bondvalue = `Total Stake ${parseInt(
-        this.props.valinfo.stakers.total / 10 ** 12,
+        this.props.valinfo.stakers.total / 10 ** 12
       ).toFixed(3)} KSM`;
 
       validatorSelfStake = `Self Stake ${parseInt(
-        this.props.valinfo.stakers.own / 10 ** 12,
+        this.props.valinfo.stakers.own / 10 ** 12
       ).toFixed(3)} KSM`;
 
       nominatorsStake = `Nominators Stake ${(
@@ -89,10 +87,10 @@ class Validator extends React.Component {
     let y1 = this.props.y;
     let x2 = this.props.x;
     let y2 = this.props.y;
-    let color = '#C31169';
+    let color = "#C31169";
     let opacity = 1;
     if (!this.props.isKusama) {
-      color = '#9335A3';
+      color = "#9335A3";
     }
     // if (!this.props.isMainWrapper) {
     //   if (this.props.intentions.includes(this.props.validatorAddress)) {
@@ -114,21 +112,25 @@ class Validator extends React.Component {
           x={x1 / 2}
           y={y1 / 2}
           angle={this.props.angle}
-          validatorAddress={this.props.validatorAddress}
-          valinfo={this.props.valinfo}
-          bondvalue={bondvalue}
-          nominators={nomvalue}
-          commission={commission}
-          nominatorinfo={this.props.nominatorinfo}
+          name={this.props.name}
+          stashId={this.props.stashId}
+          nomCount={this.props.nomCount}
+          showInfoCard={this.props.showInfoCard}
+          rewardsPer100KSM={this.props.rewardsPer100KSM}
+          commission={this.props.commission}
+          othersStake={this.props.othersStake}
+          ownStake={this.props.ownStake}
+          riskScore={this.props.riskScore}
+          estimatedPoolReward={this.props.estimatedPoolReward}
+          handleOnMouseOver={this.props.handleOnMouseOver}
+          handleOnMouseOut={this.props.handleOnMouseOut}
+          setSpecificInfo={this.props.setSpecificInfo}
           history={this.props.history}
           totalinfo={this.props.totalinfo}
           isMainWrapper={this.props.isMainWrapper}
           isKusama={this.props.isKusama}
           intentions={this.props.intentions}
           color={color}
-          validatorSelfStake={validatorSelfStake}
-          nominatorsStake={nominatorsStake}
-          accountIndex={this.props.accountIndex}
           onValidatorHover={this.props.onValidatorHover}
         />
       </React.Fragment>
