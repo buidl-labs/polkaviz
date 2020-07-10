@@ -20,8 +20,8 @@
 
 .kusamacontainer {
   display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 100px 3fr 1fr;
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: 100px 500px 1fr;
   column-gap: 10px;
   row-gap: 10px;
 }
@@ -304,12 +304,21 @@ body {
 }
 
 .keyStats {
+  position: absolute;
+  width: 250px;
+  height: 400px;
+  overflow: auto;
+  /* scroll-behavior: smooth; */
+  z-index: 1;
+  top:100px;
+  left: 100px;
   color: white;
   font-size: 14px;
   line-height: 26px;
 }
 
 .keyStats-List {
+  display: flex;
   flex-direction: column;
 }
 
