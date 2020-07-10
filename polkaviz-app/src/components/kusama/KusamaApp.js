@@ -428,205 +428,213 @@ class KusamaApp extends React.Component {
         </div>
       </>
     ) : (
-      <div className="kusamacontainer">
-        {/* <div className="heading">
+      <div className="wrapper">
+        <div className="kusamacontainer">
+          {/* <div className="heading">
           <h2>Kusama Network</h2>
         </div> */}
 
-        <div className="nav-path" style={{
-              border: "1px solid blue",
-            }}>
-          <div className="nav-path-link" onClick={this.handlePolkavizClick}>
-            Polkaviz
-          </div>
-          <div>/</div>
-          <div className="nav-path-current">Kusama</div>
-        </div>
-
-        <div className="network-stats" style={{
-              border: "1px solid yellow",
-            }}>
-        <KusamaKeyStats keyStats={keyStats} />
-        </div>
-
-        <div className="relay-circle" style={{
-              border: "1px solid green",
-            }}>
           <div
-            id="main-viz"
+            className="nav-path"
+            style={{
+              border: "1px solid blue",
+            }}
+          >
+            <div className="nav-path-link" onClick={this.handlePolkavizClick}>
+              Polkaviz
+            </div>
+            <div>/</div>
+            <div className="nav-path-current">Kusama</div>
+          </div>
+
+          <div
+            className="network-stats"
+            style={{
+              border: "1px solid yellow",
+            }}
+          >
+            <KusamaKeyStats keyStats={keyStats} />
+          </div>
+
+          <div
+            className="relay-circle"
+            style={{
+              border: "1px solid green",
+            }}
+          >
+            <div
+              id="main-viz"
+              style={{
+                width: this.state.stageWidth,
+                height: this.state.stageWidth,
+                border: "1px solid grey",
+              }}
+            >
+              <Stage
+                width={this.state.stageWidth}
+                height={this.state.stageWidth}
+              >
+                <Layer>
+                  {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
+                  {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
+                  {ValidatorsData.map((person, index) => (
+                    <KusamaValidator
+                      key={index}
+                      onValidatorHover={this.onValidatorHover}
+                      name={person.name}
+                      stashId={person.stashId}
+                      nomCount={person.numOfNominators}
+                      rewardsPer100KSM={person.rewardsPer100KSM}
+                      commission={person.commission}
+                      othersStake={person.othersStake}
+                      ownStake={person.ownStake}
+                      handleOnMouseOver={this.handleOnMouseOver}
+                      setSpecificInfo={this.setSpecificInfo}
+                      handleOnMouseOut={this.handleOnMouseOut}
+                      riskScore={person.riskScore}
+                      estimatedPoolReward={person.estimatedPoolReward}
+                      angle={180 - (index * 360) / ValidatorsData.length}
+                      history={this.props.history}
+                      intentions={[]}
+                      x={
+                        commonWidth +
+                        500 *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / ValidatorsData.length) *
+                              0.0174533
+                          )
+                      }
+                      y={
+                        commonHeight +
+                        500 *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / ValidatorsData.length) *
+                              0.0174533
+                          )
+                      }
+                      isKusama
+                    />
+                  ))}
+                  {IntentionsData.map((person, index) => (
+                    <KusamaIntention
+                      key={index}
+                      onIntentionHover={this.onIntentionHover}
+                      validatorAddress={person.valname}
+                      valinfo={person.valinfo}
+                      totalinfo={this.state.kusamavaltotalinfo}
+                      nominatorinfo={this.state.kusamanominatorinfo}
+                      angle={180 - (index * 360) / IntentionsData.length}
+                      history={this.props.history}
+                      intentions={IntentionsData}
+                      x={
+                        commonWidth -
+                        40 +
+                        500 *
+                          Math.cos(
+                            (90 - 1 - (index * 360) / IntentionsData.length) *
+                              0.0174533
+                          )
+                      }
+                      y={
+                        commonHeight +
+                        500 *
+                          Math.sin(
+                            (90 - 1 - (index * 360) / IntentionsData.length) *
+                              0.0174533
+                          )
+                      }
+                      isKusama
+                    />
+                  ))}
+                  {/* {console.log(this.state.bottombarobject.finalblock)}
+              {console.log(this.state.previousBlock)} */}
+                  <BlockAnimationNew
+                    key={authorIndex}
+                    angle={180 - (authorIndex * 360) / arr.length}
+                    x1={
+                      commonWidth / 2 +
+                      160 *
+                        Math.cos(
+                          (90 - (authorIndex * 360) / arr.length) * 0.0174533
+                        )
+                    }
+                    y1={
+                      commonHeight / 2 +
+                      160 *
+                        Math.sin(
+                          (90 - (authorIndex * 360) / arr.length) * 0.0174533
+                        )
+                    }
+                    x2={
+                      commonWidth / 2 +
+                      240 *
+                        Math.cos(
+                          (90 - (authorIndex * 360) / arr.length) * 0.0174533
+                        )
+                    }
+                    y2={
+                      commonHeight / 2 +
+                      240 *
+                        Math.sin(
+                          (90 - (authorIndex * 360) / arr.length) * 0.0174533
+                        )
+                    }
+                  />
+                  <Relay x={commonWidth} y={commonHeight} isKusama />
+                  <Text
+                    text={
+                      this.state.showFirstViewInstructions &&
+                      "Hover over validators \n and intentions to see info"
+                    }
+                    x={commonWidth - 730}
+                    y={commonHeight - 420}
+                    fontFamily="Roboto Mono"
+                    fill="#FFFFFF"
+                    fontSize={20}
+                    align="center"
+                  />
+                  {this.state.showInfoCard && (
+                    <InfoCard
+                      specificInfo={this.state.specificInfo}
+                      showInfoCard={this.state.showInfoCard}
+                    />
+                  )}
+                </Layer>
+              </Stage>
+            </div>
+          </div>
+          <div
+            id="validator-types-info"
             style={{
               width: this.state.stageWidth,
-              height: this.state.stageWidth,
               border: "1px solid grey",
             }}
           >
-            <Stage width={this.state.stageWidth} height={this.state.stageWidth}>
+            <Stage width={500} height={200}>
               <Layer>
-                {/* <Parachains x={window.innerWidth} y={window.innerHeight} parachains={arr1}/> */}
-                {/* in  (90 - 1) "-1"  is to handle the deviation of hexagon wrt to validators */}
-                {ValidatorsData.map((person, index) => (
-                  <KusamaValidator
-                    key={index}
-                    onValidatorHover={this.onValidatorHover}
-                    name={person.name}
-                    stashId={person.stashId}
-                    nomCount={person.numOfNominators}
-                    rewardsPer100KSM={person.rewardsPer100KSM}
-                    commission={person.commission}
-                    othersStake={person.othersStake}
-                    ownStake={person.ownStake}
-                    handleOnMouseOver={this.handleOnMouseOver}
-                    setSpecificInfo={this.setSpecificInfo}
-                    handleOnMouseOut={this.handleOnMouseOut}
-                    riskScore={person.riskScore}
-                    estimatedPoolReward={person.estimatedPoolReward}
-                    angle={180 - (index * 360) / ValidatorsData.length}
-                    history={this.props.history}
-                    intentions={[]}
-                    x={
-                      commonWidth +
-                      500 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / ValidatorsData.length) *
-                            0.0174533
-                        )
-                    }
-                    y={
-                      commonHeight +
-                      500 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / ValidatorsData.length) *
-                            0.0174533
-                        )
-                    }
-                    isKusama
-                  />
-                ))}
-                {IntentionsData.map((person, index) => (
-                  <KusamaIntention
-                    key={index}
-                    onIntentionHover={this.onIntentionHover}
-                    validatorAddress={person.valname}
-                    valinfo={person.valinfo}
-                    totalinfo={this.state.kusamavaltotalinfo}
-                    nominatorinfo={this.state.kusamanominatorinfo}
-                    angle={180 - (index * 360) / IntentionsData.length}
-                    history={this.props.history}
-                    intentions={IntentionsData}
-                    x={
-                      commonWidth -
-                      40 +
-                      500 *
-                        Math.cos(
-                          (90 - 1 - (index * 360) / IntentionsData.length) *
-                            0.0174533
-                        )
-                    }
-                    y={
-                      commonHeight +
-                      500 *
-                        Math.sin(
-                          (90 - 1 - (index * 360) / IntentionsData.length) *
-                            0.0174533
-                        )
-                    }
-                    isKusama
-                  />
-                ))}
-                {/* {console.log(this.state.bottombarobject.finalblock)}
-              {console.log(this.state.previousBlock)} */}
-                <BlockAnimationNew
-                  key={authorIndex}
-                  angle={180 - (authorIndex * 360) / arr.length}
-                  x1={
-                    commonWidth / 2 +
-                    160 *
-                      Math.cos(
-                        (90 - (authorIndex * 360) / arr.length) * 0.0174533
-                      )
-                  }
-                  y1={
-                    commonHeight / 2 +
-                    160 *
-                      Math.sin(
-                        (90 - (authorIndex * 360) / arr.length) * 0.0174533
-                      )
-                  }
-                  x2={
-                    commonWidth / 2 +
-                    240 *
-                      Math.cos(
-                        (90 - (authorIndex * 360) / arr.length) * 0.0174533
-                      )
-                  }
-                  y2={
-                    commonHeight / 2 +
-                    240 *
-                      Math.sin(
-                        (90 - (authorIndex * 360) / arr.length) * 0.0174533
-                      )
-                  }
-                />
-                <Relay x={commonWidth} y={commonHeight} isKusama />
+                <Circle x={150} y={200 - 190} radius={10} fill="#FFEB3B" />
                 <Text
-                  text={
-                    this.state.showFirstViewInstructions &&
-                    "Hover over validators \n and intentions to see info"
+                  x={165}
+                  y={200 - 195}
+                  text="Waiting Validators"
+                  fill={
+                    this.props.colorMode === "light" ? "#1A202C" : "#718096"
                   }
-                  x={commonWidth - 730}
-                  y={commonHeight - 420}
-                  fontFamily="Roboto Mono"
-                  fill="#FFFFFF"
-                  fontSize={20}
-                  align="center"
+                  fontSize={15}
                 />
-                {this.state.showInfoCard && (
-                  <InfoCard
-                    specificInfo={this.state.specificInfo}
-                    showInfoCard={this.state.showInfoCard}
-                  />
-                )}
+                <Circle x={150} y={200 - 160} radius={10} fill="#C31169" />
+                <Text
+                  x={165}
+                  y={200 - 165}
+                  text="Active Validators"
+                  fill={
+                    this.props.colorMode === "light" ? "#1A202C" : "#718096"
+                  }
+                  fontSize={15}
+                />
               </Layer>
             </Stage>
           </div>
-        </div>
-        <div
-          id="validator-types-info"
-          style={{
-            width: this.state.stageWidth,
-            border: "1px solid grey"
-          }}
-        >
-          <Stage width={500} height={200}>
-            <Layer>
-              <Circle
-                x={150}
-                y={200 - 190}
-                radius={10}
-                fill="#FFEB3B"
-              />
-              <Text
-                x={165}
-                y={200 - 195}
-                text="Waiting Validators"
-                fill={this.props.colorMode === "light" ? "#1A202C" : "#718096"}
-                fontSize={15}
-              />
-              <Circle
-                x={150}
-                y={200 - 160}
-                radius={10}
-                fill="#C31169"
-              />
-              <Text
-                x={165}
-                y={200 - 165}
-                text="Active Validators"
-                fill={this.props.colorMode === "light" ? "#1A202C" : "#718096"}
-                fontSize={15}
-              />
-            </Layer>
-          </Stage>
         </div>
       </div>
     );
