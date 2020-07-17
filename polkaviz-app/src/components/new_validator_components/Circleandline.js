@@ -34,22 +34,21 @@ class Circleandline extends React.Component {
 
   render() {
     let nomaddress =
-      'stashId: ' +
-      this.props.nomId.toString().slice(0, 8) +
+      this.props.nomId.toString().slice(0, 5) +
       '......' +
-      this.props.nomId.toString().slice(-8);
+      this.props.nomId.toString().slice(-5);
 
-    let nombonded = 'Bonded: ' + this.props.stake.toString().slice(0, 7) + ' DOT';
+    let nombonded = 'Bonded: ' + this.props.stake.toString().slice(0, 7) + ' KSM';
 
-    let x1 = this.props.x - 300;
-    let y1 = this.props.y  -30;
+    let x1 = this.props.x + 15;
+    let y1 = this.props.y - 8;
 
     return (
       <React.Fragment>
         <Line
           points={[this.props.x, this.props.y, this.props.x2, this.props.y2]}
-          stroke="white"
-          opacity={0.3}
+          stroke="#35475C"
+          strokeWidth={1}
         />
         <Circle
           x={this.props.x}
@@ -65,10 +64,10 @@ class Circleandline extends React.Component {
           <Rect
             x={x1}
             y={y1}
-            width={260}
-            height={50}
+            width={159}
+            height={69}
             cornerRadius={4.69457}
-            fill="#333333"
+            fill="#48607C"
             shadowOffsetY={10}
             shadowBlur={10}
             shadowColor="black"
@@ -77,10 +76,10 @@ class Circleandline extends React.Component {
         )}
 
         {this.state.showNominatorAddress && (
-          <Text text={nomaddress} x={x1 + 20} y={y1 + 10} fill="#FFFFFF" />
+          <Text text={nomaddress} x={x1 + 15} y={y1 + 10} fill="#FFFFFF" fontSize={16} fontStyle={'bold'} />
         )}
         {this.state.showNominatorAddress && (
-          <Text text={nombonded} x={x1 + 20} y={y1 + 30} fill="#FFFFFF" />
+          <Text text={nombonded} x={x1 + 15} y={y1 + 35} fill="#B2BECC" />
         )}
       </React.Fragment>
     );

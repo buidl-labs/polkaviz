@@ -2,6 +2,7 @@ import React from "react";
 import { Stage, Layer, Circle, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 import { withRouter } from "react-router-dom";
+import Network from "./Network";
 
 class NewValidatorApp extends React.Component {
   constructor() {
@@ -42,7 +43,7 @@ class NewValidatorApp extends React.Component {
     // console.log(width, height);
     this.setState({
       stageWidth: width,
-      stageHeight: height
+      stageHeight: height,
     });
   };
 
@@ -159,9 +160,25 @@ class NewValidatorApp extends React.Component {
     this.ismounted = false;
   }
   render() {
-    const width = this.state.stageWidth === undefined ? window.innerWidth: this.state.stageWidth;
-    const height = this.state.stageHeight === undefined ? window.innerHeight : this.state.stageHeight;
-    // console.log(width, height);
+    const width =
+      this.state.stageWidth === undefined
+        ? window.innerWidth
+        : this.state.stageWidth;
+    const height =
+      this.state.stageHeight === undefined
+        ? window.innerHeight
+        : this.state.stageHeight;
+    let valText = undefined;
+    if (this.state.ValidatorData !== undefined) {
+      valText =
+        this.state.ValidatorData.socialInfo.name !== null
+          ? this.state.ValidatorData.socialInfo.name
+          : this.state.ValidatorData.keyStats.stashId;
+      if (valText.length > 11) {
+        valText = valText.slice(0, 5) + "..." + valText.slice(-5);
+      }
+    }
+    const NetworkName = "KUSAMA NETWORK";
     let radius = 400;
 
     const validatorRectangleWidth = 110;
@@ -171,7 +188,7 @@ class NewValidatorApp extends React.Component {
       radius = 200;
     }
     let opacity = 0.3;
-    
+
     return this.state.ValidatorData === undefined ? (
       <React.Fragment>
         <div className="lds-ripple">
@@ -181,12 +198,13 @@ class NewValidatorApp extends React.Component {
       </React.Fragment>
     ) : (
       <>
-      <div className="specific-view"
-      ref={node => {
-        this.container = node;
-      }}
-      >
-        {/* <div
+        <div
+          className="specific-view"
+          ref={(node) => {
+            this.container = node;
+          }}
+        >
+          {/* <div
           className="back-arrow"
           onClick={this.BackbtnhandleClick}
           onMouseOver={this.BackbtnhandleOnMouseOver}
@@ -195,69 +213,85 @@ class NewValidatorApp extends React.Component {
           &#8592;
         </div> */}
 
-        <Stage width={width} height={window.innerHeight}>
-          <Layer>
-            {this.state.copied && (
-              <Text text="copied" x={1000} y={45} fill="green" fontSize={18} />
-            )}
-            {/* Here n is number of white circles to draw
+          <Stage width={width} height={window.innerHeight}>
+            <Layer>
+              {this.state.copied && (
+                <Text
+                  text="copied"
+                  x={1000}
+                  y={45}
+                  fill="green"
+                  fontSize={18}
+                />
+              )}
+              {/* Here n is number of white circles to draw
                         r is radius of the imaginary circle on which we have to draw white circles
                         x,y is center of imaginary circle 
                      */}
 
-            <WhiteCircles
-              r={radius}
-              x={width / 2}
-              y={height - 185 - validatorRectangleHeight/2}
-              maxRadius={height / 2 - 15}
-              history={this.props.history}
-              valinfo={this.state.ValidatorData}
-            />
-            {/* Adding 6 to stating and ending y point and 24 to length of line
+              <WhiteCircles
+                r={radius}
+                x={width / 2}
+                y={height - 185 - validatorRectangleHeight / 2}
+                maxRadius={height / 2 - 15}
+                history={this.props.history}
+                valinfo={this.state.ValidatorData}
+              />
+              {/* Adding 6 to stating and ending y point and 24 to length of line
                     because the upper left corner of rectangle is at width/2,height/2
                     so mid point of rectangle becomes width/2+12,height/2+6
                  */}
-            <Line
-              points={[
-                width / 2,
-                height -185,
-                width / 2,
-                height,
-              ]}
-              fill="white"
-              stroke="white"
-              opacity={opacity}
-            />
-            {/* Arc used to create the semicircle on the right, 
+              <Line
+                points={[width / 2, height - 185, width / 2, height]}
+                fill="#35475C"
+                strokeWidth={2}
+                stroke="#35475C"
+                opacity={opacity}
+              />
+              {/* Arc used to create the semicircle on the right, 
                     Rotation is used to rotate the arc drawn by 90 degrees in clockwise direction
                 */}
-            <Circle
+              <Circle
+                x={width / 2}
+                y={height + 135}
+                rotation={180}
+                angle={180}
+                radius={235}
+                fill={"#212D3B"}
+                stroke={"#35475C"}
+                strokeWidth={4}
+              />
+
+              <Rect
+                x={width / 2 - validatorRectangleWidth / 2}
+                y={height - 185 - validatorRectangleHeight}
+                width={validatorRectangleWidth}
+                height={validatorRectangleHeight}
+                fill={"#48607C"}
+                cornerRadius={8}
+                // onMouseOver={this.handleOnMouseOver}
+                // onMouseOut={this.handleOnMouseOut}
+              />
+              <Text
+                text={valText}
+                x={width / 2 - validatorRectangleWidth / 2}
+                y={height - 185 - validatorRectangleHeight + 10}
+                width={validatorRectangleWidth}
+                height={validatorRectangleHeight}
+                align="center"
+                fill="white"
+                fontSize={12}
+                fontStyle="bold"
+              />
+              <Network
               x={width / 2}
               y={height + 135}
-              innerRadius={height / 2 - 25}
-              outerRadius={height / 2 - 24}
-              rotation={180}
-              angle={180}
-              radius={235}
-              fill={'#212D3B'}
-              stroke={"#97A1BF"}
-              strokeWidth={4}
-            />
-
-            <Rect
-              x={width / 2 - (validatorRectangleWidth/2)}
-              y={height - 185 - validatorRectangleHeight}
-              width={validatorRectangleWidth}
-              height={validatorRectangleHeight}
-              fill={'#48607C'}
-              cornerRadius={8}
-              // onMouseOver={this.handleOnMouseOver}
-              // onMouseOut={this.handleOnMouseOut}
-            />
-          </Layer>
-        </Stage>
-      </div>
-    </>
+              NetworkName={NetworkName}
+              />
+            </Layer>
+          </Stage>
+        </div>
+      </>
     );
   }
 }
