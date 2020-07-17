@@ -51,6 +51,15 @@
   color: #ffffff;
 }
 
+.specific-view {
+  background-color: #212D3B;
+}
+
+.new-specific-view {
+  transform: rotate(90deg);
+  background-color: #212D3B;
+}
+
 /* .valheading h2,.valheading span{
     margin: 0 auto;
     position: absolute;

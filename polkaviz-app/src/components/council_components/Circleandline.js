@@ -34,12 +34,12 @@ class Circleandline extends React.Component {
 
   render() {
     let nomaddress =
-      'stashId: ' +
+      'AccountId: ' +
       this.props.nomId.toString().slice(0, 8) +
       '......' +
       this.props.nomId.toString().slice(-8);
 
-    let nombonded = 'Bonded: ' + this.props.stake.toString().slice(0, 7) + ' DOT';
+    let nombonded = 'Stake: ' + this.props.stake.toString().slice(0, 7) + ' KSM';
 
     let x1 = this.props.x - 300;
     let y1 = this.props.y  -30;

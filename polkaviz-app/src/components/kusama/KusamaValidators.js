@@ -4,91 +4,12 @@ import Tail from "../Tail";
 
 class Validator extends React.Component {
   render() {
-    let bondvalue = "";
-    let nomvalue = 0;
-    let commission = "";
-    let nominatorsStake = 0;
-    let validatorSelfStake = 0;
-    if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
-      bondvalue = "Bonded: No Data found";
-      nomvalue = "Backed by: No Data found";
-      if (!this.props.isKusama) {
-        let totalvalue =
-          parseInt(this.props.valinfo.stakers.total) / Math.pow(10, 15);
-        let ownvalue =
-          parseInt(this.props.valinfo.stakers.own) / Math.pow(10, 15);
-        let totalbonded = 0;
-        if (this.props.intentions.includes(this.props.validatorAddress)) {
-          totalvalue = parseInt(this.props.valinfo.stakingLedger.total);
-          ownvalue = parseInt(this.props.valinfo.stakingLedger.total);
-        }
-        console.log(
-          "totalbonded: " +
-            totalbonded +
-            " totalvalue: " +
-            totalvalue +
-            " ownvalue: " +
-            ownvalue
-        );
-        // console.log('totalbonded: '+ parseInt(totalbonded) + ' totalvalue: '+ parseInt(totalvalue) + ' ownvalue: ' + parseInt(ownvalue));
-
-        totalbonded = totalvalue.toFixed(3) - ownvalue.toFixed(3);
-        bondvalue =
-          "Bonded: " +
-          ownvalue.toString().slice(0, 5) +
-          " (+ " +
-          totalbonded.toString().slice(0, 5) +
-          " ) DOT";
-        nomvalue =
-          "Backed by: " +
-          this.props.valinfo.stakers.others.length +
-          " nominators";
-      }
-
-      // if (this.props.intentions.includes(this.props.validatorAddress)) {
-      //   if (this.props.isKusama) {
-      //     let value =
-      //       this.props.valinfo.stakingLedger.active / Math.pow(10, 12);
-      //     if (value > 1000) {
-      //       value = value / Math.pow(10, 3);
-      //       value = value.toFixed(3);
-      //       // value = value.split(".")[0]
-      //       value = value + 'k';
-      //     } else value = value.toFixed(3);
-      //     // console.log(value)
-      //     bondvalue = 'Bonded: ' + value.toString() + ' KSM';
-
-      //     let commissionvalue = this.props.valinfo.validatorPrefs
-      //       .validatorPayment;
-      //     commissionvalue = commissionvalue / Math.pow(10, 12);
-      //     commissionvalue = commissionvalue.toFixed(3);
-      //     commission = 'commission: ' + commissionvalue + ' KSM';
-      //   }
-      // }
-    }
-    if (!this.props.isMainWrapper && this.props.valinfo !== undefined) {
-      nomvalue =
-        "Backed by " + this.props.valinfo.stakers.others.length + " nominators";
-      //Total Stake
-      bondvalue = `Total Stake ${parseInt(
-        this.props.valinfo.stakers.total / 10 ** 12
-      ).toFixed(3)} KSM`;
-
-      validatorSelfStake = `Self Stake ${parseInt(
-        this.props.valinfo.stakers.own / 10 ** 12
-      ).toFixed(3)} KSM`;
-
-      nominatorsStake = `Nominators Stake ${(
-        parseInt(this.props.valinfo.stakers.total / 10 ** 12) -
-        parseInt(this.props.valinfo.stakers.own / 10 ** 12)
-      ).toFixed(3)} KSM`;
-    }
-    let x1 = this.props.x;
-    let y1 = this.props.y;
-    let x2 = this.props.x;
-    let y2 = this.props.y;
+    const x1 = this.props.x;
+    const y1 = this.props.y;
+    const x2 = this.props.x;
+    const y2 = this.props.y;
     let color = "#C31169";
-    let opacity = 1;
+    const opacity = 1;
     if (!this.props.isKusama) {
       color = "#9335A3";
     }
@@ -101,7 +22,7 @@ class Validator extends React.Component {
     //   }
     // }
     return (
-      <React.Fragment>
+      <>
         <Tail
           x={x2 / 2}
           y={y2 / 2}
@@ -133,7 +54,7 @@ class Validator extends React.Component {
           color={color}
           onValidatorHover={this.props.onValidatorHover}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

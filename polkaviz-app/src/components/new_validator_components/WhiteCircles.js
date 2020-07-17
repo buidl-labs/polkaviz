@@ -22,8 +22,8 @@ class WhiteCircles extends React.Component {
       arr.push(
         <Circleandline
           key={index}
-          x={radius * Math.cos(angle) + this.props.x}
-          y={radius * Math.sin(angle) + this.props.y}
+          x={radius * Math.sin(angle) + this.props.x}
+          y={radius * Math.cos(angle) + this.props.y}
           x2={this.props.x}
           y2={this.props.y}
           nomId={element.nomId}

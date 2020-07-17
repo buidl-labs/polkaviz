@@ -1,9 +1,9 @@
 import React from "react";
-import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
+import { Stage, Layer, Circle, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 import { withRouter } from "react-router-dom";
 
-class ValidatorApp extends React.Component {
+class NewValidatorApp extends React.Component {
   constructor() {
     super();
     this.container = React.createRef();
@@ -12,6 +12,7 @@ class ValidatorApp extends React.Component {
       nominators: [],
       showValidatorAddress: false,
       stash: "",
+      showNominatorAddress: false,
       stageWidth: undefined,
       stageHeight: undefined,
       controller: "",
@@ -163,6 +164,9 @@ class ValidatorApp extends React.Component {
     // console.log(width, height);
     let radius = 400;
 
+    const validatorRectangleWidth = 110;
+    const validatorRectangleHeight = 30;
+
     if (this.state.nominators.length > 10) {
       radius = 200;
     }
@@ -180,7 +184,8 @@ class ValidatorApp extends React.Component {
       <div className="specific-view"
       ref={node => {
         this.container = node;
-      }}>
+      }}
+      >
         {/* <div
           className="back-arrow"
           onClick={this.BackbtnhandleClick}
@@ -202,25 +207,11 @@ class ValidatorApp extends React.Component {
 
             <WhiteCircles
               r={radius}
-              x={width / 2 + 13}
-              y={height / 2 + 6}
+              x={width / 2}
+              y={height - 185 - validatorRectangleHeight/2}
               maxRadius={height / 2 - 15}
               history={this.props.history}
               valinfo={this.state.ValidatorData}
-            />
-
-            {/* Arc used to create the semicircle on the right, 
-                    Rotation is used to rotate the arc drawn by 90 degrees in clockwise direction
-                */}
-            <Arc
-              x={width - 2}
-              y={height / 2}
-              innerRadius={height / 2 - 25}
-              outerRadius={height / 2 - 24}
-              rotation={90}
-              angle={180}
-              stroke="#97A1BF"
-              strokeWidth={4}
             />
             {/* Adding 6 to stating and ending y point and 24 to length of line
                     because the upper left corner of rectangle is at width/2,height/2
@@ -229,22 +220,37 @@ class ValidatorApp extends React.Component {
             <Line
               points={[
                 width / 2,
-                height / 2 + 6,
-                width - height / 2 + 23,
-                height / 2 + 6,
+                height -185,
+                width / 2,
+                height,
               ]}
               fill="white"
               stroke="white"
               opacity={opacity}
             />
+            {/* Arc used to create the semicircle on the right, 
+                    Rotation is used to rotate the arc drawn by 90 degrees in clockwise direction
+                */}
+            <Circle
+              x={width / 2}
+              y={height + 135}
+              innerRadius={height / 2 - 25}
+              outerRadius={height / 2 - 24}
+              rotation={180}
+              angle={180}
+              radius={235}
+              fill={'#212D3B'}
+              stroke={"#97A1BF"}
+              strokeWidth={4}
+            />
 
             <Rect
-              x={width / 2}
-              y={height / 2}
-              width={26}
-              height={12}
+              x={width / 2 - (validatorRectangleWidth/2)}
+              y={height - 185 - validatorRectangleHeight}
+              width={validatorRectangleWidth}
+              height={validatorRectangleHeight}
               fill={'#48607C'}
-              cornerRadius={10}
+              cornerRadius={8}
               // onMouseOver={this.handleOnMouseOver}
               // onMouseOut={this.handleOnMouseOut}
             />
@@ -256,4 +262,4 @@ class ValidatorApp extends React.Component {
   }
 }
 
-export default withRouter(ValidatorApp);
+export default withRouter(NewValidatorApp);

@@ -3,7 +3,7 @@ import { Stage, Layer, Arc, Line, Rect, Text } from "react-konva";
 import WhiteCircles from "./WhiteCircles";
 import { withRouter } from "react-router-dom";
 
-class ValidatorApp extends React.Component {
+class CouncilApp extends React.Component {
   constructor() {
     super();
     this.container = React.createRef();
@@ -17,7 +17,7 @@ class ValidatorApp extends React.Component {
       controller: "",
       totalinfo: [],
       valinfo: {},
-      ValidatorData: undefined,
+      CouncilData: undefined,
       copied: false,
     };
     this.ismounted = false;
@@ -87,13 +87,13 @@ class ValidatorApp extends React.Component {
 
   async serverApi() {
     const url =
-      "https://yieldscan-api.onrender.com/api/validator/" +
+      "https://yieldscan-api.onrender.com/api/council/member/" +
       this.props.match.params.id;
     try {
-      const validator_response = await fetch(url);
-      const validator_data = await validator_response.json();
+      const council_response = await fetch(url);
+      const council_data = await council_response.json();
       console.log("validator_data");
-      console.log(validator_data);
+      console.log(council_data);
 
       // // Handle validator data
       // if (validator_data && validator_data.length > 0) {
@@ -132,7 +132,7 @@ class ValidatorApp extends React.Component {
       //   });
       // }
       this.setState({
-        ValidatorData: validator_data,
+        CouncilData: council_data,
       });
     } catch (err) {
       console.log("err", err);
@@ -168,7 +168,7 @@ class ValidatorApp extends React.Component {
     }
     let opacity = 0.3;
     
-    return this.state.ValidatorData === undefined ? (
+    return this.state.CouncilData === undefined ? (
       <React.Fragment>
         <div className="lds-ripple">
           <div></div>
@@ -177,10 +177,7 @@ class ValidatorApp extends React.Component {
       </React.Fragment>
     ) : (
       <>
-      <div className="specific-view"
-      ref={node => {
-        this.container = node;
-      }}>
+      <div className="specific-view">
         {/* <div
           className="back-arrow"
           onClick={this.BackbtnhandleClick}
@@ -190,7 +187,7 @@ class ValidatorApp extends React.Component {
           &#8592;
         </div> */}
 
-        <Stage width={width} height={window.innerHeight}>
+        <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             {this.state.copied && (
               <Text text="copied" x={1000} y={45} fill="green" fontSize={18} />
@@ -206,7 +203,7 @@ class ValidatorApp extends React.Component {
               y={height / 2 + 6}
               maxRadius={height / 2 - 15}
               history={this.props.history}
-              valinfo={this.state.ValidatorData}
+              councilinfo={this.state.CouncilData}
             />
 
             {/* Arc used to create the semicircle on the right, 
@@ -256,4 +253,4 @@ class ValidatorApp extends React.Component {
   }
 }
 
-export default withRouter(ValidatorApp);
+export default withRouter(CouncilApp);
